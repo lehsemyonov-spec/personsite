@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- Всё грузится только с этого сайта: без аналитики, cookie, форм и сторонних сервисов -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'self'; object-src 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Избушка дизайна — Андрей Хол</title>
+  <meta name="description" content="Андрей Хол — графический дизайнер. Карточки для маркетплейсов, каталоги, презентации, визитки и эмодзи-паки. Тёплый дизайн с технологичной точностью.">
+  <meta name="theme-color" content="#14110e">
+  <meta property="og:title" content="Избушка дизайна — Андрей Хол">
+  <meta property="og:description" content="Тёплый дизайн с технологичной точностью: маркетплейсы, каталоги, презентации, визитки, эмодзи.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/unbounded-cyrillic-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/manrope-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/fonts.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <script src="assets/js/boot.js"></script>
+</head>
+<body>
+
+<!-- Спрайт: карандаш для орбиты и разделителей -->
+<svg class="sprite" aria-hidden="true">
+  <symbol id="pencil" viewBox="0 0 120 20">
+    <path d="M2 10 L22 3 H104 a6 6 0 0 1 6 6 v2 a6 6 0 0 1 -6 6 H22 Z" fill="url(#pencil-body)" stroke="#ffd59a" stroke-width="1"/>
+    <path d="M2 10 L22 3 V17 Z" fill="#e9d6b4" stroke="#ffd59a" stroke-width="1"/>
+    <path d="M2 10 L9 7.5 V12.5 Z" fill="#3a2a1a"/>
+    <path d="M92 3 V17 M97 3 V17" stroke="#ffd59a" stroke-width="1" opacity=".7"/>
+    <path d="M26 7 H88" stroke="#fff3df" stroke-width="1.4" stroke-linecap="round" opacity=".6"/>
+  </symbol>
+  <linearGradient id="pencil-body" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#ffcf8a" stop-opacity=".95"/>
+    <stop offset=".55" stop-color="#c98a4b" stop-opacity=".85"/>
+    <stop offset="1" stop-color="#7a4f2a" stop-opacity=".9"/>
+  </linearGradient>
+  <symbol id="spark" viewBox="0 0 24 24">
+    <path d="M12 0 C13 8 16 11 24 12 C16 13 13 16 12 24 C11 16 8 13 0 12 C8 11 11 8 12 0Z" fill="currentColor"/>
+  </symbol>
+  <symbol id="tg" viewBox="0 0 24 24">
+    <path d="M21.4 3.6 2.9 10.7c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.9-1.4-1.5Zm-3.3 3.6-8.6 7.8-.3 3.4-1.5-4.7 10.1-6.4c.4-.3.7-.1.3-.1Z" fill="currentColor"/>
+  </symbol>
+  <symbol id="arrow" viewBox="0 0 24 24">
+    <path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+</svg>
+
+<!-- 0. Прелоадер: избушка прорисовывается, в окне загорается свет -->
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="preloader__inner">
+    <div class="preloader__frame">
+      <span class="pf pf--t"></span><span class="pf pf--r"></span><span class="pf pf--b"></span><span class="pf pf--l"></span>
+      <svg class="izba" viewBox="20 40 360 290" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <g class="iz-pencil"><path pathLength="1" class="ink fill-wood" d="M250 84h11v80h-11z"/><path pathLength="1" class="ink fill-light" d="M250 84l5.5-14 5.5 14z"/><path pathLength="1" class="ink fill-ink" d="M253.6 74.8l1.9-4.8 1.9 4.8z"/><path pathLength="1" class="ink" d="M255.5 86v76"/></g>
+      <g class="iz-pencil"><path pathLength="1" class="ink fill-wood" d="M263 72h11v92h-11z"/><path pathLength="1" class="ink fill-light" d="M263 72l5.5-14 5.5 14z"/><path pathLength="1" class="ink fill-ink" d="M266.6 62.8l1.9-4.8 1.9 4.8z"/><path pathLength="1" class="ink" d="M268.5 74v88"/></g>
+      <g class="iz-pencil"><path pathLength="1" class="ink fill-wood" d="M276 88h11v78h-11z"/><path pathLength="1" class="ink fill-light" d="M276 88l5.5-14 5.5 14z"/><path pathLength="1" class="ink fill-ink" d="M279.6 78.8l1.9-4.8 1.9 4.8z"/><path pathLength="1" class="ink" d="M281.5 90v74"/></g>
+      <path pathLength="1" class="ink fill-dark" d="M92 172L200 98 308 172z"/>
+      <path pathLength="1" class="ink thin" d="M176.7 116H223.3"/>
+      <path pathLength="1" class="ink thin" d="M159.2 128H240.8"/>
+      <path pathLength="1" class="ink thin" d="M141.7 140H258.3"/>
+      <path pathLength="1" class="ink thin" d="M124.2 152H275.8"/>
+      <path pathLength="1" class="ink thin" d="M106.7 164H293.3"/>
+      <circle pathLength="1" class="ink fill-glow iz-attic" cx="200" cy="140" r="11"/><path pathLength="1" class="ink thin" d="M200 129v22M189 140h22"/>
+      <path pathLength="1" class="ink fill-wood" d="M56 178L200 79 200 98 69 191z"/>
+      <path pathLength="1" class="ink fill-wood" d="M200 79L344 178 331 191 200 98z"/>
+      <path pathLength="1" class="ink thin" d="M63.2 173.1l2.5 3.7M70.4 168.1l2.5 3.7M77.6 163.2l2.5 3.7M84.8 158.2l2.5 3.7M92 153.2l4.5 6.6M99.2 148.3l2.5 3.7M106.4 143.3l2.5 3.7M113.6 138.4l2.5 3.7M120.8 133.4l2.5 3.7M128 128.5l4.5 6.6M135.2 123.5l2.5 3.7M142.4 118.6l2.5 3.7M149.6 113.7l2.5 3.7M156.8 108.7l2.5 3.7M164 103.8l4.5 6.6M171.2 98.8l2.5 3.7M178.4 93.9l2.5 3.7M185.6 88.9l2.5 3.7M192.8 84l2.5 3.7"/>
+      <path pathLength="1" class="ink thin" d="M214 93l120 82M228 103l-6 6M262 126l-6 6M296 150l-6 6"/>
+      <rect pathLength="1" class="ink fill-wood" x="88" y="172" width="224" height="20" rx="9"/>
+      <path pathLength="1" class="ink thin" d="M100 180h30M190 184h24"/>
+      <circle pathLength="1" class="ink fill-light" cx="86" cy="182" r="9.5"/><circle pathLength="1" class="ink thin" cx="86" cy="182" r="4.5"/>
+      <circle pathLength="1" class="ink fill-light" cx="314" cy="182" r="9.5"/><circle pathLength="1" class="ink thin" cx="314" cy="182" r="4.5"/>
+      <rect pathLength="1" class="ink fill-wood" x="88" y="192" width="224" height="20" rx="9"/>
+      <path pathLength="1" class="ink thin" d="M137 200h43M219 204h31"/>
+      <circle pathLength="1" class="ink fill-light" cx="86" cy="202" r="9.5"/><circle pathLength="1" class="ink thin" cx="86" cy="202" r="4.5"/>
+      <circle pathLength="1" class="ink fill-light" cx="314" cy="202" r="9.5"/><circle pathLength="1" class="ink thin" cx="314" cy="202" r="4.5"/>
+      <rect pathLength="1" class="ink fill-wood" x="88" y="212" width="224" height="20" rx="9"/>
+      <path pathLength="1" class="ink thin" d="M114 220h31M198 224h38"/>
+      <circle pathLength="1" class="ink fill-light" cx="86" cy="222" r="9.5"/><circle pathLength="1" class="ink thin" cx="86" cy="222" r="4.5"/>
+      <circle pathLength="1" class="ink fill-light" cx="314" cy="222" r="9.5"/><circle pathLength="1" class="ink thin" cx="314" cy="222" r="4.5"/>
+      <rect pathLength="1" class="ink fill-wood" x="88" y="232" width="224" height="20" rx="9"/>
+      <path pathLength="1" class="ink thin" d="M151 240h44M227 244h25"/>
+      <circle pathLength="1" class="ink fill-light" cx="86" cy="242" r="9.5"/><circle pathLength="1" class="ink thin" cx="86" cy="242" r="4.5"/>
+      <circle pathLength="1" class="ink fill-light" cx="314" cy="242" r="9.5"/><circle pathLength="1" class="ink thin" cx="314" cy="242" r="4.5"/>
+      <rect pathLength="1" class="ink fill-wood" x="88" y="252" width="224" height="20" rx="9"/>
+      <path pathLength="1" class="ink thin" d="M128 260h32M206 264h32"/>
+      <circle pathLength="1" class="ink fill-light" cx="86" cy="262" r="9.5"/><circle pathLength="1" class="ink thin" cx="86" cy="262" r="4.5"/>
+      <circle pathLength="1" class="ink fill-light" cx="314" cy="262" r="9.5"/><circle pathLength="1" class="ink thin" cx="314" cy="262" r="4.5"/>
+      <rect pathLength="1" class="ink fill-wood" x="88" y="272" width="224" height="20" rx="9"/>
+      <path pathLength="1" class="ink thin" d="M105 280h45M235 284h39"/>
+      <circle pathLength="1" class="ink fill-light" cx="86" cy="282" r="9.5"/><circle pathLength="1" class="ink thin" cx="86" cy="282" r="4.5"/>
+      <circle pathLength="1" class="ink fill-light" cx="314" cy="282" r="9.5"/><circle pathLength="1" class="ink thin" cx="314" cy="282" r="4.5"/>
+      <g class="iz-window"><rect pathLength="1" class="ink fill-glow" x="118" y="196" width="76" height="62" rx="3"/>
+      <path pathLength="1" class="ink fill-dark iz-person" d="M168 258v-12c0-9-7-14-15-14s-15 5-15 14v12z"/><circle pathLength="1" class="ink fill-dark iz-person" cx="153" cy="221" r="8"/>
+      <path pathLength="1" class="ink fill-light" d="M126 258l8-20h26l-4 20z"/><path pathLength="1" class="ink thin" d="M137 243h17"/>
+      <path pathLength="1" class="ink" d="M156 196v62M118 227h76" opacity=".9"/><rect pathLength="1" class="ink fill-none frame" x="112" y="190" width="88" height="74" rx="4"/><path pathLength="1" class="ink fill-wood" d="M108 264h96v8h-96z"/></g>
+      <path pathLength="1" class="ink fill-wood" d="M232 290v-80a24 24 0 0 1 48 0v80z"/><path pathLength="1" class="ink thin" d="M244 191v99M256 187v103M268 191v99"/><circle pathLength="1" class="ink fill-ink" cx="272" cy="252" r="2.6"/>
+      <path pathLength="1" class="ink fill-light" d="M224 290h64v9h-64zM216 299h80v9h-80z"/>
+      <g transform="translate(-30 0)"><path pathLength="1" class="ink fill-wood" d="M64 308l4-24h22l4 24z"/><path pathLength="1" class="ink" d="M79 284c-2-12-10-18-18-20M79 284c1-14 8-22 17-24M79 284c0-10-1-20 0-28"/><path pathLength="1" class="ink fill-leaf" d="M61 264c6-1 11 2 12 8-6 1-11-2-12-8zM96 260c-6 0-11 4-11 10 6 0 11-4 11-10zM79 256c-4 3-5 8-2 12 4-3 5-8 2-12z"/>
+      <path pathLength="1" class="ink" d="M30 309h340"/><path pathLength="1" class="ink thin" d="M120 316c20 4 60 4 84 0M232 318c22 3 50 3 70-1M44 316h40M318 316h36"/>
+      <path pathLength="1" class="ink thin" d="M330 309c-2-8-6-12-10-14M334 309c0-9 2-14 6-17M338 309c3-6 7-9 12-10M104 309c-1-6-4-9-7-10M107 309c1-7 4-10 8-12"/>
+      </svg>
+    </div>
+    <p class="preloader__title">Избушка <em>дизайна</em></p>
+    <p class="preloader__hint">зажигаем свет…</p>
+  </div>
+</div>
+
+<div class="cursor" aria-hidden="true"><span class="cursor__ring"></span><span class="cursor__dot"></span></div>
+
+<header class="header" id="header">
+  <div class="container header__row">
+    <a class="brand" href="#top" aria-label="Избушка дизайна — наверх">
+      <span class="brand__mark"><img src="assets/img/favicon.svg" alt="" width="34" height="34"></span>
+      <span class="brand__text">Избушка <em>дизайна</em></span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Разделы">
+      <a href="#about">Обо мне</a>
+      <a href="#directions">Направления</a>
+      <a href="#soon">Работы</a>
+      <a href="#soon">Канал</a>
+    </nav>
+    <!-- TODO: заменить #soon на ссылку канала, например https://t.me/ваш_ник -->
+    <a class="btn btn--glass btn--sm header__cta" href="#soon" data-magnetic>
+      <svg class="ico"><use href="#tg"/></svg><span>Telegram</span>
+    </a>
+    <button class="burger" id="burger" type="button" aria-label="Меню" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- 1. Порог -->
+  <section class="hero" id="hero">
+    <div class="hero__bg" aria-hidden="true">
+      <canvas class="hero__engrave" id="engrave-base"></canvas>
+      <canvas class="hero__engrave" id="engrave-lit"></canvas>
+      <div class="hero__glow"></div>
+    </div>
+
+    <div class="container hero__grid">
+      <div class="hero__text">
+        <p class="label" data-reveal><span class="label__dot"></span>Избушка дизайна · графический дизайнер</p>
+        <h1 class="hero__title" data-reveal>
+          <span class="hero__name">Андрей</span>
+          <span class="hero__name hero__name--accent">Хол</span>
+        </h1>
+        <p class="hero__lead" data-reveal>Дизайн, в котором <em>тепло</em> мастерской встречается с <em>точностью</em> технологий.</p>
+        <p class="hero__sub" data-reveal>Карточки для маркетплейсов, каталоги, презентации, визитки и эмодзи-паки — всё, чтобы к вашему бренду хотелось зайти на огонёк.</p>
+        <div class="hero__actions" data-reveal>
+          <a class="btn btn--amber" href="#directions" data-magnetic>Смотреть работы<svg class="ico"><use href="#arrow"/></svg></a>
+          <a class="btn btn--glass" href="#soon" data-magnetic><svg class="ico"><use href="#tg"/></svg>Зайти в Избушку</a>
+        </div>
+        <ul class="hero__facts" data-reveal>
+          <li><b>5+</b><span>направлений<br>дизайна</span></li>
+          <li><b>1</b><span>тёплый канал<br>о дизайне</span></li>
+          <li class="hero__hint"><span class="mouse"><i></i></span><span>Проведите курсором —<br>фонарь проявит линии</span></li>
+        </ul>
+      </div>
+
+      <div class="hero__scene" id="scene" aria-hidden="true">
+        <div class="rings rings--back"><div class="rings__tilt"><div class="ring ring--a"></div><div class="ring ring--b"></div></div></div>
+        <div class="layer layer--base"><div class="layer__tilt"><div class="box box--base"><i class="f f--front"></i><i class="f f--back"></i><i class="f f--left"></i><i class="f f--right"></i><i class="f f--top"></i></div></div></div>
+        <div class="stage" id="stage">
+
+          <div class="cube">
+            <div class="glass">
+              <i class="g g--front"></i><i class="g g--back"></i><i class="g g--left"></i><i class="g g--right"></i>
+            </div>
+            <div class="medal">
+              <div class="medal__disc">
+                <svg class="izba" viewBox="20 40 360 290" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <g class="iz-pencil"><path class="ink fill-wood" d="M250 84h11v80h-11z"/><path class="ink fill-light" d="M250 84l5.5-14 5.5 14z"/><path class="ink fill-ink" d="M253.6 74.8l1.9-4.8 1.9 4.8z"/><path class="ink" d="M255.5 86v76"/></g>
+                <g class="iz-pencil"><path class="ink fill-wood" d="M263 72h11v92h-11z"/><path class="ink fill-light" d="M263 72l5.5-14 5.5 14z"/><path class="ink fill-ink" d="M266.6 62.8l1.9-4.8 1.9 4.8z"/><path class="ink" d="M268.5 74v88"/></g>
+                <g class="iz-pencil"><path class="ink fill-wood" d="M276 88h11v78h-11z"/><path class="ink fill-light" d="M276 88l5.5-14 5.5 14z"/><path class="ink fill-ink" d="M279.6 78.8l1.9-4.8 1.9 4.8z"/><path class="ink" d="M281.5 90v74"/></g>
+                <path class="ink fill-dark" d="M92 172L200 98 308 172z"/>
+                <path class="ink thin" d="M176.7 116H223.3"/>
+                <path class="ink thin" d="M159.2 128H240.8"/>
+                <path class="ink thin" d="M141.7 140H258.3"/>
+                <path class="ink thin" d="M124.2 152H275.8"/>
+                <path class="ink thin" d="M106.7 164H293.3"/>
+                <circle class="ink fill-glow iz-attic" cx="200" cy="140" r="11"/><path class="ink thin" d="M200 129v22M189 140h22"/>
+                <path class="ink fill-wood" d="M56 178L200 79 200 98 69 191z"/>
+                <path class="ink fill-wood" d="M200 79L344 178 331 191 200 98z"/>
+                <path class="ink thin" d="M63.2 173.1l2.5 3.7M70.4 168.1l2.5 3.7M77.6 163.2l2.5 3.7M84.8 158.2l2.5 3.7M92 153.2l4.5 6.6M99.2 148.3l2.5 3.7M106.4 143.3l2.5 3.7M113.6 138.4l2.5 3.7M120.8 133.4l2.5 3.7M128 128.5l4.5 6.6M135.2 123.5l2.5 3.7M142.4 118.6l2.5 3.7M149.6 113.7l2.5 3.7M156.8 108.7l2.5 3.7M164 103.8l4.5 6.6M171.2 98.8l2.5 3.7M178.4 93.9l2.5 3.7M185.6 88.9l2.5 3.7M192.8 84l2.5 3.7"/>
+                <path class="ink thin" d="M214 93l120 82M228 103l-6 6M262 126l-6 6M296 150l-6 6"/>
+                <rect class="ink fill-wood" x="88" y="172" width="224" height="20" rx="9"/>
+                <path class="ink thin" d="M100 180h30M190 184h24"/>
+                <circle class="ink fill-light" cx="86" cy="182" r="9.5"/><circle class="ink thin" cx="86" cy="182" r="4.5"/>
+                <circle class="ink fill-light" cx="314" cy="182" r="9.5"/><circle class="ink thin" cx="314" cy="182" r="4.5"/>
+                <rect class="ink fill-wood" x="88" y="192" width="224" height="20" rx="9"/>
+                <path class="ink thin" d="M137 200h43M219 204h31"/>
+                <circle class="ink fill-light" cx="86" cy="202" r="9.5"/><circle class="ink thin" cx="86" cy="202" r="4.5"/>
+                <circle class="ink fill-light" cx="314" cy="202" r="9.5"/><circle class="ink thin" cx="314" cy="202" r="4.5"/>
+                <rect class="ink fill-wood" x="88" y="212" width="224" height="20" rx="9"/>
+                <path class="ink thin" d="M114 220h31M198 224h38"/>
+                <circle class="ink fill-light" cx="86" cy="222" r="9.5"/><circle class="ink thin" cx="86" cy="222" r="4.5"/>
+                <circle class="ink fill-light" cx="314" cy="222" r="9.5"/><circle class="ink thin" cx="314" cy="222" r="4.5"/>
+                <rect class="ink fill-wood" x="88" y="232" width="224" height="20" rx="9"/>
+                <path class="ink thin" d="M151 240h44M227 244h25"/>
+                <circle class="ink fill-light" cx="86" cy="242" r="9.5"/><circle class="ink thin" cx="86" cy="242" r="4.5"/>
+                <circle class="ink fill-light" cx="314" cy="242" r="9.5"/><circle class="ink thin" cx="314" cy="242" r="4.5"/>
+                <rect class="ink fill-wood" x="88" y="252" width="224" height="20" rx="9"/>
+                <path class="ink thin" d="M128 260h32M206 264h32"/>
+                <circle class="ink fill-light" cx="86" cy="262" r="9.5"/><circle class="ink thin" cx="86" cy="262" r="4.5"/>
+                <circle class="ink fill-light" cx="314" cy="262" r="9.5"/><circle class="ink thin" cx="314" cy="262" r="4.5"/>
+                <rect class="ink fill-wood" x="88" y="272" width="224" height="20" rx="9"/>
+                <path class="ink thin" d="M105 280h45M235 284h39"/>
+                <circle class="ink fill-light" cx="86" cy="282" r="9.5"/><circle class="ink thin" cx="86" cy="282" r="4.5"/>
+                <circle class="ink fill-light" cx="314" cy="282" r="9.5"/><circle class="ink thin" cx="314" cy="282" r="4.5"/>
+                <g class="iz-window"><rect class="ink fill-glow" x="118" y="196" width="76" height="62" rx="3"/>
+                <path class="ink fill-dark iz-person" d="M168 258v-12c0-9-7-14-15-14s-15 5-15 14v12z"/><circle class="ink fill-dark iz-person" cx="153" cy="221" r="8"/>
+                <path class="ink fill-light" d="M126 258l8-20h26l-4 20z"/><path class="ink thin" d="M137 243h17"/>
+                <path class="ink" d="M156 196v62M118 227h76" opacity=".9"/><rect class="ink fill-none frame" x="112" y="190" width="88" height="74" rx="4"/><path class="ink fill-wood" d="M108 264h96v8h-96z"/></g>
+                <path class="ink fill-wood" d="M232 290v-80a24 24 0 0 1 48 0v80z"/><path class="ink thin" d="M244 191v99M256 187v103M268 191v99"/><circle class="ink fill-ink" cx="272" cy="252" r="2.6"/>
+                <path class="ink fill-light" d="M224 290h64v9h-64zM216 299h80v9h-80z"/>
+                <g transform="translate(-30 0)"><path class="ink fill-wood" d="M64 308l4-24h22l4 24z"/><path class="ink" d="M79 284c-2-12-10-18-18-20M79 284c1-14 8-22 17-24M79 284c0-10-1-20 0-28"/><path class="ink fill-leaf" d="M61 264c6-1 11 2 12 8-6 1-11-2-12-8zM96 260c-6 0-11 4-11 10 6 0 11-4 11-10zM79 256c-4 3-5 8-2 12 4-3 5-8 2-12z"/>
+                <path class="ink" d="M30 309h340"/><path class="ink thin" d="M120 316c20 4 60 4 84 0M232 318c22 3 50 3 70-1M44 316h40M318 316h36"/>
+                <path class="ink thin" d="M330 309c-2-8-6-12-10-14M334 309c0-9 2-14 6-17M338 309c3-6 7-9 12-10M104 309c-1-6-4-9-7-10M107 309c1-7 4-10 8-12"/>
+                </svg>
+                <p class="medal__title">Избушка дизайна</p>
+                <span class="medal__rule"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="orbit">
+            <div class="slot"><svg class="pencil"><use href="#pencil"/></svg></div>
+            <div class="slot"><svg class="pencil"><use href="#pencil"/></svg></div>
+            <div class="slot"><svg class="pencil"><use href="#pencil"/></svg></div>
+            <div class="slot"><svg class="pencil"><use href="#pencil"/></svg></div>
+            <div class="slot"><svg class="pencil"><use href="#pencil"/></svg></div>
+          </div>
+        </div>
+        <div class="layer layer--lid"><div class="layer__tilt"><div class="box box--lid"><i class="f f--front"></i><i class="f f--back"></i><i class="f f--left"></i><i class="f f--right"></i><i class="f f--top"></i></div></div></div>
+        <div class="rings rings--front"><div class="rings__tilt"><div class="ring ring--a"></div><div class="ring ring--b"></div></div></div>
+        <div class="floor"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Бегущая строка -->
+  <section class="marquee" aria-label="Чем я занимаюсь">
+    <div class="marquee__track" data-speed="0.55">
+      <div class="marquee__group">
+        <span>Карточки WB</span><svg class="spark"><use href="#spark"/></svg>
+        <span class="o">Карточки Ozon</span><svg class="spark"><use href="#spark"/></svg>
+        <span>Инфографика</span><svg class="spark"><use href="#spark"/></svg>
+        <span class="o">Каталоги</span><svg class="spark"><use href="#spark"/></svg>
+        <span>Презентации</span><svg class="spark"><use href="#spark"/></svg>
+        <span class="o">Визитки</span><svg class="spark"><use href="#spark"/></svg>
+        <span>Эмодзи-паки</span><svg class="spark"><use href="#spark"/></svg>
+      </div>
+    </div>
+    <div class="marquee__track marquee__track--serif" data-speed="-0.35">
+      <div class="marquee__group">
+        <span>тепло мастерской</span><svg class="pencil-mini"><use href="#pencil"/></svg>
+        <span>точность технологий</span><svg class="pencil-mini"><use href="#pencil"/></svg>
+        <span>свет в окне</span><svg class="pencil-mini"><use href="#pencil"/></svg>
+        <span>дизайн, который продаёт</span><svg class="pencil-mini"><use href="#pencil"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Обо мне -->
+  <section class="about section" id="about">
+    <div class="container about__grid">
+      <div class="about__visual" data-reveal>
+        <div class="window" id="window">
+          <div class="window__light"></div>
+          <div class="window__frame">
+            <div class="window__pane">
+              <!-- TODO: заменить иллюстрацию на фото: <img src="assets/img/andrey.webp" alt="Андрей Хол"> -->
+              <svg class="window__person" viewBox="0 0 300 360" aria-hidden="true">
+                <defs>
+                  <radialGradient id="lamp" cx=".72" cy=".28" r=".7">
+                    <stop offset="0" stop-color="#ffe2b0"/>
+                    <stop offset=".45" stop-color="#ffb15c"/>
+                    <stop offset="1" stop-color="#b8612a"/>
+                  </radialGradient>
+                </defs>
+                <rect width="300" height="360" fill="url(#lamp)"/>
+                <g fill="#3a2716">
+                  <path d="M206 64h44l-12 26h-20z"/><path d="M226 90v70h-4V90z" opacity=".7"/>
+                  <circle cx="122" cy="150" r="34"/>
+                  <path d="M40 360v-70c0-50 36-92 82-92s82 42 82 92v70z"/>
+                  <path d="M150 262h110l-14 98H150z" opacity=".95"/>
+                </g>
+                <path d="M160 270h92l-11 80h-81z" fill="#ffd59a" opacity=".55"/>
+                <path d="M0 330h300v30H0z" fill="#2a1c10" opacity=".55"/>
+              </svg>
+              <span class="window__dust"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            </div>
+            <span class="window__cross window__cross--h"></span>
+            <span class="window__cross window__cross--v"></span>
+          </div>
+          <div class="window__sill"></div>
+          <span class="chip window__chip">место для вашего фото</span>
+        </div>
+      </div>
+
+      <div class="about__text">
+        <p class="label" data-reveal><span class="label__dot"></span>Хозяин избушки</p>
+        <h2 class="h2" data-reveal>Привет, я <em>Андрей</em></h2>
+        <!-- TODO: текст-черновик, перепишите своими словами -->
+        <p class="about__p" data-words>Я графический дизайнер и хозяин «Избушки дизайна». Здесь, в тёплой мастерской, собираю визуал, который работает: от карточек для маркетплейсов до каталогов, презентаций, визиток и эмодзи-паков.</p>
+        <p class="about__p about__p--dim" data-reveal>Мне важно, чтобы дизайн был одновременно уютным — понятным и приятным человеку, и точным — чтобы он решал задачу бизнеса.</p>
+
+        <!-- TODO: цифры-заглушки, впишите свои -->
+        <ul class="stats" data-reveal>
+          <li class="stat"><b data-count="5">5</b><span>направлений дизайна</span></li>
+          <li class="stat"><b data-count="50" data-suffix="+">50+</b><span>проектов</span></li>
+          <li class="stat"><b data-count="3">3</b><span>года в дизайне</span></li>
+          <li class="stat"><b>24/7</b><span>свет в окне канала</span></li>
+        </ul>
+
+        <!-- TODO: проверьте список программ -->
+        <ul class="tools" data-reveal>
+          <li>Photoshop</li><li>Illustrator</li><li>Figma</li><li>Нейросети</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Направления -->
+  <section class="directions section" id="directions">
+    <div class="container">
+      <div class="section__head">
+        <p class="label" data-reveal><span class="label__dot"></span>Что умеет избушка</p>
+        <h2 class="h2" data-reveal>Карта <em>навыков</em></h2>
+        <p class="section__lead" data-reveal>Один дизайнер — много форматов. Наведите на направление, чтобы заглянуть внутрь.</p>
+      </div>
+
+      <div class="bento">
+        <a class="tile tile--main" href="#soon" data-tile data-reveal>
+          <span class="tile__shine"></span>
+          <div class="tile__top">
+            <span class="tile__num">01</span>
+            <span class="tile__tag">Мастерская</span>
+          </div>
+          <div class="mp-stack" aria-hidden="true">
+            <div class="mp-card mp-card--3"></div>
+            <div class="mp-card mp-card--2"></div>
+            <div class="mp-card mp-card--1">
+              <span class="mp-card__badge">хит</span>
+              <span class="mp-card__img"><svg viewBox="0 0 64 64"><path d="M24 14h16v8l6 6v26a4 4 0 0 1-4 4H22a4 4 0 0 1-4-4V28l6-6z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M24 22h16M22 36h20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></span>
+              <span class="mp-card__line"></span>
+              <span class="mp-card__line mp-card__line--s"></span>
+              <span class="mp-card__row"><span class="mp-card__stars">★★★★★</span><span class="mp-card__price">₽</span></span>
+            </div>
+          </div>
+          <div class="tile__body">
+            <h3 class="tile__title">Карточки для маркетплейсов</h3>
+            <p class="tile__desc">Wildberries и Ozon: инфографика, главный и дополнительные слайды, которые останавливают скролл покупателя.</p>
+          </div>
+          <span class="tile__go">Смотреть мастерскую<svg class="ico"><use href="#arrow"/></svg></span>
+        </a>
+
+        <a class="tile" href="#soon" data-tile data-reveal data-kind="catalog">
+          <span class="tile__shine"></span>
+          <div class="tile__top"><span class="tile__num">02</span><span class="tile__tag">Чердак</span></div>
+          <svg class="tile__ico" viewBox="0 0 64 64" aria-hidden="true">
+            <path class="i-base" d="M32 18c-6-4-14-5-22-4v34c8-1 16 0 22 4 6-4 14-5 22-4V14c-8-1-16 0-22 4z"/>
+            <path class="i-base" d="M32 18v34"/>
+            <path class="i-page" d="M32 18c5-3.5 11-4.5 18-4v32c-7-.5-13 .5-18 4z"/>
+            <path class="i-thin" d="M15 24h11M15 30h11M15 36h8"/>
+          </svg>
+          <h3 class="tile__title">Каталоги</h3>
+          <p class="tile__desc">Многостраничная вёрстка для компаний: структура, сетка, единый стиль.</p>
+        </a>
+
+        <a class="tile" href="#soon" data-tile data-reveal data-kind="slides">
+          <span class="tile__shine"></span>
+          <div class="tile__top"><span class="tile__num">03</span><span class="tile__tag">Чердак</span></div>
+          <svg class="tile__ico" viewBox="0 0 64 64" aria-hidden="true">
+            <defs><clipPath id="screen-clip"><rect x="11" y="13" width="42" height="28" rx="2"/></clipPath></defs>
+            <rect class="i-base" x="9" y="11" width="46" height="32" rx="4"/>
+            <path class="i-base" d="M32 43v8M22 53h20"/>
+            <g clip-path="url(#screen-clip)">
+              <g class="i-slide i-slide--a"><path class="i-thin" d="M16 20h18M16 26h12"/><rect class="i-fill" x="38" y="18" width="10" height="16" rx="2"/></g>
+              <g class="i-slide i-slide--b"><path class="i-thin" d="M18 34l8-9 6 6 4-4 10 7"/><circle class="i-fill" cx="42" cy="20" r="3"/></g>
+            </g>
+          </svg>
+          <h3 class="tile__title">Презентации</h3>
+          <p class="tile__desc">Презентации-визитки, которые рассказывают о бизнесе за пару слайдов.</p>
+        </a>
+
+        <a class="tile" href="#soon" data-tile data-reveal data-kind="card">
+          <span class="tile__shine"></span>
+          <div class="tile__top"><span class="tile__num">04</span><span class="tile__tag">Чердак</span></div>
+          <svg class="tile__ico" viewBox="0 0 64 64" aria-hidden="true">
+            <g class="i-flip">
+              <g class="i-face i-face--front"><rect class="i-base" x="8" y="18" width="48" height="30" rx="4"/><path class="i-thin" d="M15 38h16M15 43h10"/><circle class="i-fill" cx="46" cy="27" r="4"/></g>
+              <g class="i-face i-face--back"><rect class="i-base" x="8" y="18" width="48" height="30" rx="4"/><path class="i-thin" d="M24 33h16"/><path class="i-fill" d="M32 24l2.4 4.8 5.3.8-3.8 3.7.9 5.2-4.8-2.5-4.8 2.5.9-5.2-3.8-3.7 5.3-.8z"/></g>
+            </g>
+          </svg>
+          <h3 class="tile__title">Визитки</h3>
+          <p class="tile__desc">Лицо и оборот, которые хочется оставить себе, а не выбросить.</p>
+        </a>
+
+        <a class="tile" href="#soon" data-tile data-reveal data-kind="emoji">
+          <span class="tile__shine"></span>
+          <div class="tile__top"><span class="tile__num">05</span><span class="tile__tag">Чердак</span></div>
+          <svg class="tile__ico" viewBox="0 0 64 64" aria-hidden="true">
+            <g class="i-pop i-pop--1"><path class="i-fill" d="M14 20c-2-3 2-6 4-3 2-3 6 0 4 3l-4 4z"/></g>
+            <g class="i-pop i-pop--2"><path class="i-fill" d="M50 14l1.5 3 3.3.5-2.4 2.3.6 3.3-3-1.6-3 1.6.6-3.3-2.4-2.3 3.3-.5z"/></g>
+            <g class="i-pop i-pop--3"><circle class="i-fill" cx="50" cy="44" r="3"/></g>
+            <g class="i-face-emoji">
+              <circle class="i-base" cx="32" cy="34" r="17"/>
+              <circle class="i-fill" cx="26" cy="30" r="2.2"/><circle class="i-fill" cx="38" cy="30" r="2.2"/>
+              <path class="i-base" d="M24 38c4 5 12 5 16 0"/>
+            </g>
+          </svg>
+          <h3 class="tile__title">Эмодзи-паки</h3>
+          <p class="tile__desc">Наборы стикеров и эмодзи в фирменном характере бренда или канала.</p>
+        </a>
+
+        <a class="strip" href="#soon" data-tile data-reveal>
+          <span class="tile__shine"></span>
+          <span class="strip__text">Не нашли нужный формат? <em>Заходите на огонёк</em> — обсудим вашу задачу в Telegram.</span>
+          <span class="btn btn--amber btn--sm"><svg class="ico"><use href="#tg"/></svg>Написать</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Временная заглушка: следующие блоки появятся, когда будут картинки работ -->
+  <section class="soon section" id="soon">
+    <div class="container soon__inner" data-reveal>
+      <svg class="soon__spark"><use href="#spark"/></svg>
+      <h2 class="h2">Мастерская <em>строится</em></h2>
+      <p class="section__lead">Скоро здесь появятся «до/после», портфолио, чердак с проектами из разных областей и всё остальное. А пока — свет горит в канале.</p>
+      <a class="btn btn--amber" href="#top" data-magnetic>Наверх<svg class="ico ico--up"><use href="#arrow"/></svg></a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__row">
+    <span>© 2026 Андрей Хол · Избушка дизайна</span>
+    <span class="footer__note">Сайт не собирает персональные данные и не использует cookie.</span>
+  </div>
+</footer>
+
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>
