@@ -384,131 +384,199 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 600; color: v
 .mouse i { position: absolute; left: 50%; top: 7px; width: 3px; height: 6px; margin-left: -1.5px; border-radius: 2px; background: var(--amber); animation: wheel 1.8s infinite; }
 @keyframes wheel { 0% { opacity: 0; transform: translateY(-3px); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(9px); } }
 
-/* ---------- Ночная избушка: гравюра в темноте, фонарь проявляет цвет ---------- */
-.hero__scene {
-  position: relative;
-  display: grid;
-  place-items: center;
-  transform-origin: 42.75% 60.9%; /* центр горящего окна — сюда «влетает» камера */
-  will-change: transform;
-}
-.night {
-  width: 100%;
-  max-width: 680px;
-  height: auto;
-  max-height: 82vh;
-  overflow: visible;
-  /* края сцены растворяются в темноте — избушка будто выплывает из ночи */
-  -webkit-mask-image: radial-gradient(ellipse 62% 58% at 50% 48%, #000 62%, transparent 100%);
-  mask-image: radial-gradient(ellipse 62% 58% at 50% 48%, #000 62%, transparent 100%);
-}
-
-/* общие классы рисунка избушки: цвет задают переменные слоя */
+/* общие классы рисунка избушки (прелоадер) */
 .ink { stroke: var(--ink, var(--sepia)); stroke-width: 2; }
 .thin { stroke-width: 1.2; }
-.hair { stroke-width: 0.8; }
 .fill-none { fill: none; }
-.fill-wood { fill: var(--wood, #d8bc8e); }
-.fill-light { fill: var(--light, #eedcb8); }
-.fill-dark { fill: var(--dark, #4a3420); }
-.fill-ink { fill: var(--ink, var(--sepia)); }
-.fill-leaf { fill: var(--leaf, #8f8250); }
+.fill-wood { fill: #d8bc8e; }
+.fill-light { fill: #eedcb8; }
+.fill-dark { fill: #4a3420; }
+.fill-ink { fill: var(--sepia); }
+.fill-leaf { fill: #8f8250; }
 .fill-glow { fill: #ffbe66; }
-.fill-moon { fill: var(--moon); }
-.fill-pine { fill: var(--pine); }
-.fill-ground { fill: var(--ground); }
-.fill-stone { fill: var(--stone); }
-.fill-metal { fill: #2b2118; }
 
-.layer-night, .izba-night {
-  --ink: rgba(233, 214, 180, 0.5);
-  --wood: #1c1611; --light: #231c15; --dark: #110d0a; --leaf: #1d2018;
-  --moon: #dfeaf2; --pine: #15130f; --ground: #161210; --stone: #1f1913;
+/* ---------- Окно-портал: парит в ночи, внутри по кругу идут работы ---------- */
+.hero__scene { position: relative; display: grid; place-items: center; padding: 20px 0 10px; }
+.portal {
+  --w: clamp(250px, 27vw, 390px);
+  --h: calc(var(--w) * 1.32);
+  --card: calc(var(--w) * 0.68);
+  position: relative;
+  display: grid;
+  justify-items: center;
 }
-.layer-lit, .izba-lit {
-  --ink: #3a2716;
-  --wood: #c98a4c; --light: #ecb877; --dark: #4a2c17; --leaf: #6f8a45;
-  --moon: #fff1d6; --pine: #3f5a35; --ground: #5a3d22; --stone: #c79a63;
+.portal__float { position: relative; animation: levitate 6.5s ease-in-out infinite; will-change: transform; }
+@keyframes levitate {
+  0%, 100% { transform: translateY(6px) rotate(-0.4deg); }
+  50% { transform: translateY(-14px) rotate(0.5deg); }
 }
-.layer-lit .hair { stroke: #6b4a2a; }
-.layer-lit .fill-ground { fill: #4b321c; }
-
-/* окно мерцает, как живой свет */
-#izba-art .fill-glow { animation: window-light 5s infinite; }
-@keyframes window-light {
-  0%, 100% { fill: #ffbe66; }
-  48% { fill: #ffd28a; }
-  50% { fill: #ffad55; }
-  53% { fill: #ffcf86; }
-}
-.win-halo { animation: halo 5s infinite; transform-box: fill-box; transform-origin: center; }
-@keyframes halo { 0%, 100% { opacity: 1; } 50% { opacity: 0.75; } 52% { opacity: 0.95; } }
-.spill { mix-blend-mode: screen; opacity: 0.7; }
-
-/* луна, звёзды, светлячки */
-.moon { filter: drop-shadow(0 0 14px rgba(191, 227, 255, 0.5)); }
-.star { color: #f4ead9; opacity: 0.5; animation: twinkle 4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
-.star--1 { animation-delay: -1s; animation-duration: 5s; }
-.star--2 { animation-delay: -2.2s; animation-duration: 3.4s; }
-.star--3 { animation-delay: -3s; animation-duration: 6s; }
-@keyframes twinkle { 0%, 100% { opacity: 0.15; transform: scale(0.7); } 50% { opacity: 0.9; transform: scale(1); } }
-.fly { fill: #ffe2a0; filter: drop-shadow(0 0 4px #ffb15c); animation: fly 9s ease-in-out infinite; opacity: 0; }
-.fly--1 { animation-delay: -1.3s; animation-duration: 11s; }
-.fly--2 { animation-delay: -2.6s; }
-.fly--3 { animation-delay: -4s; animation-duration: 12s; }
-.fly--4 { animation-delay: -5.2s; animation-duration: 10s; }
-.fly--5 { animation-delay: -6.5s; }
-.fly--6 { animation-delay: -7.4s; animation-duration: 13s; }
-.fly--7 { animation-delay: -8.2s; }
-@keyframes fly {
-  0% { opacity: 0; transform: translate(0, 0); }
-  20% { opacity: 1; }
-  50% { transform: translate(18px, -26px); }
-  80% { opacity: 0.8; }
-  100% { opacity: 0; transform: translate(-10px, -52px); }
+.portal__tilt {
+  --rx: 0deg; --ry: 0deg;
+  position: relative;
+  transform: perspective(1200px) rotateX(var(--rx)) rotateY(var(--ry));
+  transform-style: preserve-3d;
+  transition: transform 0.8s var(--ease);
 }
 
-/* дым из трубы-карандашей */
-.puff { fill: rgba(233, 214, 180, 0.2); filter: blur(3px); opacity: 0; animation: puff 7s linear infinite; transform-box: fill-box; transform-origin: center; }
-.puff--1 { animation-delay: -1.4s; }
-.puff--2 { animation-delay: -2.8s; }
-.puff--3 { animation-delay: -4.2s; }
-.puff--4 { animation-delay: -5.6s; }
-@keyframes puff {
-  0% { opacity: 0; transform: translate(0, 0) scale(0.4); }
-  15% { opacity: 0.9; }
-  100% { opacity: 0; transform: translate(-46px, -120px) scale(2.6); }
-}
-
-/* фонарь у двери */
-.lantern__swing { transform-box: view-box; transform-origin: 429.6px 328.9px; animation: swing 3.8s ease-in-out infinite; }
-@keyframes swing { 0%, 100% { transform: rotate(5deg); } 50% { transform: rotate(-5deg); } }
-.lantern__glass { fill: rgba(255, 196, 120, 0.35); }
-.lantern__flame { fill: #fff1c9; filter: drop-shadow(0 0 4px #ffb15c) drop-shadow(0 0 10px #ff8a3d); animation: flame 0.9s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: 50% 80%; }
-@keyframes flame { from { transform: scale(0.85, 1); } to { transform: scale(1.1, 1.25); } }
-.lantern__glow { animation: halo 3s infinite; }
-.lantern .ink { stroke: rgba(233, 214, 180, 0.7); }
-
-/* световое пятно фонаря-курсора */
-.warm { mix-blend-mode: screen; pointer-events: none; }
-
-/* вспышка тёплого света при «влёте» в окно */
-.hero__flash {
+/* свет, который льётся из окна */
+.portal__halo {
   position: absolute;
-  inset: 0;
-  z-index: 3;
-  background: radial-gradient(60% 60% at 50% 50%, #ffd59a 0%, #ffb15c 40%, rgba(255, 138, 61, 0.6) 70%, rgba(20, 17, 14, 0) 100%);
-  opacity: 0;
+  inset: -22% -40% -30%;
+  background:
+    radial-gradient(42% 38% at 50% 46%, rgba(255, 170, 90, 0.42), transparent 70%),
+    radial-gradient(30% 22% at 50% 12%, rgba(191, 227, 255, 0.08), transparent 70%);
+  filter: blur(12px);
+  pointer-events: none;
+  animation: breathe 6s ease-in-out infinite;
+}
+
+/* резная рама с аркой */
+.portal__frame {
+  position: relative;
+  width: calc(var(--w) + 34px);
+  padding: 17px;
+  border-radius: calc(var(--w) / 2 + 17px) calc(var(--w) / 2 + 17px) 10px 10px;
+  background:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.09) 0 2px, transparent 2px 9px),
+    linear-gradient(180deg, #7a5532, #4a3220 70%, #3b2819);
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 213, 154, 0.28),
+    inset 0 0 0 7px rgba(58, 39, 22, 0.55),
+    0 0 0 1px rgba(255, 196, 130, 0.55),
+    0 0 46px rgba(255, 160, 80, 0.4),
+    0 50px 90px -40px rgba(0, 0, 0, 0.9);
+}
+.portal__arch { /* тонкая светящаяся линия по арке */
+  position: absolute;
+  inset: 8px;
+  border-radius: calc(var(--w) / 2 + 9px) calc(var(--w) / 2 + 9px) 6px 6px;
+  border: 1px solid rgba(255, 213, 154, 0.45);
+  box-shadow: 0 0 12px rgba(255, 177, 92, 0.35);
   pointer-events: none;
 }
-/* после вспышки глаза «привыкают»: экран уходит в темноту и плавно переходит в следующий блок */
-.hero__fade { position: absolute; inset: 0; z-index: 4; background: var(--bg); opacity: 0; pointer-events: none; }
-
-/* закрепляем первый экран, пока камера летит к окну (только на больших экранах) */
-@media (min-width: 901px) and (min-height: 620px) and (prefers-reduced-motion: no-preference) {
-  .js .hero-pin { height: 210vh; }
-  .js .hero-pin .hero { position: sticky; top: 0; height: 100vh; min-height: 0; }
+.portal__pane {
+  position: relative;
+  width: var(--w);
+  height: var(--h);
+  overflow: hidden;
+  border-radius: calc(var(--w) / 2) calc(var(--w) / 2) 4px 4px;
+  background:
+    radial-gradient(70% 55% at 50% 45%, #5a3a1f 0%, #2a1c12 60%, #170f0a 100%);
+  box-shadow: inset 0 0 40px rgba(20, 12, 6, 0.9), inset 0 0 0 1px rgba(255, 213, 154, 0.35);
+  perspective: 1100px;
+  isolation: isolate;
+  touch-action: pan-y;
 }
+.portal__pane::before { /* тёплый свет из глубины комнаты */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 45% at 50% 58%, rgba(255, 177, 92, 0.38), transparent 70%);
+  z-index: -1;
+}
+.portal__glass { /* отражение стекла поверх работ */
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    linear-gradient(118deg, rgba(255, 255, 255, 0.14) 0%, transparent 26%, transparent 70%, rgba(191, 227, 255, 0.1) 100%),
+    linear-gradient(180deg, rgba(20, 12, 6, 0.35), transparent 22%, transparent 80%, rgba(20, 12, 6, 0.55));
+  pointer-events: none;
+}
+.portal__glass::after { /* блик, пробегающий по стеклу */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 240, 220, 0.16) 45%, transparent 55%);
+  background-size: 260% 100%;
+  animation: sheen 8s var(--ease) infinite;
+}
+@keyframes sheen { 0%, 60% { background-position: 120% 0; } 100% { background-position: -60% 0; } }
+
+/* кольцо карточек */
+.portal__ring {
+  --r: 200px;
+  position: absolute;
+  left: 50%;
+  top: 56%;
+  width: var(--card);
+  height: calc(var(--card) * 4 / 3);
+  margin: calc(var(--card) * -2 / 3) 0 0 calc(var(--card) / -2);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.portal__card {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: rotateY(calc(var(--i) * 72deg)) translateZ(var(--r));
+  box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 213, 154, 0.18);
+  transition: box-shadow 0.6s var(--ease);
+}
+.portal__card.is-front { box-shadow: 0 24px 50px -16px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 213, 154, 0.55), 0 0 34px rgba(255, 160, 80, 0.45); }
+.portal__card img { width: 100%; height: 100%; object-fit: cover; user-select: none; -webkit-user-drag: none; pointer-events: none; }
+.portal__card:nth-child(1) { --i: 0; }
+.portal__card:nth-child(2) { --i: 1; }
+.portal__card:nth-child(3) { --i: 2; }
+.portal__card:nth-child(4) { --i: 3; }
+.portal__card:nth-child(5) { --i: 4; }
+
+/* подоконник и тень под парящим окном */
+.portal__sill {
+  position: relative;
+  height: 20px;
+  margin: 0 -16px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #8a6440, #4a3220);
+  box-shadow: inset 0 2px 0 rgba(255, 213, 154, 0.35), 0 16px 30px -12px rgba(255, 150, 70, 0.55);
+}
+.portal__shadow {
+  width: calc(var(--w) * 0.9);
+  height: 22px;
+  margin-top: 18px;
+  border-radius: 50%;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(255, 150, 70, 0.32), rgba(0, 0, 0, 0.35) 45%, transparent 72%);
+  filter: blur(6px);
+  animation: shadow 6.5s ease-in-out infinite;
+}
+@keyframes shadow { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.82); opacity: 0.6; } }
+
+/* искры, поднимающиеся вокруг окна */
+.portal__sparks i {
+  position: absolute;
+  bottom: 12%;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: #fff1d6;
+  box-shadow: 0 0 6px #ffb15c, 0 0 12px #ff8a3d;
+  opacity: 0;
+  animation: rise 6s linear infinite;
+}
+.portal__sparks i:nth-child(1) { left: -6%; }
+.portal__sparks i:nth-child(2) { left: 8%; animation-delay: -1.2s; animation-duration: 7s; }
+.portal__sparks i:nth-child(3) { left: 94%; animation-delay: -2.1s; }
+.portal__sparks i:nth-child(4) { left: 104%; animation-delay: -3.4s; animation-duration: 8s; }
+.portal__sparks i:nth-child(5) { left: -12%; animation-delay: -4.2s; animation-duration: 7.5s; }
+.portal__sparks i:nth-child(6) { left: 110%; animation-delay: -5s; }
+.portal__sparks i:nth-child(7) { left: 50%; bottom: -4%; animation-delay: -2.8s; animation-duration: 9s; }
+@keyframes rise {
+  0% { opacity: 0; transform: translate(0, 0); }
+  15% { opacity: 1; }
+  100% { opacity: 0; transform: translate(14px, -320px); }
+}
+
+/* навигация по работам */
+.portal__nav { display: flex; align-items: center; gap: 16px; margin-top: 2px; }
+.portal__count { font: 500 12px/1 var(--f-display); color: var(--dim); letter-spacing: 0.06em; }
+.portal__count b { color: var(--gold); font-weight: 700; }
+.portal__dots { display: flex; gap: 4px; }
+.portal__dot { display: grid; place-items: center; width: 26px; height: 26px; padding: 0; border: 0; background: none; cursor: pointer; }
+.portal__dot span { width: 7px; height: 7px; border-radius: 50%; background: rgba(233, 214, 180, 0.25); transition: width 0.4s var(--ease), background 0.4s, box-shadow 0.4s; }
+.portal__dot.is-on span { width: 22px; border-radius: 4px; background: var(--amber); box-shadow: 0 0 10px rgba(255, 177, 92, 0.7); }
 
 /* ==========================================================================
    2. Бегущая строка
@@ -879,8 +947,8 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 600; color: v
 
   .hero { padding-top: 100px; }
   .hero__grid { grid-template-columns: 1fr; }
-  .hero__scene { order: -1; margin: -20px -8px -30px; }
-  .night { max-height: 52vh; }
+  .hero__scene { order: -1; padding: 0 0 10px; }
+  .portal { --w: clamp(220px, 62vw, 320px); }
   .hero__name--accent { padding-left: 0.4em; }
   .about { overflow: hidden; }
 .about__grid { grid-template-columns: 1fr; }

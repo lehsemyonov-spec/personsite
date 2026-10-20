@@ -130,8 +130,7 @@
 
 <main id="top">
 
-  <!-- 1. Порог: ночная избушка, при скролле камера влетает в окно -->
-  <div class="hero-pin" id="hero-pin">
+  <!-- 1. Порог: парящее окно-портал с работами -->
   <section class="hero" id="hero">
     <div class="hero__bg" aria-hidden="true">
       <canvas class="hero__engrave" id="engrave-base"></canvas>
@@ -155,93 +154,47 @@
         <ul class="hero__facts" data-reveal>
           <li><b>5+</b><span>направлений<br>дизайна</span></li>
           <li><b>1</b><span>тёплый канал<br>о дизайне</span></li>
-          <li class="hero__hint"><span class="mouse"><i></i></span><span>Посветите фонарём<br>и листайте к окну</span></li>
+          <li class="hero__hint"><span class="mouse"><i></i></span><span>Проведите курсором —<br>фонарь проявит линии</span></li>
         </ul>
       </div>
 
-      <div class="hero__scene" id="scene" aria-hidden="true">
-        <svg class="night" id="night" viewBox="0 0 640 600" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <defs>
-          <symbol id="izba-art" viewBox="20 40 360 290" overflow="visible"><g class="iz-pencil"><path class="ink fill-wood" d="M250 84h11v80h-11z"/><path class="ink fill-light" d="M250 84l5.5-14 5.5 14z"/><path class="ink fill-ink" d="M253.6 74.8l1.9-4.8 1.9 4.8z"/><path class="ink" d="M255.5 86v76"/></g>
-        <g class="iz-pencil"><path class="ink fill-wood" d="M263 72h11v92h-11z"/><path class="ink fill-light" d="M263 72l5.5-14 5.5 14z"/><path class="ink fill-ink" d="M266.6 62.8l1.9-4.8 1.9 4.8z"/><path class="ink" d="M268.5 74v88"/></g>
-        <g class="iz-pencil"><path class="ink fill-wood" d="M276 88h11v78h-11z"/><path class="ink fill-light" d="M276 88l5.5-14 5.5 14z"/><path class="ink fill-ink" d="M279.6 78.8l1.9-4.8 1.9 4.8z"/><path class="ink" d="M281.5 90v74"/></g>
-        <path class="ink fill-dark" d="M92 172L200 98 308 172z"/>
-        <path class="ink thin" d="M176.7 116H223.3"/>
-        <path class="ink thin" d="M159.2 128H240.8"/>
-        <path class="ink thin" d="M141.7 140H258.3"/>
-        <path class="ink thin" d="M124.2 152H275.8"/>
-        <path class="ink thin" d="M106.7 164H293.3"/>
-        <circle class="ink fill-glow iz-attic" cx="200" cy="140" r="11"/><path class="ink thin" d="M200 129v22M189 140h22"/>
-        <path class="ink fill-wood" d="M56 178L200 79 200 98 69 191z"/>
-        <path class="ink fill-wood" d="M200 79L344 178 331 191 200 98z"/>
-        <path class="ink thin" d="M63.2 173.1l2.5 3.7M70.4 168.1l2.5 3.7M77.6 163.2l2.5 3.7M84.8 158.2l2.5 3.7M92 153.2l4.5 6.6M99.2 148.3l2.5 3.7M106.4 143.3l2.5 3.7M113.6 138.4l2.5 3.7M120.8 133.4l2.5 3.7M128 128.5l4.5 6.6M135.2 123.5l2.5 3.7M142.4 118.6l2.5 3.7M149.6 113.7l2.5 3.7M156.8 108.7l2.5 3.7M164 103.8l4.5 6.6M171.2 98.8l2.5 3.7M178.4 93.9l2.5 3.7M185.6 88.9l2.5 3.7M192.8 84l2.5 3.7"/>
-        <path class="ink thin" d="M214 93l120 82M228 103l-6 6M262 126l-6 6M296 150l-6 6"/>
-        <rect class="ink fill-wood" x="88" y="172" width="224" height="20" rx="9"/>
-        <path class="ink thin" d="M100 180h30M190 184h24"/>
-        <circle class="ink fill-light" cx="86" cy="182" r="9.5"/><circle class="ink thin" cx="86" cy="182" r="4.5"/>
-        <circle class="ink fill-light" cx="314" cy="182" r="9.5"/><circle class="ink thin" cx="314" cy="182" r="4.5"/>
-        <rect class="ink fill-wood" x="88" y="192" width="224" height="20" rx="9"/>
-        <path class="ink thin" d="M137 200h43M219 204h31"/>
-        <circle class="ink fill-light" cx="86" cy="202" r="9.5"/><circle class="ink thin" cx="86" cy="202" r="4.5"/>
-        <circle class="ink fill-light" cx="314" cy="202" r="9.5"/><circle class="ink thin" cx="314" cy="202" r="4.5"/>
-        <rect class="ink fill-wood" x="88" y="212" width="224" height="20" rx="9"/>
-        <path class="ink thin" d="M114 220h31M198 224h38"/>
-        <circle class="ink fill-light" cx="86" cy="222" r="9.5"/><circle class="ink thin" cx="86" cy="222" r="4.5"/>
-        <circle class="ink fill-light" cx="314" cy="222" r="9.5"/><circle class="ink thin" cx="314" cy="222" r="4.5"/>
-        <rect class="ink fill-wood" x="88" y="232" width="224" height="20" rx="9"/>
-        <path class="ink thin" d="M151 240h44M227 244h25"/>
-        <circle class="ink fill-light" cx="86" cy="242" r="9.5"/><circle class="ink thin" cx="86" cy="242" r="4.5"/>
-        <circle class="ink fill-light" cx="314" cy="242" r="9.5"/><circle class="ink thin" cx="314" cy="242" r="4.5"/>
-        <rect class="ink fill-wood" x="88" y="252" width="224" height="20" rx="9"/>
-        <path class="ink thin" d="M128 260h32M206 264h32"/>
-        <circle class="ink fill-light" cx="86" cy="262" r="9.5"/><circle class="ink thin" cx="86" cy="262" r="4.5"/>
-        <circle class="ink fill-light" cx="314" cy="262" r="9.5"/><circle class="ink thin" cx="314" cy="262" r="4.5"/>
-        <rect class="ink fill-wood" x="88" y="272" width="224" height="20" rx="9"/>
-        <path class="ink thin" d="M105 280h45M235 284h39"/>
-        <circle class="ink fill-light" cx="86" cy="282" r="9.5"/><circle class="ink thin" cx="86" cy="282" r="4.5"/>
-        <circle class="ink fill-light" cx="314" cy="282" r="9.5"/><circle class="ink thin" cx="314" cy="282" r="4.5"/>
-        <g class="iz-window"><rect class="ink fill-glow" x="118" y="196" width="76" height="62" rx="3"/>
-        <path class="ink fill-dark iz-person" d="M168 258v-12c0-9-7-14-15-14s-15 5-15 14v12z"/><circle class="ink fill-dark iz-person" cx="153" cy="221" r="8"/>
-        <path class="ink fill-light" d="M126 258l8-20h26l-4 20z"/><path class="ink thin" d="M137 243h17"/>
-        <path class="ink" d="M156 196v62M118 227h76" opacity=".9"/><rect class="ink fill-none frame" x="112" y="190" width="88" height="74" rx="4"/><path class="ink fill-wood" d="M108 264h96v8h-96z"/></g>
-        <path class="ink fill-wood" d="M232 290v-80a24 24 0 0 1 48 0v80z"/><path class="ink thin" d="M244 191v99M256 187v103M268 191v99"/><circle class="ink fill-ink" cx="272" cy="252" r="2.6"/>
-        <path class="ink fill-light" d="M224 290h64v9h-64zM216 299h80v9h-80z"/>
-        <g transform="translate(-30 0)"><path class="ink fill-wood" d="M64 308l4-24h22l4 24z"/><path class="ink" d="M79 284c-2-12-10-18-18-20M79 284c1-14 8-22 17-24M79 284c0-10-1-20 0-28"/><path class="ink fill-leaf" d="M61 264c6-1 11 2 12 8-6 1-11-2-12-8zM96 260c-6 0-11 4-11 10 6 0 11-4 11-10zM79 256c-4 3-5 8-2 12 4-3 5-8 2-12z"/>
-        <path class="ink" d="M30 309h340"/><path class="ink thin" d="M120 316c20 4 60 4 84 0M232 318c22 3 50 3 70-1M44 316h40M318 316h36"/>
-        <path class="ink thin" d="M330 309c-2-8-6-12-10-14M334 309c0-9 2-14 6-17M338 309c3-6 7-9 12-10M104 309c-1-6-4-9-7-10M107 309c1-7 4-10 8-12"/></symbol>
-          <radialGradient id="spot-grad"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
-          <radialGradient id="warm-grad"><stop offset="0" stop-color="#ffb15c" stop-opacity=".35"/><stop offset="1" stop-color="#ffb15c" stop-opacity="0"/></radialGradient>
-          <radialGradient id="moon-glow"><stop offset="0" stop-color="#bfe3ff" stop-opacity=".35"/><stop offset="1" stop-color="#bfe3ff" stop-opacity="0"/></radialGradient>
-          <radialGradient id="win-halo"><stop offset="0" stop-color="#ffb15c" stop-opacity=".55"/><stop offset=".4" stop-color="#ff8a3d" stop-opacity=".18"/><stop offset="1" stop-color="#ff8a3d" stop-opacity="0"/></radialGradient>
-          <linearGradient id="spill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb15c" stop-opacity=".5"/><stop offset="1" stop-color="#ffb15c" stop-opacity="0"/></linearGradient>
-          <radialGradient id="lantern-glow"><stop offset="0" stop-color="#ffd59a" stop-opacity=".9"/><stop offset=".3" stop-color="#ffb15c" stop-opacity=".35"/><stop offset="1" stop-color="#ff8a3d" stop-opacity="0"/></radialGradient>
-          <mask id="lamp-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="600">
-            <rect width="640" height="600" fill="#000"/>
-            <circle class="spot" id="spot" cx="436" cy="372" r="150" fill="url(#spot-grad)"/>
-          </mask>
-        </defs>
-        <g class="layer-night"><g class="stars"><use class="star star--0" href="#spark" x="70" y="60" width="10" height="10"/><use class="star star--1" href="#spark" x="160" y="120" width="7" height="7"/><use class="star star--2" href="#spark" x="250" y="40" width="9" height="9"/><use class="star star--3" href="#spark" x="330" y="96" width="6" height="6"/><use class="star star--0" href="#spark" x="420" y="30" width="8" height="8"/><use class="star star--1" href="#spark" x="610" y="170" width="7" height="7"/><use class="star star--2" href="#spark" x="460" y="150" width="5" height="5"/><use class="star star--3" href="#spark" x="40" y="190" width="6" height="6"/><use class="star star--0" href="#spark" x="600" y="40" width="9" height="9"/><use class="star star--1" href="#spark" x="300" y="170" width="5" height="5"/></g><g class="moon"><circle cx="520" cy="92" r="90" fill="url(#moon-glow)" stroke="none"/><path class="ink fill-moon" d="M536 62a34 34 0 1 0 12 50a28 28 0 1 1 -12 -50z"/></g><path class="ink thin" d="M0 400C70 372 130 360 210 376S360 350 430 362 560 344 640 366"/><path class="ink hair" d="M-4 407C70 379 130 367 210 383S360 357 430 369 560 351 650 373" opacity="0.47"/><path class="ink hair" d="M2 414C70 386 130 374 210 390S360 364 430 376 560 358 650 380" opacity="0.39"/><path class="ink hair" d="M8 421C70 393 130 381 210 397S360 371 430 383 560 365 650 387" opacity="0.31"/><path class="ink hair" d="M14 428C70 400 130 388 210 404S360 378 430 390 560 372 650 394" opacity="0.23"/><path class="ink hair" d="M20 435C70 407 130 395 210 411S360 385 430 397 560 379 650 401" opacity="0.15"/><g class="pine pine--a"><path class="ink" d="M78 470v-27.599999999999998"/><path class="ink fill-pine" d="M78 364.2L133.0 442.4H23.0Z"/><path class="ink fill-pine" d="M78 313.59999999999997L122.0 391.79999999999995H34.0Z"/><path class="ink fill-pine" d="M78 263.0L111.0 341.2H45.0Z"/><path class="ink fill-pine" d="M78 212.39999999999998L100.0 290.59999999999997H56.0Z"/></g><g class="pine pine--b"><path class="ink" d="M150 462v-18.0"/><path class="ink fill-pine" d="M150 393.0L187.0 444.0H113.0Z"/><path class="ink fill-pine" d="M150 360.0L179.6 411.0H120.4Z"/><path class="ink fill-pine" d="M150 327.0L172.2 378.0H127.8Z"/><path class="ink fill-pine" d="M150 294.0L164.8 345.0H135.2Z"/></g><g class="pine pine--c"><path class="ink" d="M572 468v-25.2"/><path class="ink fill-pine" d="M572 371.4L622.0 442.8H522.0Z"/><path class="ink fill-pine" d="M572 325.20000000000005L612.0 396.6H532.0Z"/><path class="ink fill-pine" d="M572 279.0L602.0 350.4H542.0Z"/><path class="ink fill-pine" d="M572 232.80000000000004L592.0 304.20000000000005H552.0Z"/></g><circle class="win-halo" cx="273.6" cy="365.4" r="120" fill="url(#win-halo)" stroke="none"/><path class="fill-ground" d="M0 470C110 452 220 458 320 460S520 452 640 466V600H0Z"/><path class="ink" d="M0 470C110 452 220 458 320 460S520 452 640 466"/><path class="ink hair" d="M34 488C140 478 300 484 420 482S560 480 620 488" opacity="0.53"/><path class="ink hair" d="M48 500C140 490 300 496 420 494S560 492 610 500" opacity="0.46"/><path class="ink hair" d="M62 512C140 502 300 508 420 506S560 504 600 512" opacity="0.39"/><path class="ink hair" d="M76 524C140 514 300 520 420 518S560 516 590 524" opacity="0.32"/><path class="ink hair" d="M90 536C140 526 300 532 420 530S560 528 580 536" opacity="0.25"/><path class="ink hair" d="M104 548C140 538 300 544 420 542S560 540 570 548" opacity="0.18"/><ellipse class="ink fill-stone" cx="372" cy="478" rx="16" ry="5"/><ellipse class="ink fill-stone" cx="360" cy="494" rx="19" ry="6"/><ellipse class="ink fill-stone" cx="380" cy="512" rx="22" ry="7"/><ellipse class="ink fill-stone" cx="356" cy="532" rx="26" ry="8"/><ellipse class="ink fill-stone" cx="384" cy="556" rx="30" ry="9"/><path class="ink thin" d="M60 476c-2-9-6-13-10-15M64 476c0-10 2-15 6-18M68 476c3-7 7-10 12-11"/><path class="ink thin" d="M108 476c-2-9-6-13-10-15M112 476c0-10 2-15 6-18M116 476c3-7 7-10 12-11"/><path class="ink thin" d="M230 476c-2-9-6-13-10-15M234 476c0-10 2-15 6-18M238 476c3-7 7-10 12-11"/><path class="ink thin" d="M296 476c-2-9-6-13-10-15M300 476c0-10 2-15 6-18M304 476c3-7 7-10 12-11"/><path class="ink thin" d="M470 476c-2-9-6-13-10-15M474 476c0-10 2-15 6-18M478 476c3-7 7-10 12-11"/><path class="ink thin" d="M520 476c-2-9-6-13-10-15M524 476c0-10 2-15 6-18M528 476c3-7 7-10 12-11"/><path class="ink thin" d="M600 476c-2-9-6-13-10-15M604 476c0-10 2-15 6-18M608 476c3-7 7-10 12-11"/><path class="spill" d="M233.4 404.1H313.7L383.7 541.9H183.4Z" fill="url(#spill)" stroke="none"/><use class="izba-night" href="#izba-art" x="130" y="168" width="380" height="306.1"/></g>
-        <g class="layer-lit" mask="url(#lamp-mask)"><g class="moon"><circle cx="520" cy="92" r="90" fill="url(#moon-glow)" stroke="none"/><path class="ink fill-moon" d="M536 62a34 34 0 1 0 12 50a28 28 0 1 1 -12 -50z"/></g><path class="ink thin" d="M0 400C70 372 130 360 210 376S360 350 430 362 560 344 640 366"/><path class="ink hair" d="M-4 407C70 379 130 367 210 383S360 357 430 369 560 351 650 373" opacity="0.47"/><path class="ink hair" d="M2 414C70 386 130 374 210 390S360 364 430 376 560 358 650 380" opacity="0.39"/><path class="ink hair" d="M8 421C70 393 130 381 210 397S360 371 430 383 560 365 650 387" opacity="0.31"/><path class="ink hair" d="M14 428C70 400 130 388 210 404S360 378 430 390 560 372 650 394" opacity="0.23"/><path class="ink hair" d="M20 435C70 407 130 395 210 411S360 385 430 397 560 379 650 401" opacity="0.15"/><g class="pine pine--a"><path class="ink" d="M78 470v-27.599999999999998"/><path class="ink fill-pine" d="M78 364.2L133.0 442.4H23.0Z"/><path class="ink fill-pine" d="M78 313.59999999999997L122.0 391.79999999999995H34.0Z"/><path class="ink fill-pine" d="M78 263.0L111.0 341.2H45.0Z"/><path class="ink fill-pine" d="M78 212.39999999999998L100.0 290.59999999999997H56.0Z"/></g><g class="pine pine--b"><path class="ink" d="M150 462v-18.0"/><path class="ink fill-pine" d="M150 393.0L187.0 444.0H113.0Z"/><path class="ink fill-pine" d="M150 360.0L179.6 411.0H120.4Z"/><path class="ink fill-pine" d="M150 327.0L172.2 378.0H127.8Z"/><path class="ink fill-pine" d="M150 294.0L164.8 345.0H135.2Z"/></g><g class="pine pine--c"><path class="ink" d="M572 468v-25.2"/><path class="ink fill-pine" d="M572 371.4L622.0 442.8H522.0Z"/><path class="ink fill-pine" d="M572 325.20000000000005L612.0 396.6H532.0Z"/><path class="ink fill-pine" d="M572 279.0L602.0 350.4H542.0Z"/><path class="ink fill-pine" d="M572 232.80000000000004L592.0 304.20000000000005H552.0Z"/></g><path class="fill-ground" d="M0 470C110 452 220 458 320 460S520 452 640 466V600H0Z"/><path class="ink" d="M0 470C110 452 220 458 320 460S520 452 640 466"/><path class="ink hair" d="M34 488C140 478 300 484 420 482S560 480 620 488" opacity="0.53"/><path class="ink hair" d="M48 500C140 490 300 496 420 494S560 492 610 500" opacity="0.46"/><path class="ink hair" d="M62 512C140 502 300 508 420 506S560 504 600 512" opacity="0.39"/><path class="ink hair" d="M76 524C140 514 300 520 420 518S560 516 590 524" opacity="0.32"/><path class="ink hair" d="M90 536C140 526 300 532 420 530S560 528 580 536" opacity="0.25"/><path class="ink hair" d="M104 548C140 538 300 544 420 542S560 540 570 548" opacity="0.18"/><ellipse class="ink fill-stone" cx="372" cy="478" rx="16" ry="5"/><ellipse class="ink fill-stone" cx="360" cy="494" rx="19" ry="6"/><ellipse class="ink fill-stone" cx="380" cy="512" rx="22" ry="7"/><ellipse class="ink fill-stone" cx="356" cy="532" rx="26" ry="8"/><ellipse class="ink fill-stone" cx="384" cy="556" rx="30" ry="9"/><path class="ink thin" d="M60 476c-2-9-6-13-10-15M64 476c0-10 2-15 6-18M68 476c3-7 7-10 12-11"/><path class="ink thin" d="M108 476c-2-9-6-13-10-15M112 476c0-10 2-15 6-18M116 476c3-7 7-10 12-11"/><path class="ink thin" d="M230 476c-2-9-6-13-10-15M234 476c0-10 2-15 6-18M238 476c3-7 7-10 12-11"/><path class="ink thin" d="M296 476c-2-9-6-13-10-15M300 476c0-10 2-15 6-18M304 476c3-7 7-10 12-11"/><path class="ink thin" d="M470 476c-2-9-6-13-10-15M474 476c0-10 2-15 6-18M478 476c3-7 7-10 12-11"/><path class="ink thin" d="M520 476c-2-9-6-13-10-15M524 476c0-10 2-15 6-18M528 476c3-7 7-10 12-11"/><path class="ink thin" d="M600 476c-2-9-6-13-10-15M604 476c0-10 2-15 6-18M608 476c3-7 7-10 12-11"/><path class="spill" d="M233.4 404.1H313.7L383.7 541.9H183.4Z" fill="url(#spill)" stroke="none"/><use class="izba-lit" href="#izba-art" x="130" y="168" width="380" height="306.1"/></g>
-        <circle class="warm" id="warm" cx="436" cy="372" r="190" fill="url(#warm-grad)" stroke="none"/>
-        <g class="smoke"><circle class="puff puff--0" cx="391.8" cy="180.7" r="7"/><circle class="puff puff--1" cx="391.8" cy="180.7" r="9"/><circle class="puff puff--2" cx="391.8" cy="180.7" r="11"/><circle class="puff puff--3" cx="391.8" cy="180.7" r="13"/><circle class="puff puff--4" cx="391.8" cy="180.7" r="15"/></g><g class="lantern" id="lantern">
-          <path class="ink" d="M399.0 315.3L429.6 315.3L429.6 328.9"/>
-          <g class="lantern__swing">
-            <circle class="lantern__glow" cx="429.6" cy="373.1" r="80" fill="url(#lantern-glow)" stroke="none"/>
-            <path class="ink" d="M429.6 328.9L429.6 339.1"/>
-            <path class="ink fill-metal" d="M416.0 339.1L443.2 339.1L438.1 349.3L421.1 349.3Z"/>
-            <rect class="ink lantern__glass" x="417.7" y="349.3" width="23.8" height="37.4" rx="4"/>
-            <path class="ink thin" d="M429.6 349.3L429.6 386.7"/>
-            <path class="ink fill-metal" d="M414.3 386.7L444.9 386.7L444.9 393.5L414.3 393.5Z"/>
-            <circle class="lantern__flame" cx="429.6" cy="369.7" r="5.8" stroke="none"/>
-          </g>
-        </g><g class="flies"><circle class="fly fly--0" cx="110" cy="430" r="2"/><circle class="fly fly--1" cx="200" cy="500" r="2"/><circle class="fly fly--2" cx="290" cy="440" r="2"/><circle class="fly fly--3" cx="470" cy="430" r="2"/><circle class="fly fly--4" cx="540" cy="500" r="2"/><circle class="fly fly--5" cx="610" cy="420" r="2"/><circle class="fly fly--6" cx="250" cy="560" r="2"/><circle class="fly fly--7" cx="520" cy="560" r="2"/></g>
-        </svg>
+      <div class="hero__scene" id="scene">
+        <div class="portal" id="portal" aria-roledescription="карусель" aria-label="Избранные работы">
+          <div class="portal__float">
+            <div class="portal__halo" aria-hidden="true"></div>
+            <span class="portal__sparks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            <div class="portal__tilt" id="portal-tilt">
+              <div class="portal__frame">
+                <div class="portal__pane" id="portal-pane">
+                  <div class="portal__ring" id="portal-ring">
+              <figure class="portal__card" data-i="0"><img src="assets/img/works/t1.webp" alt="Карточка товара: термокружка AMAROON" width="904" height="1205" decoding="async"></figure>
+              <figure class="portal__card" data-i="1"><img src="assets/img/works/t2.webp" alt="Карточка: пополнение баланса Roblox" width="904" height="1205" decoding="async"></figure>
+              <figure class="portal__card" data-i="2"><img src="assets/img/works/t3.webp" alt="Карточка товара: бескислотный дегидратор для ногтей Nayada" width="904" height="1205" decoding="async"></figure>
+              <figure class="portal__card" data-i="3"><img src="assets/img/works/t4.webp" alt="Карточка товара: клей «Момент 88»" width="904" height="1205" decoding="async"></figure>
+              <figure class="portal__card" data-i="4"><img src="assets/img/works/t5.webp" alt="Карточка товара: очиститель воздуха — озонатор" width="904" height="1205" decoding="async"></figure>
+                  </div>
+                  <span class="portal__glass" aria-hidden="true"></span>
+                </div>
+                <span class="portal__arch" aria-hidden="true"></span>
+              </div>
+              <div class="portal__sill" aria-hidden="true"></div>
+            </div>
+          </div>
+          <div class="portal__shadow" aria-hidden="true"></div>
+          <div class="portal__nav">
+            <span class="portal__count"><b id="portal-num">01</b> / 05</span>
+            <div class="portal__dots">
+          <button class="portal__dot" type="button" data-go="0" aria-label="Работа 1"><span></span></button>
+          <button class="portal__dot" type="button" data-go="1" aria-label="Работа 2"><span></span></button>
+          <button class="portal__dot" type="button" data-go="2" aria-label="Работа 3"><span></span></button>
+          <button class="portal__dot" type="button" data-go="3" aria-label="Работа 4"><span></span></button>
+          <button class="portal__dot" type="button" data-go="4" aria-label="Работа 5"><span></span></button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="hero__flash" id="flash" aria-hidden="true"></div>
-    <div class="hero__fade" id="fade" aria-hidden="true"></div>
   </section>
-  </div>
 
   <!-- 2. Бегущая строка -->
   <section class="marquee" aria-label="Чем я занимаюсь">

@@ -387,106 +387,84 @@
     render();
   })();
 
-  /* ---------- 1. Ночная избушка: фонарь проявляет цвет, при скролле — полёт в окно ---------- */
-  (function nightScene() {
-    var svg = document.getElementById("night");
-    var hero = document.getElementById("hero");
-    var pin = document.getElementById("hero-pin");
-    var scene = document.getElementById("scene");
-    var flash = document.getElementById("flash");
-    var fade = document.getElementById("fade");
-    if (!svg || !hero) return;
-    var spot = document.getElementById("spot");
-    var warm = document.getElementById("warm");
-    var text = hero.querySelector(".hero__text");
-    var bg = hero.querySelector(".hero__bg");
+  /* ---------- 1. Окно-портал: работы вращаются по кругу, рядом — «черновики» в сепии ---------- */
+  (function portal() {
+    var root = document.getElementById("portal");
+    if (!root) return;
+    var pane = document.getElementById("portal-pane");
+    var ring = document.getElementById("portal-ring");
+    var tilt = document.getElementById("portal-tilt");
+    var num = document.getElementById("portal-num");
+    var cards = Array.prototype.slice.call(ring.querySelectorAll(".portal__card"));
+    var dots = Array.prototype.slice.call(root.querySelectorAll(".portal__dot"));
+    var N = cards.length, STEP = 360 / N, DELAY = 3200;
+    var index = 0, angle = 0, target = 0, radius = 200;
+    var hovered = false, visible = true, nextAt = performance.now() + DELAY + 1800;
 
-    var LANTERN = { x: 430, y: 370 };   // фонарь у двери, координаты рисунка
-    var WINDOW = { x: 273.6, y: 365.4 }; // центр горящего окна
-    var cur = { x: LANTERN.x, y: LANTERN.y, r: 120 };
-    var target = { x: LANTERN.x, y: LANTERN.y, r: 120 };
-    var lastMove = -1e9, inside = false, visible = true;
-
-    function toSvg(e) {
-      var m = svg.getScreenCTM();
-      if (!m) return null;
-      var pt = new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse());
-      return pt;
+    function layout() {
+      var w = ring.offsetWidth;
+      // радиус кольца, при котором соседние карточки не наезжают друг на друга
+      radius = (w / 2) / Math.tan(Math.PI / N) * 1.08;
+      ring.style.setProperty("--r", radius.toFixed(1) + "px");
     }
-    function onMove(e) {
-      var pt = toSvg(e);
-      if (!pt) return;
-      inside = pt.x > -60 && pt.x < 700 && pt.y > -60 && pt.y < 660;
-      target.x = clamp(pt.x, -40, 680);
-      target.y = clamp(pt.y, -40, 640);
-      lastMove = performance.now();
+    function go(i) {
+      var diff = ((i - index) % N + N) % N;
+      if (diff > N / 2) diff -= N;          // крутим коротким путём
+      index = (index + diff + N) % N;
+      target -= diff * STEP;
+      nextAt = performance.now() + DELAY;
+      dots.forEach(function (d, k) { d.classList.toggle("is-on", k === index); d.setAttribute("aria-current", k === index ? "true" : "false"); });
+      num.textContent = (index < 9 ? "0" : "") + (index + 1);
     }
-    hero.addEventListener("pointermove", onMove, { passive: true });
-    hero.addEventListener("pointerdown", onMove, { passive: true });
-    hero.addEventListener("pointerleave", function () { inside = false; });
-    new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }).observe(hero);
+    dots.forEach(function (d) { d.addEventListener("click", function () { go(+d.dataset.go); }); });
+    var swiped = false;
+    cards.forEach(function (c, k) { c.addEventListener("click", function () { if (swiped) { swiped = false; return; } go(k !== index ? k : index + 1); }); });
 
-    var ease = function (t) { return t * t * (3 - 2 * t); };
-    var band = function (p, a, b) { return ease(clamp((p - a) / (b - a), 0, 1)); };
+    // пауза при наведении, свайп на телефоне
+    root.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") hovered = true; });
+    root.addEventListener("pointerleave", function () { hovered = false; tilt.style.setProperty("--rx", "0deg"); tilt.style.setProperty("--ry", "0deg"); });
+    var sx = null;
+    pane.addEventListener("pointerdown", function (e) { sx = e.clientX; });
+    pane.addEventListener("pointerup", function (e) {
+      if (sx === null) return;
+      var dx = e.clientX - sx; sx = null;
+      if (Math.abs(dx) > 30) { swiped = true; go(index + (dx < 0 ? 1 : -1)); setTimeout(function () { swiped = false; }, 50); }
+    });
+    pane.addEventListener("pointercancel", function () { sx = null; });
 
-    // полёт камеры: считаем, где окно на экране без трансформаций
-    var winScreen = null;
-    function measureWindow() {
-      scene.style.transform = "";
-      var m = svg.getScreenCTM();
-      if (!m) return;
-      var pt = new DOMPoint(WINDOW.x, WINDOW.y).matrixTransform(m);
-      var r = hero.getBoundingClientRect();
-      winScreen = { x: pt.x - r.left, y: pt.y - r.top };
+    if (finePointer && !reduceMotion) {
+      root.addEventListener("pointermove", function (e) {
+        var r = root.getBoundingClientRect();
+        var nx = (e.clientX - r.left) / r.width - 0.5, ny = (e.clientY - r.top) / r.height - 0.5;
+        tilt.style.setProperty("--ry", (nx * 10).toFixed(2) + "deg");
+        tilt.style.setProperty("--rx", (-ny * 7).toFixed(2) + "deg");
+      });
     }
 
-    var pinned = false;
-    function updatePin() {
-      pinned = !!pin && pin.offsetHeight > hero.offsetHeight + 10;
-      measureWindow();
+    new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }).observe(root);
+    window.addEventListener("resize", layout);
+    layout();
+    go(0);
+
+    function paint() {
+      ring.style.transform = "translateZ(" + (-radius).toFixed(1) + "px) rotateY(" + angle.toFixed(2) + "deg)";
+      cards.forEach(function (c, k) {
+        var rel = ((angle + k * STEP) % 360 + 540) % 360 - 180; // -180…180, 0 — карточка смотрит на нас
+        var f = Math.max(0, Math.cos(rel * Math.PI / 180));
+        var front = Math.pow(f, 3);
+        c.style.filter = "sepia(" + ((1 - front) * 0.85).toFixed(2) + ") brightness(" + (0.42 + front * 0.58).toFixed(2) + ")";
+        c.classList.toggle("is-front", Math.abs(rel) < STEP / 2);
+      });
     }
-    window.addEventListener("resize", updatePin);
-    window.addEventListener("load", updatePin);
-    updatePin();
+    paint();
 
     jobs.push(function (dt, now) {
       if (!visible) return;
-
-      // 1) пятно света: за курсором, а в покое — у фонаря
-      var idle = !inside || now - lastMove > 4500;
-      if (idle) {
-        var t = now / 1000;
-        target.x = LANTERN.x + Math.sin(t * 0.7) * 26;
-        target.y = LANTERN.y + Math.cos(t * 0.9) * 14;
-        target.r = 105 + Math.sin(t * 1.7) * 8;
-      } else {
-        target.r = 150;
-      }
-      var k = reduceMotion ? 1 : 1 - Math.pow(0.0015, dt);
-      cur.x = lerp(cur.x, target.x, k);
-      cur.y = lerp(cur.y, target.y, k);
-      cur.r = lerp(cur.r, target.r, k);
-      spot.setAttribute("cx", cur.x.toFixed(1));
-      spot.setAttribute("cy", cur.y.toFixed(1));
-      spot.setAttribute("r", cur.r.toFixed(1));
-      warm.setAttribute("cx", cur.x.toFixed(1));
-      warm.setAttribute("cy", cur.y.toFixed(1));
-      warm.setAttribute("r", (cur.r * 1.3).toFixed(1));
-
-      // 2) полёт в окно при скролле
-      if (!pinned || !winScreen || reduceMotion) return;
-      var range = pin.offsetHeight - window.innerHeight;
-      var p = clamp(-pin.getBoundingClientRect().top / Math.max(1, range), 0, 1);
-      var z = band(p, 0.05, 0.95);
-      var scale = 1 + z * z * 14;
-      var dx = (window.innerWidth / 2 - winScreen.x) * z;
-      var dy = (window.innerHeight / 2 - winScreen.y) * z;
-      scene.style.transform = p > 0 ? "translate(" + dx.toFixed(1) + "px," + dy.toFixed(1) + "px) scale(" + scale.toFixed(3) + ")" : "";
-      text.style.opacity = (1 - band(p, 0.02, 0.35)).toFixed(3);
-      text.style.transform = "translateY(" + (-band(p, 0, 0.4) * 60).toFixed(1) + "px)";
-      bg.style.opacity = (1 - band(p, 0.2, 0.7)).toFixed(3);
-      flash.style.opacity = band(p, 0.5, 0.82).toFixed(3);
-      fade.style.opacity = band(p, 0.84, 1).toFixed(3);
+      if (!hovered && !reduceMotion && now > nextAt && document.visibilityState === "visible") go(index + 1);
+      if (Math.abs(target - angle) < 0.01) return;
+      angle = reduceMotion ? target : lerp(angle, target, 1 - Math.pow(0.004, dt));
+      if (Math.abs(target - angle) < 0.01) angle = target;
+      paint();
     });
   })();
 
