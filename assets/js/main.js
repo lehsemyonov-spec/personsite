@@ -387,34 +387,106 @@
     render();
   })();
 
-  /* ---------- 1. Куб: поворот за курсором + лёгкое покачивание ---------- */
-  (function cube() {
-    var stage = document.getElementById("scene");
+  /* ---------- 1. Ночная избушка: фонарь проявляет цвет, при скролле — полёт в окно ---------- */
+  (function nightScene() {
+    var svg = document.getElementById("night");
     var hero = document.getElementById("hero");
-    if (!stage) return;
-    var base = { rx: -12, ry: -26 };
-    var target = { rx: base.rx, ry: base.ry };
-    var cur = { rx: base.rx, ry: base.ry };
-    var visible = true;
-    if (finePointer && !reduceMotion) {
-      window.addEventListener("pointermove", function (e) {
-        var nx = e.clientX / window.innerWidth - 0.5;
-        var ny = e.clientY / window.innerHeight - 0.5;
-        target.ry = base.ry + nx * 46;
-        target.rx = base.rx - ny * 18;
-      }, { passive: true });
+    var pin = document.getElementById("hero-pin");
+    var scene = document.getElementById("scene");
+    var flash = document.getElementById("flash");
+    var fade = document.getElementById("fade");
+    if (!svg || !hero) return;
+    var spot = document.getElementById("spot");
+    var warm = document.getElementById("warm");
+    var text = hero.querySelector(".hero__text");
+    var bg = hero.querySelector(".hero__bg");
+
+    var LANTERN = { x: 430, y: 370 };   // фонарь у двери, координаты рисунка
+    var WINDOW = { x: 273.6, y: 365.4 }; // центр горящего окна
+    var cur = { x: LANTERN.x, y: LANTERN.y, r: 120 };
+    var target = { x: LANTERN.x, y: LANTERN.y, r: 120 };
+    var lastMove = -1e9, inside = false, visible = true;
+
+    function toSvg(e) {
+      var m = svg.getScreenCTM();
+      if (!m) return null;
+      var pt = new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse());
+      return pt;
     }
+    function onMove(e) {
+      var pt = toSvg(e);
+      if (!pt) return;
+      inside = pt.x > -60 && pt.x < 700 && pt.y > -60 && pt.y < 660;
+      target.x = clamp(pt.x, -40, 680);
+      target.y = clamp(pt.y, -40, 640);
+      lastMove = performance.now();
+    }
+    hero.addEventListener("pointermove", onMove, { passive: true });
+    hero.addEventListener("pointerdown", onMove, { passive: true });
+    hero.addEventListener("pointerleave", function () { inside = false; });
     new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }).observe(hero);
-    if (reduceMotion) return;
+
+    var ease = function (t) { return t * t * (3 - 2 * t); };
+    var band = function (p, a, b) { return ease(clamp((p - a) / (b - a), 0, 1)); };
+
+    // полёт камеры: считаем, где окно на экране без трансформаций
+    var winScreen = null;
+    function measureWindow() {
+      scene.style.transform = "";
+      var m = svg.getScreenCTM();
+      if (!m) return;
+      var pt = new DOMPoint(WINDOW.x, WINDOW.y).matrixTransform(m);
+      var r = hero.getBoundingClientRect();
+      winScreen = { x: pt.x - r.left, y: pt.y - r.top };
+    }
+
+    var pinned = false;
+    function updatePin() {
+      pinned = !!pin && pin.offsetHeight > hero.offsetHeight + 10;
+      measureWindow();
+    }
+    window.addEventListener("resize", updatePin);
+    window.addEventListener("load", updatePin);
+    updatePin();
+
     jobs.push(function (dt, now) {
       if (!visible) return;
-      var t = now / 1000;
-      var swayY = finePointer ? Math.sin(t * 0.5) * 4 : Math.sin(t * 0.35) * 22;
-      var swayX = Math.sin(t * 0.7) * 2;
-      cur.rx = lerp(cur.rx, target.rx + swayX, 0.05);
-      cur.ry = lerp(cur.ry, target.ry + swayY, 0.05);
-      stage.style.setProperty("--rx", cur.rx.toFixed(2) + "deg");
-      stage.style.setProperty("--ry", cur.ry.toFixed(2) + "deg");
+
+      // 1) пятно света: за курсором, а в покое — у фонаря
+      var idle = !inside || now - lastMove > 4500;
+      if (idle) {
+        var t = now / 1000;
+        target.x = LANTERN.x + Math.sin(t * 0.7) * 26;
+        target.y = LANTERN.y + Math.cos(t * 0.9) * 14;
+        target.r = 105 + Math.sin(t * 1.7) * 8;
+      } else {
+        target.r = 150;
+      }
+      var k = reduceMotion ? 1 : 1 - Math.pow(0.0015, dt);
+      cur.x = lerp(cur.x, target.x, k);
+      cur.y = lerp(cur.y, target.y, k);
+      cur.r = lerp(cur.r, target.r, k);
+      spot.setAttribute("cx", cur.x.toFixed(1));
+      spot.setAttribute("cy", cur.y.toFixed(1));
+      spot.setAttribute("r", cur.r.toFixed(1));
+      warm.setAttribute("cx", cur.x.toFixed(1));
+      warm.setAttribute("cy", cur.y.toFixed(1));
+      warm.setAttribute("r", (cur.r * 1.3).toFixed(1));
+
+      // 2) полёт в окно при скролле
+      if (!pinned || !winScreen || reduceMotion) return;
+      var range = pin.offsetHeight - window.innerHeight;
+      var p = clamp(-pin.getBoundingClientRect().top / Math.max(1, range), 0, 1);
+      var z = band(p, 0.05, 0.95);
+      var scale = 1 + z * z * 14;
+      var dx = (window.innerWidth / 2 - winScreen.x) * z;
+      var dy = (window.innerHeight / 2 - winScreen.y) * z;
+      scene.style.transform = p > 0 ? "translate(" + dx.toFixed(1) + "px," + dy.toFixed(1) + "px) scale(" + scale.toFixed(3) + ")" : "";
+      text.style.opacity = (1 - band(p, 0.02, 0.35)).toFixed(3);
+      text.style.transform = "translateY(" + (-band(p, 0, 0.4) * 60).toFixed(1) + "px)";
+      bg.style.opacity = (1 - band(p, 0.2, 0.7)).toFixed(3);
+      flash.style.opacity = band(p, 0.5, 0.82).toFixed(3);
+      fade.style.opacity = band(p, 0.84, 1).toFixed(3);
     });
   })();
 
