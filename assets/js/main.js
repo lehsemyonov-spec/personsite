@@ -585,66 +585,61 @@
     els.forEach(function (el) { io.observe(el); });
   })();
 
-  /* ---------- 5. До / После: «после» проявляется кругом из точки, где курсор вошёл ---------- */
+  /* ---------- 5. До / После: «после» проявляется кругом из точки, где курсор вошёл ----------
+     Наведение показывает результат, пока курсор на фото. Нажатие закрепляет «после»:
+     оно уходит, только если нажать другое фото или ничего не делать 15 секунд. */
   (function beforeAfter() {
-    document.querySelectorAll("[data-ba]").forEach(function (el) {
+    var items = Array.prototype.slice.call(document.querySelectorAll("[data-ba]"));
+    if (!items.length) return;
+    var pinned = null, idleTimer = null, IDLE = 15000;
+    function origin(el, e) {
       var frame = el.querySelector(".ba__frame");
-      function origin(e) {
-        var r = frame.getBoundingClientRect();
-        el.style.setProperty("--x", clamp((e.clientX - r.left) / r.width * 100, 0, 100).toFixed(1) + "%");
-        el.style.setProperty("--y", clamp((e.clientY - r.top) / r.height * 100, 0, 100).toFixed(1) + "%");
-      }
-      function set(on) { el.classList.toggle("is-on", on); el.setAttribute("aria-pressed", String(on)); }
-      el.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") { origin(e); set(true); } });
-      el.addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse") { origin(e); set(false); } });
-      // на телефоне и с клавиатуры — переключение нажатием
-      el.addEventListener("click", function (e) {
-        if (e.pointerType === "mouse") return;
-        if (e.clientX) origin(e); else { el.style.setProperty("--x", "50%"); el.style.setProperty("--y", "50%"); }
-        set(!el.classList.contains("is-on"));
-      });
+      var r = frame.getBoundingClientRect();
+      var x = e && e.clientX ? (e.clientX - r.left) / r.width * 100 : 50;
+      var y = e && e.clientY ? (e.clientY - r.top) / r.height * 100 : 50;
+      el.style.setProperty("--x", clamp(x, 0, 100).toFixed(1) + "%");
+      el.style.setProperty("--y", clamp(y, 0, 100).toFixed(1) + "%");
+    }
+    function set(el, on) { el.classList.toggle("is-on", on); el.setAttribute("aria-pressed", String(on && el === pinned)); }
+    function unpin() {
+      if (!pinned) return;
+      var el = pinned;
+      pinned = null;
+      el.classList.remove("is-pinned");
+      if (!el.matches(":hover")) set(el, false); else el.setAttribute("aria-pressed", "false");
+    }
+    function armIdle() {
+      clearTimeout(idleTimer);
+      if (pinned) idleTimer = setTimeout(unpin, IDLE);
+    }
+    function pin(el, e) {
+      if (pinned && pinned !== el) unpin();
+      if (!el.classList.contains("is-on")) origin(el, e);
+      pinned = el;
+      el.classList.add("is-pinned");
+      set(el, true);
+      armIdle();
+    }
+    // любое действие посетителя продлевает закреплённое «после»
+    ["pointermove", "pointerdown", "keydown", "scroll", "wheel", "touchstart"].forEach(function (t) {
+      window.addEventListener(t, function () { if (pinned) armIdle(); }, { passive: true });
+    });
+    items.forEach(function (el) {
+      el.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse" && el !== pinned) { origin(el, e); set(el, true); } });
+      el.addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse" && el !== pinned) { origin(el, e); set(el, false); } });
+      el.addEventListener("click", function (e) { pin(el, e); });
       el.addEventListener("keydown", function (e) {
         if (e.key !== "Enter" && e.key !== " ") return;
         e.preventDefault();
-        el.style.setProperty("--x", "50%"); el.style.setProperty("--y", "50%");
-        set(!el.classList.contains("is-on"));
+        pin(el, null);
       });
     });
   })();
 
-  /* ---------- 6. Мастерская: пролистывание слайдов курсором и просмотр целиком ---------- */
-  (function workshop() {
-    var works = Array.prototype.slice.call(document.querySelectorAll("[data-work]"));
-    if (!works.length) return;
-    function slides(el) {
-      var n = +el.dataset.slides, list = [];
-      for (var i = 1; i <= n; i++) list.push("assets/img/portfolio/" + el.dataset.work + "/" + i + ".webp");
-      return list;
-    }
-    function preload(list) { list.forEach(function (src) { var im = new Image(); im.decoding = "async"; im.src = src; }); }
-
-    works.forEach(function (el) {
-      var img = el.querySelector(".work__img");
-      var bars = Array.prototype.slice.call(el.querySelectorAll(".work__bars i"));
-      var list = slides(el), cur = 0, loaded = false;
-      function show(i) {
-        if (i === cur) return;
-        cur = i;
-        img.src = list[i];
-        bars.forEach(function (b, k) { b.classList.toggle("on", k === i); });
-      }
-      if (bars[0]) bars[0].classList.add("on");
-      el.addEventListener("pointerenter", function () { if (!loaded) { preload(list.slice(1)); loaded = true; } });
-      el.addEventListener("pointermove", function (e) {
-        if (e.pointerType !== "mouse" || list.length < 2) return;
-        var r = el.getBoundingClientRect();
-        show(clamp(Math.floor((e.clientX - r.left) / r.width * list.length), 0, list.length - 1));
-      });
-      el.addEventListener("pointerleave", function () { show(0); });
-      el.addEventListener("click", function () { lightbox.open(el.dataset.title, list, cur, el); });
-    });
-
+  /* ---------- Просмотр работы целиком: общий для мастерской и чердака ---------- */
+  var lightbox = (function () {
     var lb = document.getElementById("lightbox");
+    if (!lb) return { open: function () {} };
     var lbImg = document.getElementById("lb-img");
     var lbTitle = document.getElementById("lb-title");
     var lbCount = document.getElementById("lb-count");
@@ -656,12 +651,13 @@
     function render() {
       var n = state.list.length;
       lbImg.classList.add("is-loading");
-      lbImg.onload = function () { lbImg.classList.remove("is-loading"); };
+      lbImg.onload = function () {
+        lbImg.classList.remove("is-loading");
+        lbImg.classList.toggle("is-wide", lbImg.naturalWidth > lbImg.naturalHeight * 1.05);
+      };
       lbImg.src = state.list[state.i];
       lbImg.alt = state.title + " — слайд " + (state.i + 1) + " из " + n;
       lbCount.textContent = (state.i + 1) + " / " + n;
-      prev.disabled = state.i === 0;
-      next.disabled = state.i === n - 1;
       prev.hidden = next.hidden = lbThumbs.hidden = n < 2;
       Array.prototype.forEach.call(lbThumbs.children, function (t, k) {
         t.classList.toggle("is-on", k === state.i);
@@ -669,12 +665,14 @@
       });
     }
     function step(d) {
-      var i = clamp(state.i + d, 0, state.list.length - 1);
-      if (i !== state.i) { state.i = i; render(); }
+      var n = state.list.length;
+      if (n < 2) return;
+      state.i = (state.i + d + n) % n; // по кругу: после последнего — снова первый
+      render();
     }
-    var lightbox = {
+    var api = {
       open: function (title, list, i, opener) {
-        state = { list: list, i: i, opener: opener, title: title };
+        state = { list: list, i: i || 0, opener: opener, title: title };
         lbTitle.textContent = title;
         lbThumbs.textContent = "";
         list.forEach(function (src, k) {
@@ -684,6 +682,7 @@
           b.setAttribute("aria-label", "Слайд " + (k + 1));
           var t = document.createElement("img");
           t.src = src; t.alt = ""; t.loading = "lazy";
+          t.onload = function () { b.classList.toggle("is-wide", t.naturalWidth > t.naturalHeight * 1.05); };
           b.appendChild(t);
           b.addEventListener("click", function () { state.i = k; render(); });
           lbThumbs.appendChild(b);
@@ -701,14 +700,14 @@
     };
     prev.addEventListener("click", function () { step(-1); });
     next.addEventListener("click", function () { step(1); });
-    lb.addEventListener("click", function (e) { if (e.target.closest("[data-close]")) lightbox.close(); });
+    lb.addEventListener("click", function (e) { if (e.target.closest("[data-close]")) api.close(); });
     document.addEventListener("keydown", function (e) {
       if (lb.hidden) return;
-      if (e.key === "Escape") lightbox.close();
+      if (e.key === "Escape") api.close();
       else if (e.key === "ArrowLeft") step(-1);
       else if (e.key === "ArrowRight") step(1);
       else if (e.key === "Tab") { // фокус не уходит из окна просмотра
-        var f = Array.prototype.filter.call(lb.querySelectorAll("button"), function (b) { return !b.hidden && !b.disabled && b.offsetParent; });
+        var f = Array.prototype.filter.call(lb.querySelectorAll("button"), function (b) { return !b.hidden && b.offsetParent; });
         if (!f.length) return;
         var a = f[0], z = f[f.length - 1];
         if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
@@ -721,6 +720,23 @@
       if (sx === null) return;
       var dx = e.clientX - sx; sx = null;
       if (Math.abs(dx) > 40) step(dx < 0 ? 1 : -1);
+    });
+    return api;
+  })();
+
+  /* ---------- 6–7. Мастерская и чердак: нажатие открывает все слайды работы ---------- */
+  (function works() {
+    document.querySelectorAll("[data-work]").forEach(function (el) {
+      var n = +el.dataset.slides, base = el.dataset.base || "assets/img/portfolio/" + el.dataset.work + "/";
+      var list = [];
+      for (var i = 1; i <= n; i++) list.push(base + i + ".webp");
+      var loaded = false;
+      el.addEventListener("pointerenter", function () {
+        if (loaded) return;
+        loaded = true;
+        list.slice(1, 4).forEach(function (src) { var im = new Image(); im.src = src; });
+      });
+      el.addEventListener("click", function () { lightbox.open(el.dataset.title, list, 0, el); });
     });
   })();
 
