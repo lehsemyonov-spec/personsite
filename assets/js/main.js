@@ -414,7 +414,7 @@
       nextAt = performance.now() + DELAY;
       dots.forEach(function (d, k) { d.classList.toggle("is-on", k === index); d.setAttribute("aria-current", k === index ? "true" : "false"); });
     }
-    dots.forEach(function (d) { d.addEventListener("click", function () { go(+d.dataset.go); }); });
+    dots.forEach(function (d) { d.addEventListener("click", function () { if (!root.classList.contains("is-open")) openShutters(); go(+d.dataset.go); }); });
     var swiped = false;
     cards.forEach(function (c, k) { c.addEventListener("click", function () { if (swiped) { swiped = false; return; } go(k !== index ? k : index + 1); }); });
 
@@ -456,7 +456,20 @@
     }
     paint();
 
+    // ставни закрыты, пока идёт прелоадер; распахиваются — и только потом карточки начинают вращаться
+    var opened = false;
+    function openShutters() {
+      root.classList.add("is-open");
+      nextAt = performance.now() + (reduceMotion ? DELAY : 1900 + DELAY * 0.4);
+    }
+
     jobs.push(function (dt, now) {
+      if (!opened && document.documentElement.classList.contains("is-loaded")) {
+        opened = true;
+        nextAt = Infinity;
+        setTimeout(openShutters, reduceMotion ? 0 : 450);
+      }
+      if (!opened) nextAt = Infinity;
       if (!visible) return;
       if (!hovered && !reduceMotion && now > nextAt && document.visibilityState === "visible") go(index + 1);
       if (Math.abs(target - angle) < 0.01) return;
@@ -735,6 +748,78 @@
         list.slice(1, 4).forEach(function (src) { var im = new Image(); im.src = src; });
       });
       el.addEventListener("click", function () { lightbox.open(el.dataset.title, list, 0, el); });
+    });
+  })();
+
+  /* ---------- 8. Прайс: вкладки и калькуляторы ---------- */
+  (function prices() {
+    var tabs = Array.prototype.slice.call(document.querySelectorAll(".ptabs__btn"));
+    function select(tab) {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.classList.toggle("is-on", on);
+        t.setAttribute("aria-selected", String(on));
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+      });
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener("click", function () { select(t); });
+      t.addEventListener("keydown", function (e) {
+        if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+        var next = tabs[(i + (e.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length];
+        select(next); next.focus();
+      });
+    });
+
+    var fmt = function (n) { return n.toLocaleString("ru-RU").replace(/\u00a0/g, "\u202f") + "\u00a0₽"; };
+    document.querySelectorAll("[data-calc]").forEach(function (calc) {
+      var rows = Array.prototype.slice.call(calc.querySelectorAll(".calc__row"));
+      var toggle = calc.querySelector("[data-toggle-item]");
+      var sumEl = calc.querySelector("[data-sum]");
+      var noteEl = calc.querySelector("[data-note]");
+      var copyBtn = calc.querySelector("[data-copy]");
+      var lines = [];
+      function name(el) { return el.querySelector(".calc__name").firstChild.textContent.trim(); }
+      function update() {
+        var sum = 0, from = false;
+        lines = [];
+        var kit = calc.querySelector("input[name=kit]:checked");
+        if (kit && +kit.value) { sum += +kit.value; lines.push(kit.dataset.kitName + " — " + fmt(+kit.value)); }
+        rows.forEach(function (r) {
+          var q = +r.querySelector("output").value || 0, price = +r.dataset.price;
+          r.classList.toggle("is-active", q > 0);
+          r.querySelector("[data-dec]").disabled = q === 0;
+          if (!q) return;
+          sum += q * price;
+          if (r.hasAttribute("data-from")) from = true;
+          lines.push(name(r) + " × " + q + " — " + (r.hasAttribute("data-from") ? "от " : "") + fmt(q * price));
+        });
+        if (toggle && toggle.querySelector("input").checked) {
+          sum += +toggle.dataset.price; from = true;
+          lines.push(name(toggle) + " — от " + fmt(+toggle.dataset.price));
+        }
+        sumEl.textContent = (from && sum ? "от " : "") + fmt(sum);
+        noteEl.textContent = lines.length
+          ? (from ? "Итог ориентировочный: точную цену назову после обсуждения задачи." : "Позиций в расчёте: " + lines.length + ". Цена фиксированная.")
+          : "Добавьте услуги — сумма посчитается сама.";
+        copyBtn.disabled = !lines.length;
+        return { sum: sum, from: from };
+      }
+      rows.forEach(function (r) {
+        var out = r.querySelector("output");
+        out.value = 0;
+        r.querySelector("[data-inc]").addEventListener("click", function () { out.value = Math.min(99, (+out.value || 0) + 1); update(); });
+        r.querySelector("[data-dec]").addEventListener("click", function () { out.value = Math.max(0, (+out.value || 0) - 1); update(); });
+      });
+      calc.addEventListener("change", update);
+      copyBtn.addEventListener("click", function () {
+        var t = update();
+        var text = "Расчёт «" + calc.dataset.calc + "»:\n" + lines.join("\n") + "\nИтого: " + (t.from ? "от " : "") + fmt(t.sum);
+        var done = function () { copyBtn.textContent = "Скопировано ✓"; setTimeout(function () { copyBtn.textContent = "Скопировать расчёт"; }, 1800); };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function () {});
+      });
+      update();
     });
   })();
 

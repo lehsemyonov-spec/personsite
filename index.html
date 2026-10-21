@@ -111,13 +111,14 @@
 <header class="header" id="header">
   <div class="container header__row">
     <a class="brand" href="#top" aria-label="Избушка дизайна — наверх">
-      <span class="brand__mark"><img src="assets/img/favicon.svg" alt="" width="34" height="34"></span>
+      <span class="brand__mark"><img src="assets/img/avatar.webp" alt="" width="34" height="34"></span>
       <span class="brand__text">Избушка <em>дизайна</em></span>
     </a>
     <nav class="nav" id="nav" aria-label="Разделы">
       <a href="#about">Обо мне</a>
       <a href="#directions">Направления</a>
       <a href="#workshop">Работы</a>
+      <a href="#prices">Цены</a>
       <a href="#soon">Канал</a>
     </nav>
     <!-- TODO: заменить #soon на ссылку канала, например https://t.me/ваш_ник -->
@@ -141,8 +142,7 @@
     <div class="container hero__grid">
       <div class="hero__text">
         <div class="hero__top" data-reveal>
-          <!-- TODO: заменить временный знак на аватарку: assets/img/avatar.webp -->
-          <p class="label label--avatar"><span class="avatar"><img src="assets/img/favicon.svg" alt="" width="28" height="28"></span>Андрей Хол <span class="label__sep">|</span> Избушка дизайна</p>
+          <p class="label label--avatar"><span class="avatar"><img src="assets/img/avatar.webp" alt="" width="30" height="30"></span>Андрей Хол <span class="label__sep">|</span> Избушка дизайна</p>
           <p class="hero__motto">Ваше доверие ко мне — фундамент доверия к вам от ваших клиентов!</p>
         </div>
         <h1 class="hero__title" id="hero-title" data-reveal>
@@ -189,7 +189,6 @@
                 <path d="M6 80h428" stroke="#ffd59a" stroke-width="1" opacity=".5"/>
               </svg>
               <div class="portal__body">
-              <div class="portal__shutter portal__shutter--l" aria-hidden="true"><span class="shutter__panel"></span><span class="shutter__diamond"></span><span class="shutter__panel"></span></div>
               <div class="portal__frame">
                 <div class="portal__pane" id="portal-pane">
                   <div class="portal__ring" id="portal-ring">
@@ -201,8 +200,10 @@
                   </div>
                   <span class="portal__glass" aria-hidden="true"></span>
                 </div>
+                <!-- ставни: при входе закрыты, затем распахиваются -->
+                <div class="portal__shutter portal__shutter--l" aria-hidden="true"><span class="shutter__panel"></span><span class="shutter__diamond"></span><span class="shutter__panel"></span></div>
+                <div class="portal__shutter portal__shutter--r" aria-hidden="true"><span class="shutter__panel"></span><span class="shutter__diamond"></span><span class="shutter__panel"></span></div>
               </div>
-              <div class="portal__shutter portal__shutter--r" aria-hidden="true"><span class="shutter__panel"></span><span class="shutter__diamond"></span><span class="shutter__panel"></span></div>
               </div>
               <div class="portal__sill" aria-hidden="true"></div>
               <svg class="portal__apron" viewBox="0 0 440 56" preserveAspectRatio="none" aria-hidden="true">
@@ -260,32 +261,11 @@
           <div class="window__light"></div>
           <div class="window__frame">
             <div class="window__pane">
-              <!-- TODO: заменить иллюстрацию на фото: <img src="assets/img/andrey.webp" alt="Андрей Хол"> -->
-              <svg class="window__person" viewBox="0 0 300 360" aria-hidden="true">
-                <defs>
-                  <radialGradient id="lamp" cx=".72" cy=".28" r=".7">
-                    <stop offset="0" stop-color="#ffe2b0"/>
-                    <stop offset=".45" stop-color="#ffb15c"/>
-                    <stop offset="1" stop-color="#b8612a"/>
-                  </radialGradient>
-                </defs>
-                <rect width="300" height="360" fill="url(#lamp)"/>
-                <g fill="#3a2716">
-                  <path d="M206 64h44l-12 26h-20z"/><path d="M226 90v70h-4V90z" opacity=".7"/>
-                  <circle cx="122" cy="150" r="34"/>
-                  <path d="M40 360v-70c0-50 36-92 82-92s82 42 82 92v70z"/>
-                  <path d="M150 262h110l-14 98H150z" opacity=".95"/>
-                </g>
-                <path d="M160 270h92l-11 80h-81z" fill="#ffd59a" opacity=".55"/>
-                <path d="M0 330h300v30H0z" fill="#2a1c10" opacity=".55"/>
-              </svg>
+              <img class="window__photo" src="assets/img/andrey.webp" alt="Андрей Хол" width="533" height="640" loading="lazy" decoding="async">
               <span class="window__dust"><i></i><i></i><i></i><i></i><i></i><i></i></span>
             </div>
-            <span class="window__cross window__cross--h"></span>
-            <span class="window__cross window__cross--v"></span>
           </div>
           <div class="window__sill"></div>
-          <span class="chip window__chip">место для вашего фото</span>
         </div>
       </div>
 
@@ -303,11 +283,12 @@
           <li class="stat"><b>24/7</b><span>свет в окне канала</span></li>
         </ul>
 
-        <!-- TODO: проверьте список программ -->
-        <ul class="tools" data-reveal>
-          <li>Photoshop</li><li>Illustrator</li><li>Figma</li><li>Нейросети</li>
-        </ul>
       </div>
+
+      <p class="about__tools-label" data-reveal>Инструменты для работы</p>
+      <ul class="tools" data-reveal>
+        <li>Photoshop</li><li>Illustrator</li><li>Figma</li><li>Нейросети</li>
+      </ul>
     </div>
   </section>
 
@@ -603,6 +584,176 @@
             </span>
             <span class="work__plate"><b>Эмодзи-пак</b><span>18 эмодзи</span></span>
           </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Услуги и цены: два прайса с калькуляторами -->
+  <section class="prices section" id="prices">
+    <div class="container">
+      <div class="section__head">
+        <p class="label" data-reveal><span class="label__dot"></span>Прайс</p>
+        <h2 class="h2" data-reveal>Услуги и <em>цены</em></h2>
+        <p class="section__lead" data-reveal>Выберите направление, посмотрите цены и сразу посчитайте свой заказ.</p>
+      </div>
+
+      <div class="ptabs" role="tablist" aria-label="Прайсы" data-reveal>
+        <button class="ptabs__btn is-on" type="button" role="tab" id="tab-cards" aria-controls="panel-cards" aria-selected="true">Карточки товара</button>
+        <button class="ptabs__btn" type="button" role="tab" id="tab-print" aria-controls="panel-print" aria-selected="false" tabindex="-1">Печатная продукция</button>
+      </div>
+
+      <div class="ppanel" id="panel-cards" role="tabpanel" aria-labelledby="tab-cards">
+        <div class="plist" data-reveal>
+          <h3 class="plist__title">Дизайн инфографики</h3>
+          <div class="packs">
+            <div class="pack pack--gold">
+              <span class="pack__tag">Пакет</span>
+              <b class="pack__name">Стандарт</b>
+              <span class="pack__what">1 заглавный + 7 доп. слайдов</span>
+              <span class="pack__price">6 100 ₽</span>
+              <span class="pack__more">+800 ₽ за каждый следующий слайд</span>
+            </div>
+            <div class="pack pack--bronze">
+              <span class="pack__tag">Пакет</span>
+              <b class="pack__name">Новичок</b>
+              <span class="pack__what">1 заглавный + 3 доп. слайда</span>
+              <span class="pack__price">3 200 ₽</span>
+              <span class="pack__more">+800 ₽ за каждый следующий слайд</span>
+            </div>
+          </div>
+          <ul class="plist__rows">
+            <li class="plist__row"><span class="plist__name">Заглавный слайд</span><span class="plist__price">1 100 ₽</span></li>
+            <li class="plist__row"><span class="plist__name">Дополнительный слайд<small>сверх пакета или отдельно</small></span><span class="plist__price">800 ₽<i> / слайд</i></span></li>
+            <li class="plist__row"><span class="plist__name">A/Б-тест: 2 заглавных слайда<small>чтобы сравнить варианты</small></span><span class="plist__price">2 000 ₽</span></li>
+            <li class="plist__row"><span class="plist__name">A/Б-тест: 3 заглавных слайда</span><span class="plist__price">2 700 ₽</span></li>
+            <li class="plist__row"><span class="plist__name">Замена товара в готовом дизайне<small>цвет, форма и т. д.</small></span><span class="plist__price">400 ₽<i> / слайд</i></span></li>
+            <li class="plist__row"><span class="plist__name">Воронка продаж и ТЗ<small>анализ конкурентов, отзывов и вопросов</small></span><span class="plist__price">250 ₽<i> / слайд</i></span></li>
+            <li class="plist__row"><span class="plist__name">Нейрофотосессия</span><span class="plist__price">500 ₽<i> / фото</i></span></li>
+            <li class="plist__row"><span class="plist__name">Нейровидео<small>от 5 секунд</small></span><span class="plist__price">от 1 000 ₽</span></li>
+          </ul>
+        </div>
+
+        <div class="calc" data-calc="Карточки товара" data-reveal>
+          <h3 class="calc__title">Калькулятор</h3>
+          <div class="calc__kit" role="radiogroup" aria-label="Комплект">
+            <span class="calc__label">Комплект</span>
+            <label class="kit"><input type="radio" name="kit" value="0" data-kit-name="" checked><span>Без комплекта</span></label>
+            <label class="kit kit--bronze"><input type="radio" name="kit" value="3200" data-kit-name="Комплект «Новичок» 1 + 3"><span>Новичок 1 + 3<b>3 200 ₽</b></span></label>
+            <label class="kit kit--gold"><input type="radio" name="kit" value="6100" data-kit-name="Комплект «Стандарт» 1 + 7"><span>Стандарт 1 + 7<b>6 100 ₽</b></span></label>
+          </div>
+            <div class="calc__row" data-item="main" data-price="1100">
+              <span class="calc__name">Главный слайд<b>1 100 ₽ / слайд</b></span>
+              <span class="stepper"><button type="button" data-dec aria-label="Меньше: Главный слайд">−</button><output aria-live="polite">0</output><button type="button" data-inc aria-label="Больше: Главный слайд">+</button></span>
+            </div>
+            <div class="calc__row" data-item="extra" data-price="800">
+              <span class="calc__name">Дополнительный слайд<b>800 ₽ / слайд</b></span>
+              <span class="stepper"><button type="button" data-dec aria-label="Меньше: Дополнительный слайд">−</button><output aria-live="polite">0</output><button type="button" data-inc aria-label="Больше: Дополнительный слайд">+</button></span>
+            </div>
+            <div class="calc__row" data-item="swap" data-price="400">
+              <span class="calc__name">Замена фото / товара<b>400 ₽ / слайд</b></span>
+              <span class="stepper"><button type="button" data-dec aria-label="Меньше: Замена фото / товара">−</button><output aria-live="polite">0</output><button type="button" data-inc aria-label="Больше: Замена фото / товара">+</button></span>
+            </div>
+            <div class="calc__row" data-item="tz" data-price="250">
+              <span class="calc__name">Составление ТЗ<b>250 ₽ / слайд</b></span>
+              <span class="stepper"><button type="button" data-dec aria-label="Меньше: Составление ТЗ">−</button><output aria-live="polite">0</output><button type="button" data-inc aria-label="Больше: Составление ТЗ">+</button></span>
+            </div>
+            <div class="calc__row" data-item="neurophoto" data-price="500">
+              <span class="calc__name">Нейрофотосессия<b>500 ₽ / фото</b></span>
+              <span class="stepper"><button type="button" data-dec aria-label="Меньше: Нейрофотосессия">−</button><output aria-live="polite">0</output><button type="button" data-inc aria-label="Больше: Нейрофотосессия">+</button></span>
+            </div>
+            <div class="calc__row" data-item="video" data-price="1000" data-from>
+              <span class="calc__name">Нейровидео<small>от 5 секунд</small><b>от 1 000 ₽ / видео</b></span>
+              <span class="stepper"><button type="button" data-dec aria-label="Меньше: Нейровидео">−</button><output aria-live="polite">0</output><button type="button" data-inc aria-label="Больше: Нейровидео">+</button></span>
+            </div>
+          <div class="calc__total">
+            <span>Итого</span>
+            <b class="calc__sum" data-sum>0&nbsp;₽</b>
+          </div>
+          <p class="calc__note" data-note>Добавьте услуги — сумма посчитается сама.</p>
+          <div class="calc__actions">
+            <button class="btn btn--glass btn--sm" type="button" data-copy>Скопировать расчёт</button>
+            <!-- TODO: заменить #soon на ссылку канала -->
+            <a class="btn btn--amber btn--sm" href="#soon"><svg class="ico"><use href="#tg"/></svg>Обсудить</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="ppanel" id="panel-print" role="tabpanel" aria-labelledby="tab-print" hidden>
+        <div class="plist" data-reveal>
+          <h3 class="plist__title">Дизайн печатной продукции</h3>
+          <ul class="plist__rows">
+            <li class="plist__row"><span class="plist__name">Визитка личная</span><span class="plist__price">1 000 ₽<i> / сторона</i></span></li>
+            <li class="plist__row"><span class="plist__name">Визитка деловая<small>для бизнеса</small></span><span class="plist__price">1 500 ₽<i> / сторона</i></span></li>
+            <li class="plist__row"><span class="plist__name">Визитка корпоративная</span><span class="plist__price">2 000 ₽<i> / сторона</i></span></li>
+            <li class="plist__row"><span class="plist__name">Буклет</span><span class="plist__price">от 1 000 ₽<i> / страница</i></span></li>
+            <li class="plist__row"><span class="plist__name">Каталог</span><span class="plist__price">от 1 000 ₽<i> / страница</i></span></li>
+            <li class="plist__row"><span class="plist__name">Этикетка</span><span class="plist__price">1 200 ₽<i> / шт.</i></span></li>
+            <li class="plist__row"><span class="plist__name">Баннер информационный</span><span class="plist__price">1 250 ₽<i> / шт.</i></span></li>
+            <li class="plist__row"><span class="plist__name">Баннер рекламный</span><span class="plist__price">1 500 ₽<i> / шт.</i></span></li>
+            <li class="plist__row"><span class="plist__name">Презентация</span><span class="plist__price">от 1 000 ₽<i> / слайд</i></span></li>
+          </ul>
+          <div class="pack pack--key">
+            <span class="pack__tag">Под ключ</span>
+            <b class="pack__name">Упаковка бренда</b>
+            <span class="pack__what">Логотип, подбор шрифтов и цветов, цифровой макет продукта</span>
+            <span class="pack__price">от 10 000 ₽</span>
+          </div>
+        </div>
+
+        <div class="calc" data-calc="Печатная продукция" data-reveal>
+          <h3 class="calc__title">Калькулятор</h3>
+            <div class="calc__row" data-item="card-personal" data-price="1000">
+              <span class="calc__name">Визитка личная<b>1 000 ₽ / сторона</b></span>
+              <span class="stepper"><button type="button" data-dec aria-label="Меньше: Визитка личная">−</button><output aria-live="polite">0</output><button type="button" data-inc aria-label="Больше: Визитка личная">+</button></span>
+            </div>
+            <div class="calc__row" data-item="card-business" data-price="1500">
+              <span class="calc__name">Визитка деловая<b>1 500 ₽ / сторона</b></span>
+              <span class="stepper"><button type="button" data-dec aria-label="Меньше: Визитка деловая">−</button><output aria-live="polite">0</output><button type="button" data-inc aria-label="Больше: Визитка деловая">+</button></span>
+            </div>
+            <div class="calc__row" data-item="card-corp" data-price="2000">
+              <span class="calc__name">Визитка корпоративная<b>2 000 ₽ / сторона</b></span>
+              <span class="stepper"><button type="button" data-dec aria-label="Меньше: Визитка корпоративная">−</button><output aria-live="polite">0</output><button type="button" data-inc aria-label="Больше: Визитка корпоративная">+</button></span>
+            </div>
+            <div class="calc__row" data-item="booklet" data-price="1000" data-from>
+              <span class="calc__name">Буклет<b>от 1 000 ₽ / страница</b></span>
+              <span class="stepper"><button type="button" data-dec aria-label="Меньше: Буклет">−</button><output aria-live="polite">0</output><button type="button" data-inc aria-label="Больше: Буклет">+</button></span>
+            </div>
+            <div class="calc__row" data-item="catalog" data-price="1000" data-from>
+              <span class="calc__name">Каталог<b>от 1 000 ₽ / страница</b></span>
+              <span class="stepper"><button type="button" data-dec aria-label="Меньше: Каталог">−</button><output aria-live="polite">0</output><button type="button" data-inc aria-label="Больше: Каталог">+</button></span>
+            </div>
+            <div class="calc__row" data-item="label" data-price="1200">
+              <span class="calc__name">Этикетка<b>1 200 ₽ / шт.</b></span>
+              <span class="stepper"><button type="button" data-dec aria-label="Меньше: Этикетка">−</button><output aria-live="polite">0</output><button type="button" data-inc aria-label="Больше: Этикетка">+</button></span>
+            </div>
+            <div class="calc__row" data-item="banner-info" data-price="1250">
+              <span class="calc__name">Баннер информационный<b>1 250 ₽ / шт.</b></span>
+              <span class="stepper"><button type="button" data-dec aria-label="Меньше: Баннер информационный">−</button><output aria-live="polite">0</output><button type="button" data-inc aria-label="Больше: Баннер информационный">+</button></span>
+            </div>
+            <div class="calc__row" data-item="banner-ad" data-price="1500">
+              <span class="calc__name">Баннер рекламный<b>1 500 ₽ / шт.</b></span>
+              <span class="stepper"><button type="button" data-dec aria-label="Меньше: Баннер рекламный">−</button><output aria-live="polite">0</output><button type="button" data-inc aria-label="Больше: Баннер рекламный">+</button></span>
+            </div>
+            <div class="calc__row" data-item="slides" data-price="1000" data-from>
+              <span class="calc__name">Презентация<b>от 1 000 ₽ / слайд</b></span>
+              <span class="stepper"><button type="button" data-dec aria-label="Меньше: Презентация">−</button><output aria-live="polite">0</output><button type="button" data-inc aria-label="Больше: Презентация">+</button></span>
+            </div>
+          <label class="calc__toggle" data-toggle-item data-price="10000" data-from>
+            <input type="checkbox" data-toggle>
+            <span class="calc__name">Упаковка бренда под ключ<b>от 10 000 ₽</b></span>
+            <span class="switch" aria-hidden="true"></span>
+          </label>
+          <div class="calc__total">
+            <span>Итого</span>
+            <b class="calc__sum" data-sum>0&nbsp;₽</b>
+          </div>
+          <p class="calc__note" data-note>Добавьте услуги — сумма посчитается сама.</p>
+          <div class="calc__actions">
+            <button class="btn btn--glass btn--sm" type="button" data-copy>Скопировать расчёт</button>
+            <!-- TODO: заменить #soon на ссылку канала -->
+            <a class="btn btn--amber btn--sm" href="#soon"><svg class="ico"><use href="#tg"/></svg>Обсудить</a>
+          </div>
         </div>
       </div>
     </div>
