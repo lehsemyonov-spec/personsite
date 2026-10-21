@@ -987,6 +987,7 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 600; color: v
    5. До / После — проявка под курсором
    ========================================================================== */
 .ba-grid, .works { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 2vw, 26px); }
+.ba-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .ba { --x: 50%; --y: 50%; margin: 0; outline: none; cursor: pointer; }
 .ba__frame {
   position: relative;
