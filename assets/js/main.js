@@ -669,7 +669,7 @@
       lbImg.src = state.list[state.i];
       lbImg.alt = state.title + " — слайд " + (state.i + 1) + " из " + n;
       lbCount.textContent = (state.i + 1) + " / " + n;
-      prev.hidden = next.hidden = lbThumbs.hidden = n < 2;
+      prev.hidden = next.hidden = lbThumbs.hidden = lbCount.hidden = n < 2;
       Array.prototype.forEach.call(lbThumbs.children, function (t, k) {
         t.classList.toggle("is-on", k === state.i);
         if (k === state.i) t.scrollIntoView({ block: "nearest", inline: "center" });
@@ -912,28 +912,20 @@
     });
   })();
 
-  /* ---------- 12. Канал: веер постов и текст выбранного поста ---------- */
-  (function channel() {
-    var fan = document.getElementById("fan");
-    if (!fan) return;
-    var cards = Array.prototype.slice.call(fan.querySelectorAll(".fan__card"));
-    var tabs = Array.prototype.slice.call(document.querySelectorAll(".post-tabs__btn"));
-    var texts = Array.prototype.slice.call(document.querySelectorAll("[data-post-text]"));
-    var cur = 0, touched = false, visible = false;
-    function show(i) {
-      cur = i;
-      cards.forEach(function (c, k) { c.classList.toggle("is-on", k === i); });
-      tabs.forEach(function (t, k) { t.classList.toggle("is-on", k === i); t.setAttribute("aria-selected", String(k === i)); });
-      texts.forEach(function (t, k) { t.hidden = k !== i; t.classList.toggle("is-on", k === i); });
-    }
-    cards.concat(tabs).forEach(function (el) {
-      el.addEventListener("click", function () { touched = true; show(+el.dataset.post); });
+  /* ---------- 11. Отзывы: скриншот оригинального сообщения ---------- */
+  document.querySelectorAll("[data-orig]").forEach(function (btn) {
+    btn.addEventListener("click", function () { lightbox.open("Оригинальное сообщение", [btn.dataset.orig], 0, btn); });
+  });
+
+  /* ---------- 12. FAQ: в каждой категории открыт только один ответ ---------- */
+  document.querySelectorAll(".faq__group").forEach(function (g) {
+    var items = Array.prototype.slice.call(g.querySelectorAll("details"));
+    items.forEach(function (d) {
+      d.addEventListener("toggle", function () {
+        if (d.open) items.forEach(function (o) { if (o !== d) o.open = false; });
+      });
     });
-    new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }).observe(fan);
-    // пока посетитель сам не выбрал пост, посты сменяются сами
-    if (!reduceMotion) setInterval(function () { if (!touched && visible && document.visibilityState === "visible") show((cur + 1) % cards.length); }, 7000);
-    show(0);
-  })();
+  });
 
   /* ---------- 1. Верх окна — на уровне верха заголовка (на широких экранах) ---------- */
   (function alignPortal() {
