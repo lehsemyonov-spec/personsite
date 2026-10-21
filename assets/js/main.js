@@ -585,6 +585,145 @@
     els.forEach(function (el) { io.observe(el); });
   })();
 
+  /* ---------- 5. До / После: «после» проявляется кругом из точки, где курсор вошёл ---------- */
+  (function beforeAfter() {
+    document.querySelectorAll("[data-ba]").forEach(function (el) {
+      var frame = el.querySelector(".ba__frame");
+      function origin(e) {
+        var r = frame.getBoundingClientRect();
+        el.style.setProperty("--x", clamp((e.clientX - r.left) / r.width * 100, 0, 100).toFixed(1) + "%");
+        el.style.setProperty("--y", clamp((e.clientY - r.top) / r.height * 100, 0, 100).toFixed(1) + "%");
+      }
+      function set(on) { el.classList.toggle("is-on", on); el.setAttribute("aria-pressed", String(on)); }
+      el.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") { origin(e); set(true); } });
+      el.addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse") { origin(e); set(false); } });
+      // на телефоне и с клавиатуры — переключение нажатием
+      el.addEventListener("click", function (e) {
+        if (e.pointerType === "mouse") return;
+        if (e.clientX) origin(e); else { el.style.setProperty("--x", "50%"); el.style.setProperty("--y", "50%"); }
+        set(!el.classList.contains("is-on"));
+      });
+      el.addEventListener("keydown", function (e) {
+        if (e.key !== "Enter" && e.key !== " ") return;
+        e.preventDefault();
+        el.style.setProperty("--x", "50%"); el.style.setProperty("--y", "50%");
+        set(!el.classList.contains("is-on"));
+      });
+    });
+  })();
+
+  /* ---------- 6. Мастерская: пролистывание слайдов курсором и просмотр целиком ---------- */
+  (function workshop() {
+    var works = Array.prototype.slice.call(document.querySelectorAll("[data-work]"));
+    if (!works.length) return;
+    function slides(el) {
+      var n = +el.dataset.slides, list = [];
+      for (var i = 1; i <= n; i++) list.push("assets/img/portfolio/" + el.dataset.work + "/" + i + ".webp");
+      return list;
+    }
+    function preload(list) { list.forEach(function (src) { var im = new Image(); im.decoding = "async"; im.src = src; }); }
+
+    works.forEach(function (el) {
+      var img = el.querySelector(".work__img");
+      var bars = Array.prototype.slice.call(el.querySelectorAll(".work__bars i"));
+      var list = slides(el), cur = 0, loaded = false;
+      function show(i) {
+        if (i === cur) return;
+        cur = i;
+        img.src = list[i];
+        bars.forEach(function (b, k) { b.classList.toggle("on", k === i); });
+      }
+      if (bars[0]) bars[0].classList.add("on");
+      el.addEventListener("pointerenter", function () { if (!loaded) { preload(list.slice(1)); loaded = true; } });
+      el.addEventListener("pointermove", function (e) {
+        if (e.pointerType !== "mouse" || list.length < 2) return;
+        var r = el.getBoundingClientRect();
+        show(clamp(Math.floor((e.clientX - r.left) / r.width * list.length), 0, list.length - 1));
+      });
+      el.addEventListener("pointerleave", function () { show(0); });
+      el.addEventListener("click", function () { lightbox.open(el.dataset.title, list, cur, el); });
+    });
+
+    var lb = document.getElementById("lightbox");
+    var lbImg = document.getElementById("lb-img");
+    var lbTitle = document.getElementById("lb-title");
+    var lbCount = document.getElementById("lb-count");
+    var lbThumbs = document.getElementById("lb-thumbs");
+    var prev = document.getElementById("lb-prev");
+    var next = document.getElementById("lb-next");
+    var state = { list: [], i: 0, opener: null, title: "" };
+
+    function render() {
+      var n = state.list.length;
+      lbImg.classList.add("is-loading");
+      lbImg.onload = function () { lbImg.classList.remove("is-loading"); };
+      lbImg.src = state.list[state.i];
+      lbImg.alt = state.title + " — слайд " + (state.i + 1) + " из " + n;
+      lbCount.textContent = (state.i + 1) + " / " + n;
+      prev.disabled = state.i === 0;
+      next.disabled = state.i === n - 1;
+      prev.hidden = next.hidden = lbThumbs.hidden = n < 2;
+      Array.prototype.forEach.call(lbThumbs.children, function (t, k) {
+        t.classList.toggle("is-on", k === state.i);
+        if (k === state.i) t.scrollIntoView({ block: "nearest", inline: "center" });
+      });
+    }
+    function step(d) {
+      var i = clamp(state.i + d, 0, state.list.length - 1);
+      if (i !== state.i) { state.i = i; render(); }
+    }
+    var lightbox = {
+      open: function (title, list, i, opener) {
+        state = { list: list, i: i, opener: opener, title: title };
+        lbTitle.textContent = title;
+        lbThumbs.textContent = "";
+        list.forEach(function (src, k) {
+          var b = document.createElement("button");
+          b.type = "button";
+          b.className = "lightbox__thumb";
+          b.setAttribute("aria-label", "Слайд " + (k + 1));
+          var t = document.createElement("img");
+          t.src = src; t.alt = ""; t.loading = "lazy";
+          b.appendChild(t);
+          b.addEventListener("click", function () { state.i = k; render(); });
+          lbThumbs.appendChild(b);
+        });
+        lb.hidden = false;
+        root.classList.add("is-locked");
+        render();
+        (list.length > 1 ? next : lb.querySelector(".lightbox__close")).focus({ preventScroll: true });
+      },
+      close: function () {
+        lb.hidden = true;
+        root.classList.remove("is-locked");
+        if (state.opener) state.opener.focus({ preventScroll: true });
+      }
+    };
+    prev.addEventListener("click", function () { step(-1); });
+    next.addEventListener("click", function () { step(1); });
+    lb.addEventListener("click", function (e) { if (e.target.closest("[data-close]")) lightbox.close(); });
+    document.addEventListener("keydown", function (e) {
+      if (lb.hidden) return;
+      if (e.key === "Escape") lightbox.close();
+      else if (e.key === "ArrowLeft") step(-1);
+      else if (e.key === "ArrowRight") step(1);
+      else if (e.key === "Tab") { // фокус не уходит из окна просмотра
+        var f = Array.prototype.filter.call(lb.querySelectorAll("button"), function (b) { return !b.hidden && !b.disabled && b.offsetParent; });
+        if (!f.length) return;
+        var a = f[0], z = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
+        else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+      }
+    });
+    var sx = null;
+    lbImg.addEventListener("pointerdown", function (e) { sx = e.clientX; });
+    lbImg.addEventListener("pointerup", function (e) {
+      if (sx === null) return;
+      var dx = e.clientX - sx; sx = null;
+      if (Math.abs(dx) > 40) step(dx < 0 ? 1 : -1);
+    });
+  })();
+
   /* ---------- 4. Плитки: фонарь внутри и лёгкий 3D-наклон ---------- */
   (function tiles() {
     if (!finePointer) return;
