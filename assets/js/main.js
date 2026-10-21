@@ -394,7 +394,6 @@
     var pane = document.getElementById("portal-pane");
     var ring = document.getElementById("portal-ring");
     var tilt = document.getElementById("portal-tilt");
-    var num = document.getElementById("portal-num");
     var cards = Array.prototype.slice.call(ring.querySelectorAll(".portal__card"));
     var dots = Array.prototype.slice.call(root.querySelectorAll(".portal__dot"));
     var N = cards.length, STEP = 360 / N, DELAY = 3200;
@@ -414,7 +413,6 @@
       target -= diff * STEP;
       nextAt = performance.now() + DELAY;
       dots.forEach(function (d, k) { d.classList.toggle("is-on", k === index); d.setAttribute("aria-current", k === index ? "true" : "false"); });
-      num.textContent = (index < 9 ? "0" : "") + (index + 1);
     }
     dots.forEach(function (d) { d.addEventListener("click", function () { go(+d.dataset.go); }); });
     var swiped = false;
@@ -509,7 +507,7 @@
   (function words() {
     var els = Array.prototype.slice.call(document.querySelectorAll("[data-words]"));
     if (!els.length || reduceMotion) return;
-    var hot = /избушк|дизайн|тёпл|работает/i;
+    var hot = /мастерск|визуал|продава|эффективн|карточк/i;
     var all = els.map(function (el) {
       var parts = el.textContent.trim().split(/(\s+)/);
       el.textContent = "";
@@ -738,6 +736,37 @@
       });
       el.addEventListener("click", function () { lightbox.open(el.dataset.title, list, 0, el); });
     });
+  })();
+
+  /* ---------- 1. Верх окна — на уровне верха заголовка (на широких экранах) ---------- */
+  (function alignPortal() {
+    var scene = document.getElementById("scene");
+    var title = document.getElementById("hero-title");
+    if (!scene || !title) return;
+    var wide = window.matchMedia("(min-width: 901px)");
+    function align() { scene.style.paddingTop = wide.matches ? title.offsetTop + "px" : ""; }
+    window.addEventListener("resize", align);
+    window.addEventListener("load", align);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(align);
+    align();
+  })();
+
+  /* ---------- 7. Эмодзи-пак: главный эмодзи сменяется по кругу ---------- */
+  (function emojiPack() {
+    var img = document.getElementById("emoji-main");
+    if (!img || reduceMotion) return;
+    var tile = img.closest(".exhibit"), n = +tile.dataset.slides, i = 1, visible = false;
+    new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }).observe(tile);
+    setInterval(function () {
+      if (!visible || document.visibilityState !== "visible") return;
+      i = i % n + 1;
+      var next = new Image();
+      next.onload = function () {
+        img.classList.add("is-swap");
+        setTimeout(function () { img.src = next.src; img.classList.remove("is-swap"); }, 250);
+      };
+      next.src = "assets/img/attic/emoji/" + i + ".webp";
+    }, 1800);
   })();
 
   /* ---------- 4. Плитки: фонарь внутри и лёгкий 3D-наклон ---------- */

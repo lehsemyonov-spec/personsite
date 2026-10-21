@@ -6,10 +6,10 @@
   <!-- Всё грузится только с этого сайта: без аналитики, cookie, форм и сторонних сервисов -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'self'; object-src 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>Избушка дизайна — Андрей Хол</title>
+  <title>Избушка дизайна Андрея Хола</title>
   <meta name="description" content="Андрей Хол — графический дизайнер. Карточки для маркетплейсов, каталоги, презентации, визитки и эмодзи-паки. Тёплый дизайн с технологичной точностью.">
   <meta name="theme-color" content="#14110e">
-  <meta property="og:title" content="Избушка дизайна — Андрей Хол">
+  <meta property="og:title" content="Избушка дизайна Андрея Хола">
   <meta property="og:description" content="Тёплый дизайн с технологичной точностью: маркетплейсы, каталоги, презентации, визитки, эмодзи.">
   <meta property="og:type" content="website">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
@@ -140,10 +140,15 @@
 
     <div class="container hero__grid">
       <div class="hero__text">
-        <p class="label" data-reveal><span class="label__dot"></span>Избушка дизайна · графический дизайнер</p>
-        <h1 class="hero__title" data-reveal>
-          <span class="hero__name">Андрей</span>
-          <span class="hero__name hero__name--accent">Хол</span>
+        <div class="hero__top" data-reveal>
+          <!-- TODO: заменить временный знак на аватарку: assets/img/avatar.webp -->
+          <p class="label label--avatar"><span class="avatar"><img src="assets/img/favicon.svg" alt="" width="28" height="28"></span>Андрей Хол <span class="label__sep">|</span> Избушка дизайна</p>
+          <p class="hero__motto">Ваше доверие ко мне — фундамент доверия к вам от ваших клиентов!</p>
+        </div>
+        <h1 class="hero__title" id="hero-title" data-reveal>
+          <span class="hero__name">Избушка</span>
+          <span class="hero__name hero__name--serif">дизайна</span>
+          <span class="hero__name hero__name--accent">Андрея Хола</span>
         </h1>
         <p class="hero__lead" data-reveal>Дизайн, в котором <em>тепло</em> мастерской встречается с <em>точностью</em> технологий.</p>
         <p class="hero__sub" data-reveal>Карточки для маркетплейсов, презентации, оформление для компаний и мероприятий — всё, чтобы к вашему бренду хотелось зайти на огонёк.</p>
@@ -164,6 +169,27 @@
             <div class="portal__halo" aria-hidden="true"></div>
             <span class="portal__sparks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
             <div class="portal__tilt" id="portal-tilt">
+              <svg class="portal__crown" viewBox="0 0 440 96" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="wood-v" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a6038"/><stop offset=".6" stop-color="#5c3e24"/><stop offset="1" stop-color="#3f2a18"/></linearGradient>
+                  <radialGradient id="sun" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffe2b0"/><stop offset=".55" stop-color="#ffb15c"/><stop offset="1" stop-color="#c2702e"/></radialGradient>
+                </defs>
+                <path d="M6 96V80h428v16z" fill="url(#wood-v)" stroke="#2f1f12" stroke-width="1.5"/>
+                <path d="M20 80C60 78 110 60 150 40 180 25 200 10 220 6 240 10 260 25 290 40 330 60 380 78 420 80z" fill="url(#wood-v)" stroke="#2f1f12" stroke-width="1.5"/>
+                <path d="M44 78C86 72 128 56 162 38 186 26 204 16 220 13 236 16 254 26 278 38 312 56 354 72 396 78" fill="none" stroke="#ffd59a" stroke-width="1.2" opacity=".55"/>
+                <g fill="#2f1f12" opacity=".75">
+                  <path d="M70 76l8-8 8 8zM102 70l8-9 8 9zM134 60l8-9 8 9zM290 60l8-9 8 9zM322 70l8-9 8 9zM354 76l8-8 8 8z"/>
+                  <circle cx="94" cy="88" r="2.5"/><circle cx="140" cy="88" r="2.5"/><circle cx="186" cy="88" r="2.5"/><circle cx="254" cy="88" r="2.5"/><circle cx="300" cy="88" r="2.5"/><circle cx="346" cy="88" r="2.5"/>
+                </g>
+                <g class="portal__sun">
+                  <circle cx="220" cy="46" r="20" fill="none" stroke="#ffd59a" stroke-width="1.2" opacity=".7"/>
+                  <path d="M220 22v8M220 62v8M196 46h8M236 46h8M203 29l6 6M231 57l6 6M237 29l-6 6M209 57l-6 6" stroke="#ffd59a" stroke-width="1.6" stroke-linecap="round"/>
+                  <circle cx="220" cy="46" r="10" fill="url(#sun)"/>
+                </g>
+                <path d="M6 80h428" stroke="#ffd59a" stroke-width="1" opacity=".5"/>
+              </svg>
+              <div class="portal__body">
+              <div class="portal__shutter portal__shutter--l" aria-hidden="true"><span class="shutter__panel"></span><span class="shutter__diamond"></span><span class="shutter__panel"></span></div>
               <div class="portal__frame">
                 <div class="portal__pane" id="portal-pane">
                   <div class="portal__ring" id="portal-ring">
@@ -175,14 +201,20 @@
                   </div>
                   <span class="portal__glass" aria-hidden="true"></span>
                 </div>
-                <span class="portal__arch" aria-hidden="true"></span>
+              </div>
+              <div class="portal__shutter portal__shutter--r" aria-hidden="true"><span class="shutter__panel"></span><span class="shutter__diamond"></span><span class="shutter__panel"></span></div>
               </div>
               <div class="portal__sill" aria-hidden="true"></div>
+              <svg class="portal__apron" viewBox="0 0 440 56" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M14 0h412v18c-14 0-14 16-28 16s-14-16-28-16-14 16-28 16-14-16-28-16-14 16-28 16-14-16-28-16c-10 0-14 30-28 30s-18-30-28-30-14 16-28 16-14-16-28-16-14 16-28 16-14-16-28-16-14 16-28 16-14-16-28-16-14 16-28 16-14-16-28-16z" fill="url(#wood-v)" stroke="#2f1f12" stroke-width="1.5"/>
+                <path d="M14 8h412" stroke="#ffd59a" stroke-width="1" opacity=".45"/>
+                <g fill="#2f1f12" opacity=".7"><circle cx="70" cy="12" r="2.5"/><circle cx="126" cy="12" r="2.5"/><circle cx="182" cy="12" r="2.5"/><circle cx="258" cy="12" r="2.5"/><circle cx="314" cy="12" r="2.5"/><circle cx="370" cy="12" r="2.5"/></g>
+                <circle cx="220" cy="38" r="5" fill="#ffb15c" opacity=".85"/>
+              </svg>
             </div>
           </div>
           <div class="portal__shadow" aria-hidden="true"></div>
           <div class="portal__nav">
-            <span class="portal__count"><b id="portal-num">01</b> / 05</span>
             <div class="portal__dots">
           <button class="portal__dot" type="button" data-go="0" aria-label="Работа 1"><span></span></button>
           <button class="portal__dot" type="button" data-go="1" aria-label="Работа 2"><span></span></button>
@@ -259,10 +291,9 @@
 
       <div class="about__text">
         <p class="label" data-reveal><span class="label__dot"></span>Хозяин избушки</p>
-        <h2 class="h2" data-reveal>Привет, я <em>Андрей</em></h2>
-        <!-- TODO: текст-черновик, перепишите своими словами -->
-        <p class="about__p" data-words>Я графический дизайнер и хозяин «Избушки дизайна». Здесь, в тёплой мастерской, собираю визуал, который работает: от карточек для маркетплейсов до презентаций и оформления для компаний и мероприятий.</p>
-        <p class="about__p about__p--dim" data-reveal>Мне важно, чтобы дизайн был одновременно уютным — понятным и приятным человеку, и точным — чтобы он решал задачу бизнеса.</p>
+        <h2 class="h2" data-reveal>Привет, я <em>Андрей Хол</em></h2>
+        <p class="about__p" data-words>Здесь, в своей мастерской, собираю визуал, который помогает вашим товарам и бренду выйти из тени и начать продавать максимально эффективно! Специализируюсь на карточках товара, но также создаю много дизайна в других направлениях: от презентаций до полноценного оформления компании или мероприятия.</p>
+        <p class="about__p about__p--dim" data-reveal>Мне важно, чтобы дизайн решил вашу проблему и был одновременно приятным и точным, попадая чётко в боль покупателей, убирая её без лишних вопросов!</p>
 
         <!-- TODO: цифры-заглушки, впишите свои -->
         <ul class="stats" data-reveal>
@@ -564,9 +595,13 @@
             <span class="exhibit__stage"><img class="cert__img" src="assets/img/attic/cert/1.webp" alt="Сертификат участника круглого стола" width="1500" height="1000" loading="lazy" decoding="async"></span>
             <span class="work__plate"><b>Сертификат</b><span>1 макет</span></span>
           </button>
-          <button class="exhibit exhibit--emoji" type="button" data-work="emoji" data-base="assets/img/attic/emoji/" data-slides="1" data-title="Эмодзи" data-reveal aria-label="Эмодзи — открыть">
-            <span class="exhibit__stage"><img class="emoji__img" src="assets/img/attic/emoji/1.webp" alt="Эмодзи «камера»" width="300" height="300" loading="lazy" decoding="async"><span class="emoji__shadow"></span></span>
-            <span class="work__plate"><b>Эмодзи</b><span>1 эмодзи</span></span>
+          <button class="exhibit exhibit--emoji" type="button" data-work="emoji" data-base="assets/img/attic/emoji/" data-slides="18" data-title="Эмодзи-пак" data-reveal aria-label="Эмодзи-пак, 18 эмодзи — открыть">
+            <span class="exhibit__stage">
+              <span class="emoji__orbit" aria-hidden="true"><img class="emoji__mini emoji__mini--1" src="assets/img/attic/emoji/2.webp" alt="" width="300" height="300" loading="lazy" decoding="async"><img class="emoji__mini emoji__mini--2" src="assets/img/attic/emoji/3.webp" alt="" width="300" height="300" loading="lazy" decoding="async"><img class="emoji__mini emoji__mini--3" src="assets/img/attic/emoji/8.webp" alt="" width="300" height="300" loading="lazy" decoding="async"><img class="emoji__mini emoji__mini--4" src="assets/img/attic/emoji/12.webp" alt="" width="300" height="300" loading="lazy" decoding="async"><img class="emoji__mini emoji__mini--5" src="assets/img/attic/emoji/7.webp" alt="" width="300" height="300" loading="lazy" decoding="async"><img class="emoji__mini emoji__mini--6" src="assets/img/attic/emoji/9.webp" alt="" width="300" height="300" loading="lazy" decoding="async"></span>
+              <img class="emoji__img" id="emoji-main" src="assets/img/attic/emoji/1.webp" alt="Эмодзи из пака" width="300" height="300" loading="lazy" decoding="async">
+              <span class="emoji__shadow"></span>
+            </span>
+            <span class="work__plate"><b>Эмодзи-пак</b><span>18 эмодзи</span></span>
           </button>
         </div>
       </div>
