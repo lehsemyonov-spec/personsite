@@ -823,6 +823,118 @@
     });
   })();
 
+  /* ---------- 10. Как я работаю: карандаш рисует путь через шаги по мере скролла ---------- */
+  (function process() {
+    var track = document.getElementById("process-track");
+    if (!track) return;
+    var svg = track.querySelector(".process__line");
+    var bg = track.querySelector(".process__path--bg");
+    var ink = track.querySelector(".process__path--ink");
+    var pencil = track.querySelector(".process__pencil");
+    var steps = Array.prototype.slice.call(track.querySelectorAll("[data-step]"));
+    var len = 0, marks = [];
+    function build() {
+      var r = track.getBoundingClientRect();
+      svg.setAttribute("viewBox", "0 0 " + r.width.toFixed(0) + " " + r.height.toFixed(0));
+      var pts = steps.map(function (st) {
+        var d = st.querySelector(".step__dot").getBoundingClientRect();
+        return { x: d.left + d.width / 2 - r.left, y: d.top + d.height / 2 - r.top };
+      });
+      var wide = pts.length > 1 && Math.abs(pts[0].x - pts[1].x) < 2 && r.width > 600;
+      var d = "M" + pts[0].x.toFixed(1) + " " + (pts[0].y - 40).toFixed(1) + " L" + pts[0].x.toFixed(1) + " " + pts[0].y.toFixed(1);
+      for (var i = 1; i < pts.length; i++) {
+        var a = pts[i - 1], b = pts[i], my = (a.y + b.y) / 2;
+        // на широком экране путь виляет к той стороне, где стоит карточка
+        var sway = wide ? (i % 2 ? 70 : -70) : 0;
+        d += " C" + (a.x + sway).toFixed(1) + " " + my.toFixed(1) + " " + (b.x + sway).toFixed(1) + " " + my.toFixed(1) + " " + b.x.toFixed(1) + " " + b.y.toFixed(1);
+      }
+      bg.setAttribute("d", d);
+      ink.setAttribute("d", d);
+      len = ink.getTotalLength();
+      ink.style.strokeDasharray = len.toFixed(1);
+      // какую долю пути нужно пройти, чтобы дойти до каждого шага
+      marks = pts.map(function (pt) {
+        var lo = 0, hi = len;
+        for (var k = 0; k < 18; k++) { var mid = (lo + hi) / 2; if (ink.getPointAtLength(mid).y < pt.y) lo = mid; else hi = mid; }
+        return hi / len;
+      });
+      update();
+    }
+    function update() {
+      if (!len) return;
+      var r = track.getBoundingClientRect(), vh = window.innerHeight;
+      var p = reduceMotion ? 1 : clamp((vh * 0.62 - r.top) / r.height, 0, 1);
+      ink.style.strokeDashoffset = (len * (1 - p)).toFixed(1);
+      var at = len * p, pt = ink.getPointAtLength(at), pt2 = ink.getPointAtLength(Math.max(0, at - 2));
+      var ang = Math.atan2(pt.y - pt2.y, pt.x - pt2.x) * 180 / Math.PI;
+      // карандаш стоит на конце линии грифелем вниз по ходу движения
+      pencil.style.transform = "translate(" + pt.x.toFixed(1) + "px," + pt.y.toFixed(1) + "px) rotate(" + (ang + 180).toFixed(1) + "deg)";
+      pencil.style.opacity = p > 0.995 ? "0" : "1";
+      steps.forEach(function (st, i) { st.classList.toggle("is-on", p >= marks[i] - 0.005); });
+    }
+    var queued = false;
+    window.addEventListener("scroll", function () {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(function () { queued = false; update(); });
+    }, { passive: true });
+    window.addEventListener("resize", build);
+    window.addEventListener("load", build);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
+    build();
+  })();
+
+  /* ---------- 11. Отзывы: сообщения появляются по очереди, как в живом чате ---------- */
+  (function reviews() {
+    document.querySelectorAll("[data-chat]").forEach(function (chat) {
+      var msgs = Array.prototype.slice.call(chat.querySelectorAll("[data-msg]"));
+      var typing = chat.querySelector(".msg--typing");
+      if (reduceMotion) { msgs.forEach(function (m) { m.classList.add("is-shown"); }); return; }
+      var io = new IntersectionObserver(function (en) {
+        if (!en[0].isIntersecting) return;
+        io.disconnect();
+        var i = 0;
+        (function next() {
+          if (i >= msgs.length) { typing.classList.remove("is-on"); return; }
+          var m = msgs[i];
+          typing.classList.toggle("is-me", m.classList.contains("msg--me"));
+          typing.classList.add("is-on");
+          m.parentNode.insertBefore(typing, m);
+          setTimeout(function () {
+            typing.classList.remove("is-on");
+            m.classList.add("is-shown");
+            i++;
+            setTimeout(next, 450);
+          }, Math.min(1600, 500 + m.textContent.length * 4));
+        })();
+      }, { threshold: 0.45 });
+      io.observe(chat);
+    });
+  })();
+
+  /* ---------- 12. Канал: веер постов и текст выбранного поста ---------- */
+  (function channel() {
+    var fan = document.getElementById("fan");
+    if (!fan) return;
+    var cards = Array.prototype.slice.call(fan.querySelectorAll(".fan__card"));
+    var tabs = Array.prototype.slice.call(document.querySelectorAll(".post-tabs__btn"));
+    var texts = Array.prototype.slice.call(document.querySelectorAll("[data-post-text]"));
+    var cur = 0, touched = false, visible = false;
+    function show(i) {
+      cur = i;
+      cards.forEach(function (c, k) { c.classList.toggle("is-on", k === i); });
+      tabs.forEach(function (t, k) { t.classList.toggle("is-on", k === i); t.setAttribute("aria-selected", String(k === i)); });
+      texts.forEach(function (t, k) { t.hidden = k !== i; t.classList.toggle("is-on", k === i); });
+    }
+    cards.concat(tabs).forEach(function (el) {
+      el.addEventListener("click", function () { touched = true; show(+el.dataset.post); });
+    });
+    new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }).observe(fan);
+    // пока посетитель сам не выбрал пост, посты сменяются сами
+    if (!reduceMotion) setInterval(function () { if (!touched && visible && document.visibilityState === "visible") show((cur + 1) % cards.length); }, 7000);
+    show(0);
+  })();
+
   /* ---------- 1. Верх окна — на уровне верха заголовка (на широких экранах) ---------- */
   (function alignPortal() {
     var scene = document.getElementById("scene");

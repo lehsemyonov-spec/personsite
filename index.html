@@ -119,10 +119,10 @@
       <a href="#directions">Направления</a>
       <a href="#workshop">Работы</a>
       <a href="#prices">Цены</a>
-      <a href="#soon">Канал</a>
+      <a href="#channel">Канал</a>
     </nav>
-    <!-- TODO: заменить #soon на ссылку канала, например https://t.me/ваш_ник -->
-    <a class="btn btn--glass btn--sm header__cta" href="#soon" data-magnetic>
+    <!-- TODO: заменить #channel на ссылку канала, например https://t.me/ваш_ник -->
+    <a class="btn btn--glass btn--sm header__cta" href="#channel" data-magnetic>
       <svg class="ico"><use href="#tg"/></svg><span>Telegram</span>
     </a>
     <button class="burger" id="burger" type="button" aria-label="Меню" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
@@ -154,7 +154,7 @@
         <p class="hero__sub" data-reveal>Карточки для маркетплейсов, презентации, оформление для компаний и мероприятий — всё, чтобы к вашему бренду хотелось зайти на огонёк.</p>
         <div class="hero__actions" data-reveal>
           <a class="btn btn--amber" href="#workshop" data-magnetic>Смотреть работы<svg class="ico"><use href="#arrow"/></svg></a>
-          <a class="btn btn--glass" href="#soon" data-magnetic><svg class="ico"><use href="#tg"/></svg>Зайти в Избушку</a>
+          <a class="btn btn--glass" href="#channel" data-magnetic><svg class="ico"><use href="#tg"/></svg>Зайти в Избушку</a>
         </div>
         <ul class="hero__facts" data-reveal>
           <li><b>5+</b><span>направлений<br>дизайна</span></li>
@@ -368,8 +368,8 @@
           <p class="tile__desc">Афиши, бейджи, ролл-апы, стикеры и сертификаты для ваших событий.</p>
         </a>
 
-        <!-- TODO: заменить #soon на ссылку канала -->
-        <a class="tile tile--cta" href="#soon" data-tile data-reveal>
+        <!-- TODO: заменить #channel на ссылку канала -->
+        <a class="tile tile--cta" href="#channel" data-tile data-reveal>
           <span class="tile__shine"></span>
           <div class="tile__top"><span class="tile__num">05</span><svg class="tile__spark"><use href="#spark"/></svg></div>
           <p class="tile__cta-text">Не нашли нужный формат? <em>Заходите на огонёк</em> — обсудим вашу задачу в&nbsp;Telegram.</p>
@@ -479,8 +479,8 @@
             <span class="work__plate"><b>Термокружка</b><span>1 слайд</span></span>
           </span>
         </button>
-        <!-- TODO: заменить #soon на ссылку канала -->
-        <a class="work work--empty" href="#soon" data-reveal data-tile>
+        <!-- TODO: заменить #channel на ссылку канала -->
+        <a class="work work--empty" href="#channel" data-reveal data-tile>
           <span class="work__frame work__frame--empty">
             <span class="work__ghost" aria-hidden="true"><svg class="spark"><use href="#spark"/></svg></span>
           </span>
@@ -502,8 +502,8 @@
 
       <div class="attic__group" id="attic-company">
         <div class="attic__head" data-reveal><span class="attic__num">02</span><h3 class="attic__title">Оформление для компаний</h3><span class="attic__count">скоро</span></div>
-        <!-- TODO: заменить #soon на ссылку канала -->
-        <a class="attic__empty" href="#soon" data-tile data-reveal>
+        <!-- TODO: заменить #channel на ссылку канала -->
+        <a class="attic__empty" href="#channel" data-tile data-reveal>
           <span class="tile__shine"></span>
           <svg class="spark"><use href="#spark"/></svg>
           <span class="attic__empty-text">Работы для компаний скоро появятся на чердаке. А пока можно обсудить ваш проект.</span>
@@ -673,8 +673,8 @@
           <p class="calc__note" data-note>Добавьте услуги — сумма посчитается сама.</p>
           <div class="calc__actions">
             <button class="btn btn--glass btn--sm" type="button" data-copy>Скопировать расчёт</button>
-            <!-- TODO: заменить #soon на ссылку канала -->
-            <a class="btn btn--amber btn--sm" href="#soon"><svg class="ico"><use href="#tg"/></svg>Обсудить</a>
+            <!-- TODO: заменить #channel на ссылку канала -->
+            <a class="btn btn--amber btn--sm" href="#channel"><svg class="ico"><use href="#tg"/></svg>Обсудить</a>
           </div>
         </div>
       </div>
@@ -751,10 +751,125 @@
           <p class="calc__note" data-note>Добавьте услуги — сумма посчитается сама.</p>
           <div class="calc__actions">
             <button class="btn btn--glass btn--sm" type="button" data-copy>Скопировать расчёт</button>
-            <!-- TODO: заменить #soon на ссылку канала -->
-            <a class="btn btn--amber btn--sm" href="#soon"><svg class="ico"><use href="#tg"/></svg>Обсудить</a>
+            <!-- TODO: заменить #channel на ссылку канала -->
+            <a class="btn btn--amber btn--sm" href="#channel"><svg class="ico"><use href="#tg"/></svg>Обсудить</a>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. Как я работаю: линия-карандаш прорисовывает путь при скролле -->
+  <section class="process section" id="process">
+    <div class="container">
+      <div class="section__head">
+        <p class="label" data-reveal><span class="label__dot"></span>Как я работаю</p>
+        <h2 class="h2" data-reveal>От задачи до <em>готовой работы</em></h2>
+        <p class="section__lead" data-reveal>Шесть понятных шагов — без сюрпризов и потерянных сроков.</p>
+      </div>
+      <div class="process__track" id="process-track">
+        <svg class="process__line" aria-hidden="true"><path class="process__path process__path--bg"/><path class="process__path process__path--ink"/></svg>
+        <svg class="process__pencil" aria-hidden="true" viewBox="0 0 120 20"><use href="#pencil"/></svg>
+        <ol class="steps">
+          <li class="step" data-step>
+            <span class="step__dot" aria-hidden="true"></span>
+            <div class="step__card">
+              <span class="step__num">01</span>
+              <h3 class="step__title">Задача</h3>
+              <p class="step__text">Пишете мне в Telegram и описываете свою задачу простыми словами.</p>
+            </div>
+          </li>
+          <li class="step" data-step>
+            <span class="step__dot" aria-hidden="true"></span>
+            <div class="step__card">
+              <span class="step__num">02</span>
+              <h3 class="step__title">Материалы</h3>
+              <p class="step__text">Присылаете исходники, ТЗ и примеры стиля, который нравится.</p>
+            </div>
+          </li>
+          <li class="step" data-step>
+            <span class="step__dot" aria-hidden="true"></span>
+            <div class="step__card">
+              <span class="step__num">03</span>
+              <h3 class="step__title">План и сроки</h3>
+              <p class="step__text">Составляем чёткий план работы, устанавливаем сроки и правильно ставим цель.</p>
+            </div>
+          </li>
+          <li class="step" data-step>
+            <span class="step__dot" aria-hidden="true"></span>
+            <div class="step__card">
+              <span class="step__num">04</span>
+              <h3 class="step__title">Черновик</h3>
+              <p class="step__text">Создаю промежуточный вариант для дальнейшего согласования.</p>
+            </div>
+          </li>
+          <li class="step" data-step>
+            <span class="step__dot" aria-hidden="true"></span>
+            <div class="step__card">
+              <span class="step__num">05</span>
+              <h3 class="step__title">Правки</h3>
+              <p class="step__text">При наличии правок дорабатываю черновой вариант.</p>
+            </div>
+          </li>
+          <li class="step" data-step>
+            <span class="step__dot" aria-hidden="true"></span>
+            <div class="step__card">
+              <span class="step__num">06</span>
+              <h3 class="step__title">Готово</h3>
+              <p class="step__text">Высылаю готовую работу, которую можно выставлять на маркетплейс или печатать в типографии.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. Отзывы: живые переписки с клиентами -->
+  <section class="reviews section" id="reviews">
+    <div class="container">
+      <div class="section__head">
+        <p class="label" data-reveal><span class="label__dot"></span>Отзывы</p>
+        <h2 class="h2" data-reveal>Возвращаются <em>за новым</em></h2>
+        <p class="section__lead" data-reveal>Настоящие переписки с клиентами — без приукрашиваний, имена скрыты.</p>
+      </div>
+      <div class="chats">
+        <article class="chat" data-chat data-reveal>
+          <header class="chat__head">
+            <span class="chat__ava" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="4" fill="currentColor"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" fill="currentColor"/></svg></span>
+            <span class="chat__who"><b>Селлер · дождевики</b><small>имя скрыто</small></span>
+          </header>
+          <div class="chat__body">
+              <div class="msg msg--me" data-msg><p>Здравствуйте! Как ваши дела? Хотел поинтересоваться, успели ли вы хорошо протестировать слайды по дождевикам, которые мы сделали? Нам очень интересно узнать, какой результат вам удалось получить и не хотите ли вы поработать с фотографиями ещё? Буду вам очень благодарен за обратную связь и очень надеюсь, что у нас будет возможность поработать с вами ещё!)</p></div>
+              <div class="msg msg--client" data-msg><p>Добрый день! Спасибо, всё хорошо, тут на самом же деле и погода помогает) дождевики сейчас только допрадовать буду, в следующем сезоне к ним вернусь)</p></div>
+              <div class="msg msg--client" data-msg><p>У меня новый товар, я хотел бы по нему информатику сделать. Это Балаклава, особенность этой модели, что она влагостойкая и можно использовать как отдельный головной убор</p></div>
+            <div class="msg msg--typing" aria-hidden="true"><i></i><i></i><i></i></div>
+          </div>
+          <footer class="chat__foot"><svg class="spark"><use href="#spark"/></svg>Вернулся с новым товаром</footer>
+        </article>
+        <article class="chat" data-chat data-reveal>
+          <header class="chat__head">
+            <span class="chat__ava" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="4" fill="currentColor"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" fill="currentColor"/></svg></span>
+            <span class="chat__who"><b>Селлер · наборы</b><small>имя скрыто</small></span>
+          </header>
+          <div class="chat__body">
+              <div class="msg msg--me" data-msg><p>Здравствуйте! Хотел узнать, как прошли тесты карточки, которую мы делали для наборов, получилось ли добиться того эффекта, который вы хотели?)</p></div>
+              <div class="msg msg--client" data-msg><p>Добрый день, Андрей 👋 прошу прощения за долгий ответ, затерялся чат в ленте. Всё хорошо, спасибо. не зря шлифовали так долго инфографику 😸 тестировать стр при смене обложки не планируем пока, стоит на текущей, устраивают показатели 👍</p></div>
+            <div class="msg msg--typing" aria-hidden="true"><i></i><i></i><i></i></div>
+          </div>
+          <footer class="chat__foot"><svg class="spark"><use href="#spark"/></svg>Довольны показателями карточки</footer>
+        </article>
+        <article class="chat" data-chat data-reveal>
+          <header class="chat__head">
+            <span class="chat__ava" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="4" fill="currentColor"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" fill="currentColor"/></svg></span>
+            <span class="chat__who"><b>Селлер · новый проект</b><small>имя скрыто</small></span>
+          </header>
+          <div class="chat__body">
+              <div class="msg msg--me" data-msg><p>Понял, хорошо👌 Касаемо начала работы вы напишите после теста карточки?</p></div>
+              <div class="msg msg--client" data-msg><p>Я хочу вас сегодня забрать ) Добавить в чат и уже отправить первое ТЗ)</p></div>
+            <div class="msg msg--typing" aria-hidden="true"><i></i><i></i><i></i></div>
+          </div>
+          <footer class="chat__foot"><svg class="spark"><use href="#spark"/></svg>Сразу перешли к работе</footer>
+        </article>
       </div>
     </div>
   </section>
@@ -777,13 +892,82 @@
     </div>
   </div>
 
-  <!-- Временная заглушка: следующие блоки появятся, когда будут картинки работ -->
-  <section class="soon section" id="soon">
-    <div class="container soon__inner" data-reveal>
-      <svg class="soon__spark"><use href="#spark"/></svg>
-      <h2 class="h2">Мастерская <em>строится</em></h2>
-      <p class="section__lead">Скоро здесь появятся новые разделы и работы. А пока — свет горит в канале.</p>
-      <a class="btn btn--amber" href="#top" data-magnetic>Наверх<svg class="ico ico--up"><use href="#arrow"/></svg></a>
+  <!-- 12. Канал: посты веером в механической перчатке -->
+  <section class="channel section" id="channel">
+    <div class="container channel__grid">
+      <div class="fan" id="fan" data-reveal>
+        <div class="fan__glow" aria-hidden="true"></div>
+        <svg class="fan__hand fan__hand--back" viewBox="0 0 520 560" aria-hidden="true"><defs>
+  <linearGradient id="steel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7d8792"/><stop offset=".45" stop-color="#3b424b"/><stop offset="1" stop-color="#1a1d22"/></linearGradient>
+  <linearGradient id="steel-l" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9b2bc"/><stop offset=".5" stop-color="#555e68"/><stop offset="1" stop-color="#23272d"/></linearGradient>
+  <radialGradient id="core" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff1d6"/><stop offset=".4" stop-color="#ffb15c"/><stop offset="1" stop-color="#ff8a3d" stop-opacity="0"/></radialGradient>
+</defs>
+<g transform="rotate(14 318 548)"><rect x="248" y="505" width="140" height="90" rx="18" fill="url(#steel)" stroke="#111418" stroke-width="2"/><rect x="248" y="520" width="140" height="8" fill="#ffb15c" opacity=".75"/><path d="M262 545h112M262 562h112" stroke="#8b949e" stroke-width="1.2" opacity=".5"/></g>
+<g transform="translate(318 462) rotate(-10.8)" class="finger"><rect x="0" y="-12.0" width="47.9" height="24" rx="12.0" fill="url(#steel-l)" stroke="#111418" stroke-width="1.5"/><path d="M14.399999999999999 -9.0H33.453944456021595" stroke="#d6dde4" stroke-width="1.2" opacity=".55"/><path d="M23.926972228010797 -12.0V12.0" stroke="#111418" stroke-width="2"/><path d="M20.926972228010797 -10.0V10.0" stroke="#ffb15c" stroke-width="1" opacity=".8"/></g>
+<g transform="translate(365.0 453.0) rotate(-1.5)" class="finger"><rect x="0" y="-11.0" width="39.0" height="22" rx="11.0" fill="url(#steel-l)" stroke="#111418" stroke-width="1.5"/><path d="M13.2 -8.0H25.81281840626232" stroke="#d6dde4" stroke-width="1.2" opacity=".55"/><path d="M19.50640920313116 -11.0V11.0" stroke="#111418" stroke-width="2"/><path d="M16.50640920313116 -9.0V9.0" stroke="#ffb15c" stroke-width="1" opacity=".8"/></g>
+<circle cx="365.0" cy="453.0" r="10.08" fill="url(#steel)" stroke="#111418" stroke-width="1.5"/><circle cx="365.0" cy="453.0" r="4.2336" fill="#ffb15c" opacity=".85"/>
+<circle cx="404" cy="452" r="8.0" fill="#ffb15c" opacity=".35"/>
+<g transform="translate(324 442) rotate(-17.4)" class="finger"><rect x="0" y="-12.5" width="53.5" height="25" rx="12.5" fill="url(#steel-l)" stroke="#111418" stroke-width="1.5"/><path d="M15.0 -9.5H38.45091205957107" stroke="#d6dde4" stroke-width="1.2" opacity=".55"/><path d="M26.725456029785533 -12.5V12.5" stroke="#111418" stroke-width="2"/><path d="M23.725456029785533 -10.5V10.5" stroke="#ffb15c" stroke-width="1" opacity=".8"/></g>
+<g transform="translate(375.0 426.0) rotate(-10.5)" class="finger"><rect x="0" y="-11.5" width="43.7" height="23" rx="11.5" fill="url(#steel-l)" stroke="#111418" stroke-width="1.5"/><path d="M13.799999999999999 -8.5H29.93785545725808" stroke="#d6dde4" stroke-width="1.2" opacity=".55"/><path d="M21.86892772862904 -11.5V11.5" stroke="#111418" stroke-width="2"/><path d="M18.86892772862904 -9.5V9.5" stroke="#ffb15c" stroke-width="1" opacity=".8"/></g>
+<circle cx="375.0" cy="426.0" r="10.5" fill="url(#steel)" stroke="#111418" stroke-width="1.5"/><circle cx="375.0" cy="426.0" r="4.41" fill="#ffb15c" opacity=".85"/>
+<circle cx="418" cy="418" r="8.5" fill="#ffb15c" opacity=".35"/>
+<g transform="translate(320 422) rotate(-23.1)" class="finger"><rect x="0" y="-12.5" width="58.7" height="25" rx="12.5" fill="url(#steel-l)" stroke="#111418" stroke-width="1.5"/><path d="M15.0 -9.5H43.69412236331676" stroke="#d6dde4" stroke-width="1.2" opacity=".55"/><path d="M29.34706118165838 -12.5V12.5" stroke="#111418" stroke-width="2"/><path d="M26.34706118165838 -10.5V10.5" stroke="#ffb15c" stroke-width="1" opacity=".8"/></g>
+<g transform="translate(374.0 399.0) rotate(-18.1)" class="finger"><rect x="0" y="-11.5" width="48.4" height="23" rx="11.5" fill="url(#steel-l)" stroke="#111418" stroke-width="1.5"/><path d="M13.799999999999999 -8.5H34.58388161361178" stroke="#d6dde4" stroke-width="1.2" opacity=".55"/><path d="M24.19194080680589 -11.5V11.5" stroke="#111418" stroke-width="2"/><path d="M21.19194080680589 -9.5V9.5" stroke="#ffb15c" stroke-width="1" opacity=".8"/></g>
+<circle cx="374.0" cy="399.0" r="10.5" fill="url(#steel)" stroke="#111418" stroke-width="1.5"/><circle cx="374.0" cy="399.0" r="4.41" fill="#ffb15c" opacity=".85"/>
+<circle cx="420" cy="384" r="8.5" fill="#ffb15c" opacity=".35"/>
+<g transform="translate(308 404) rotate(-29.9)" class="finger"><rect x="0" y="-11.5" width="62.3" height="23" rx="11.5" fill="url(#steel-l)" stroke="#111418" stroke-width="1.5"/><path d="M13.799999999999999 -8.5H48.46556030423239" stroke="#d6dde4" stroke-width="1.2" opacity=".55"/><path d="M31.132780152116194 -11.5V11.5" stroke="#111418" stroke-width="2"/><path d="M28.132780152116194 -9.5V9.5" stroke="#ffb15c" stroke-width="1" opacity=".8"/></g>
+<g transform="translate(362.0 373.0) rotate(-26.6)" class="finger"><rect x="0" y="-10.5" width="51.4" height="21" rx="10.5" fill="url(#steel-l)" stroke="#111418" stroke-width="1.5"/><path d="M12.6 -7.5H38.82956348249516" stroke="#d6dde4" stroke-width="1.2" opacity=".55"/><path d="M25.71478174124758 -10.5V10.5" stroke="#111418" stroke-width="2"/><path d="M22.71478174124758 -8.5V8.5" stroke="#ffb15c" stroke-width="1" opacity=".8"/></g>
+<circle cx="362.0" cy="373.0" r="9.66" fill="url(#steel)" stroke="#111418" stroke-width="1.5"/><circle cx="362.0" cy="373.0" r="4.0572" fill="#ffb15c" opacity=".85"/>
+<circle cx="408" cy="350" r="7.5" fill="#ffb15c" opacity=".35"/>
+<path d="M196 470C196 432 226 410 262 408L318 404C344 404 352 430 350 456L344 506C340 528 318 540 292 540H238C212 540 196 520 196 498Z" fill="url(#steel)" stroke="#111418" stroke-width="2"/>
+<path d="M214 470C230 440 300 430 336 446" stroke="#c3cbd3" stroke-width="1.4" fill="none" opacity=".45"/>
+<path d="M230 500h90M236 516h76" stroke="#0d0f12" stroke-width="2" opacity=".8"/>
+<circle cx="282" cy="482" r="22" fill="url(#core)"/><circle cx="282" cy="482" r="9" fill="#fff1d6" opacity=".9"/><circle cx="282" cy="482" r="14" fill="none" stroke="#ffb15c" stroke-width="1.5"/></svg>
+        <div class="fan__cards">
+            <button class="fan__card fan__card--0" type="button" data-post="0" aria-label="Пост 1: Микронаушник"><img src="assets/img/channel/1.webp" alt="Карточка микронаушника — пост из канала" width="620" height="1068" loading="lazy" decoding="async"></button>
+            <button class="fan__card fan__card--1" type="button" data-post="1" aria-label="Пост 2: Каталог «Гелиос»"><img src="assets/img/channel/2.webp" alt="Каталог «Гелиос» на выставочной полке — пост из канала" width="620" height="1068" loading="lazy" decoding="async"></button>
+            <button class="fan__card fan__card--2" type="button" data-post="2" aria-label="Пост 3: Праймер"><img src="assets/img/channel/3.webp" alt="Карточка бескислотного дегидратора — пост из канала" width="620" height="1068" loading="lazy" decoding="async"></button>
+        </div>
+        <svg class="fan__hand fan__hand--front" viewBox="0 0 520 560" aria-hidden="true"><g transform="translate(200 506) rotate(-56.3)" class="thumb"><rect x="0" y="-16.0" width="64.9" height="32" rx="16.0" fill="url(#steel-l)" stroke="#111418" stroke-width="1.5"/><path d="M19.2 -13.0H45.699922958351806" stroke="#d6dde4" stroke-width="1.2" opacity=".55"/><path d="M32.449961479175904 -16.0V16.0" stroke="#111418" stroke-width="2"/><path d="M29.449961479175904 -14.0V14.0" stroke="#ffb15c" stroke-width="1" opacity=".8"/></g>
+<g transform="translate(236 452) rotate(-28.6)" class="thumb"><rect x="0" y="-14.0" width="50.1" height="28" rx="14.0" fill="url(#steel-l)" stroke="#111418" stroke-width="1.5"/><path d="M16.8 -11.0H33.319856344566674" stroke="#d6dde4" stroke-width="1.2" opacity=".55"/><path d="M25.059928172283335 -14.0V14.0" stroke="#111418" stroke-width="2"/><path d="M22.059928172283335 -12.0V12.0" stroke="#ffb15c" stroke-width="1" opacity=".8"/></g>
+<circle cx="236" cy="452" r="13" fill="url(#steel)" stroke="#111418" stroke-width="1.5"/><circle cx="236" cy="452" r="5.46" fill="#ffb15c" opacity=".85"/>
+<circle cx="280" cy="428" r="9" fill="#ffb15c" opacity=".45"/>
+<path d="M266 422c10-4 20 0 22 8" stroke="#ffd59a" stroke-width="1.5" fill="none" opacity=".7"/></svg>
+      </div>
+      <div class="channel__text">
+        <p class="label" data-reveal><span class="label__dot"></span>Telegram-канал</p>
+        <h2 class="h2" data-reveal>Заходите <em>в Избушку!</em></h2>
+        <p class="section__lead channel__lead" data-reveal>Рассказываю, как создаются работы, делюсь приёмами с нейросетями и показываю дизайн в реальной жизни.</p>
+        <div class="post-tabs" role="tablist" aria-label="Посты из канала" data-reveal>
+          <button class="post-tabs__btn is-on" type="button" data-post="0" aria-selected="true" role="tab">Микронаушник</button>
+          <button class="post-tabs__btn" type="button" data-post="1" aria-selected="false" role="tab">Каталог «Гелиос»</button>
+          <button class="post-tabs__btn" type="button" data-post="2" aria-selected="false" role="tab">Праймер</button>
+        </div>
+        <div class="posts" data-reveal>
+          <article class="post is-on" data-post-text="0">
+            <p>🎲 Маленький футляр для микронаушника на стальном плато, уходящем вниз кадра!</p>
+            <p>🐈‍⬛ Ещё 1 минималистичная работа в копилку! По ТЗ нужно было придумать новый стиль для карточки микронаушника и перенести оттуда все надписи. И конечно, нейросети снова в деле!</p>
+            <p>💎 Сама картинка, иконки и магниты были сделаны с помощью ИИ или вытащены с исходников через ИИ. То, как вытаскивать объекты с фото через нейронку, сохраняя их внешний вид — отдельная история 😾😾😾</p>
+            <p>📱 Пока я готовлю для вас гайдик по нейрофотосессии, параллельно разгоняю новые соцсети. Первая из них — <a href="https://pin.it/3c3OnGIUJ" target="_blank" rel="noopener noreferrer">Pinterest</a> 📱</p>
+            <p>☝️ Буду рад вашей поддержке! И в свою очередь постараюсь сильно не тянуть с гайдом и с другими вещами🤪</p>
+          </article>
+          <article class="post" data-post-text="1" hidden>
+            <p>😳 Друзья, сложно в посте передать теплоту ощущения, когда ты видишь, как твой дизайн используется в реальности и воплощается в физическом объекте! Но я попробую это сделать!</p>
+            <p>😎 В конце весны я работал с компанией по производству опалубочных систем, им нужно было полностью обновить визуал. А полное обновление стиля всегда подразумевает комплекс работ, поэтому для них я разработал каталог, прайс-лист, коммерческое предложение и ещё некоторые вещи (покажу вам их в последующих постах).</p>
+            <p>✅ И вот, каталог готов, основные работы позади, и вдруг мне присылают фотографию, как он смотрится на полке. Ощущения невероятные, когда понимаешь, что 2,5 недели работы были не просто так, а действительно помогли людям, превратившись в распечатанный и стильный продукт!</p>
+            <p>😮 А испытывали ли вы подобное и был ли ваш дизайн нанесён на реальные объекты или служил их наполнением? Будет очень интересно почитать про ваш опыт и ваши эмоции под постом!</p>
+          </article>
+          <article class="post" data-post-text="2" hidden>
+            <p>🌞 Тёплая погода, восхитительный отдых и премиальный минимализм! Что ещё нужно для счастья?</p>
+            <p>🖼 2 фотографии, которые прошли через цикл ретуши и дизайна, чтобы превратиться в конфетки!</p>
+            <p>😊 Интересно, что 90%+ ретуши было сделано через нейросеть путём комплексного запроса для трансформации референса.</p>
+            <p>😺 Если летнее солнце не загонит меня в ленивость окончательно, то сделаю гайдик или ролик о том, как создавать такие картинки и выстраивать вокруг них инфографику.</p>
+            <p>Дайте огня, если понравился стиль карточки!🔥🔥🔥)</p>
+          </article>
+        </div>
+        <!-- TODO: заменить #channel на ссылку канала, например https://t.me/ваш_ник -->
+        <a class="btn btn--amber channel__cta" href="#channel" data-magnetic data-reveal><svg class="ico"><use href="#tg"/></svg>Подписаться на канал</a>
+      </div>
     </div>
   </section>
 </main>
