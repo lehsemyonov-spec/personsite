@@ -927,6 +927,42 @@
     });
   });
 
+  /* ---------- 13. Почта: на компьютере копируем адрес, на телефоне открываем письмо ---------- */
+  (function email() {
+    var toast = document.getElementById("toast"), timer;
+    function say(text) {
+      toast.textContent = text;
+      toast.classList.add("is-on");
+      clearTimeout(timer);
+      timer = setTimeout(function () { toast.classList.remove("is-on"); }, 2600);
+    }
+    function copy(text) {
+      // запасной путь для браузеров и встроенных окон, где Clipboard API недоступен
+      function legacy() {
+        var ta = document.createElement("textarea");
+        ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        var ok = false;
+        try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+        document.body.removeChild(ta);
+        return ok;
+      }
+      if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(text).then(function () { return true; }, legacy);
+      }
+      return Promise.resolve(legacy());
+    }
+    document.querySelectorAll("[data-email]").forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        if (!finePointer) return; // телефон и планшет: стандартное письмо через почтовое приложение
+        e.preventDefault();
+        copy(a.dataset.email).then(function (ok) {
+          say(ok ? "Почта скопирована: " + a.dataset.email : "Почта: " + a.dataset.email);
+        });
+      });
+    });
+  })();
+
   /* ---------- 1. Верх окна — на уровне верха заголовка (на широких экранах) ---------- */
   (function alignPortal() {
     var scene = document.getElementById("scene");
