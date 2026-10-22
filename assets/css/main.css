@@ -1590,6 +1590,8 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 600; color: v
 .lightbox__img.is-loading { opacity: 0.35; }
 .lightbox__frame { max-height: 72vh; overflow-y: auto; border-radius: 18px; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: rgba(255, 177, 92, 0.5) transparent; }
 .lightbox__img.is-tall { width: min(820px, calc(100vw - 200px)); height: auto; max-height: none; max-width: none; border-radius: 18px; }
+.lightbox__frame.is-multi .lightbox__img { display: block; border-radius: 0; box-shadow: none; }
+.lightbox__frame.is-multi { box-shadow: 0 0 0 1px rgba(255, 196, 130, 0.35), 0 40px 80px -30px #000; }
 .lightbox__cap { margin: 0; padding: 8px 16px; border-radius: 99px; background: rgba(255, 177, 92, 0.12); box-shadow: inset 0 0 0 1px rgba(255, 196, 130, 0.5); color: var(--gold); font-size: 14.5px; font-weight: 600; }
 .lightbox__img.is-wide { width: auto; height: auto; max-width: min(1100px, calc(100vw - 200px)); max-height: 72vh; }
 .lightbox__arrow { display: grid; place-items: center; width: 52px; height: 52px; flex: none; border: 0; border-radius: 50%; color: var(--text); background: rgba(255, 236, 210, 0.08); box-shadow: inset 0 0 0 1px var(--line-2); cursor: pointer; transition: background 0.3s, box-shadow 0.3s; }

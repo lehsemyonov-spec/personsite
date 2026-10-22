@@ -676,7 +676,16 @@
       var cap = state.caps[state.i];
       lbCap.hidden = !cap;
       lbCap.textContent = cap || "";
-      lbImg.src = state.list[state.i];
+      // слайд может состоять из нескольких частей (длинный прайс): их показываем подряд
+      var parts = state.list[state.i].split(",");
+      Array.prototype.slice.call(lbFrame.querySelectorAll(".lightbox__part")).forEach(function (e) { e.remove(); });
+      lbImg.src = parts[0];
+      parts.slice(1).forEach(function (src) {
+        var im = document.createElement("img");
+        im.className = "lightbox__img lightbox__part is-tall"; im.src = src; im.alt = ""; im.decoding = "async";
+        lbFrame.appendChild(im);
+      });
+      lbFrame.classList.toggle("is-multi", parts.length > 1);
       lbImg.alt = state.title + " — слайд " + (state.i + 1) + " из " + n;
       lbCount.textContent = (state.i + 1) + " / " + n;
       prev.hidden = next.hidden = lbThumbs.hidden = lbCount.hidden = n < 2;
@@ -702,7 +711,7 @@
           b.className = "lightbox__thumb";
           b.setAttribute("aria-label", "Слайд " + (k + 1));
           var t = document.createElement("img");
-          t.src = src; t.alt = ""; t.loading = "lazy";
+          t.src = src.split(",")[0]; t.alt = ""; t.loading = "lazy";
           t.onload = function () { b.classList.toggle("is-wide", t.naturalWidth > t.naturalHeight * 1.05); };
           b.appendChild(t);
           b.addEventListener("click", function () { state.i = k; render(); });
@@ -751,11 +760,12 @@
       var n = +el.dataset.slides, base = el.dataset.base || "assets/img/portfolio/" + el.dataset.work + "/";
       var list = [];
       for (var i = 1; i <= n; i++) list.push(base + i + ".webp");
+      if (el.dataset.parts) el.dataset.parts.split("|").forEach(function (p, k) { if (p) list[k] = p.split(",").map(function (x) { return base + x; }).join(","); });
       var loaded = false;
       el.addEventListener("pointerenter", function () {
         if (loaded) return;
         loaded = true;
-        list.slice(1, 4).forEach(function (src) { var im = new Image(); im.src = src; });
+        list.slice(1, 4).forEach(function (src) { var im = new Image(); im.src = src.split(",")[0]; });
       });
       var caps = el.dataset.captions ? el.dataset.captions.split("|") : [];
       el.addEventListener("click", function () { lightbox.open(el.dataset.title, list, 0, el, caps); });
