@@ -659,7 +659,9 @@
     var lbThumbs = document.getElementById("lb-thumbs");
     var prev = document.getElementById("lb-prev");
     var next = document.getElementById("lb-next");
-    var state = { list: [], i: 0, opener: null, title: "" };
+    var lbCap = document.getElementById("lb-cap");
+    var lbFrame = document.getElementById("lb-frame");
+    var state = { list: [], i: 0, opener: null, title: "", caps: [] };
 
     function render() {
       var n = state.list.length;
@@ -667,7 +669,13 @@
       lbImg.onload = function () {
         lbImg.classList.remove("is-loading");
         lbImg.classList.toggle("is-wide", lbImg.naturalWidth > lbImg.naturalHeight * 1.05);
+        // длинные изображения (прайс) показываем в полную ширину и листаем вниз внутри окна
+        lbImg.classList.toggle("is-tall", lbImg.naturalHeight > lbImg.naturalWidth * 1.8);
       };
+      lbFrame.scrollTop = 0;
+      var cap = state.caps[state.i];
+      lbCap.hidden = !cap;
+      lbCap.textContent = cap || "";
       lbImg.src = state.list[state.i];
       lbImg.alt = state.title + " — слайд " + (state.i + 1) + " из " + n;
       lbCount.textContent = (state.i + 1) + " / " + n;
@@ -684,8 +692,8 @@
       render();
     }
     var api = {
-      open: function (title, list, i, opener) {
-        state = { list: list, i: i || 0, opener: opener, title: title };
+      open: function (title, list, i, opener, caps) {
+        state = { list: list, i: i || 0, opener: opener, title: title, caps: caps || [] };
         lbTitle.textContent = title;
         lbThumbs.textContent = "";
         list.forEach(function (src, k) {
@@ -749,7 +757,8 @@
         loaded = true;
         list.slice(1, 4).forEach(function (src) { var im = new Image(); im.src = src; });
       });
-      el.addEventListener("click", function () { lightbox.open(el.dataset.title, list, 0, el); });
+      var caps = el.dataset.captions ? el.dataset.captions.split("|") : [];
+      el.addEventListener("click", function () { lightbox.open(el.dataset.title, list, 0, el, caps); });
     });
   })();
 

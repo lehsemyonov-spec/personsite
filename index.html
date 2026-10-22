@@ -510,7 +510,7 @@
       </div>
 
       <div class="attic__group" id="attic-company">
-        <div class="attic__head" data-reveal><span class="attic__num">02</span><h3 class="attic__title">Оформление для компаний</h3><span class="attic__count">3 работы</span></div>
+        <div class="attic__head" data-reveal><span class="attic__num">02</span><h3 class="attic__title">Оформление для компаний</h3><span class="attic__count">4 работы</span></div>
         <div class="attic-company">
           <button class="exhibit exhibit--catalog" type="button" data-book data-title="Каталог компании «Гелиос»" data-pages="33" data-captions="Обложка|Содержание|Наш завод|Продукция|Стеновая опалубка|Опалубка стен Гелиос EURO|Щиты линейные Гелиос EURO|Опалубка стен Гелиос Армада|Стеновая опалубка Гелиос Армада|Опалубка колонн: варианты решений|Комплектующие для опалубки|Комплектующие для опалубки|Комплектующие для опалубки|Комплектующие для опалубки|Комплектующие для опалубки|Комплектующие для опалубки|Опалубка перекрытий на телескопических стойках|Опалубка перекрытий на телескопических стойках|Объёмная опалубка|Объёмная опалубка|Объёмная опалубка|Объёмная опалубка|Объёмная опалубка|Расходные материалы|Варианты решений|Варианты решений|Варианты решений|Варианты решений|Наше оборудование на объектах|Наше оборудование на объектах|Наше оборудование на объектах|Наше оборудование на объектах|Закрывающая страница" data-reveal aria-label="Каталог компании «Гелиос», 33 страницы — открыть">
             <span class="exhibit__stage">
@@ -523,7 +523,13 @@
             <span class="work__plate"><b>Каталог компании «Гелиос»</b><span>33 страницы · 2 цвета</span></span>
             <span class="swatches" aria-hidden="true"><i class="swatch swatch--white is-on"></i><i class="swatch swatch--black"></i><small>2 цвета</small></span>
           </button>
-          <div class="attic-company__side">
+          <button class="exhibit exhibit--price" type="button" data-work="price" data-base="assets/img/attic/price/" data-slides="2" data-title="Преобразование прайса компании «Гелиос»" data-captions="Мелкий прайс в Excel|Стильный прайс с цветовым разделением блоков" data-reveal aria-label="Преобразование прайса компании «Гелиос» — открыть">
+            <span class="exhibit__stage">
+              <span class="price-strip price-strip--before"><img src="assets/img/attic/price/1.webp" alt="Прайс до: таблица в Excel" width="840" height="2000" loading="lazy" decoding="async"></span>
+              <span class="price-strip price-strip--after"><img src="assets/img/attic/price/2.webp" alt="Прайс после: оформленный прайс-лист" width="474" height="2000" loading="lazy" decoding="async"></span>
+            </span>
+            <span class="work__plate"><b>Преобразование прайса компании «Гелиос»</b><span>до и после</span></span>
+          </button>
           <button class="exhibit exhibit--cards" type="button" data-work="cards" data-base="assets/img/attic/cards/" data-slides="4" data-title="Визитки компании «Гелиос»" data-reveal aria-label="Визитки компании «Гелиос», 2 варианта — открыть">
             <span class="exhibit__stage">
               <span class="bcard bcard--black"><img src="assets/img/attic/cards/3.webp" alt="Визитка «Гелиос», чёрный вариант" width="1400" height="816" loading="lazy" decoding="async"></span>
@@ -538,13 +544,6 @@
             </span>
             <span class="work__plate"><b>Коммерческое предложение компании «Гелиос»</b><span>3 страницы · 2 цвета</span></span>
           </button>
-        <a class="attic__empty" href="https://t.me/HolAndrew" target="_blank" rel="noopener noreferrer" data-tile data-reveal>
-          <span class="tile__shine"></span>
-          <svg class="spark"><use href="#spark"/></svg>
-          <span class="attic__empty-text">Скоро здесь появятся прайс-лист и другие материалы для этого же клиента.</span>
-          <span class="work__price">Обсудить проект<svg class="ico"><use href="#arrow"/></svg></span>
-        </a>
-          </div>
         </div>
       </div>
 
@@ -947,9 +946,10 @@
         <span class="lightbox__count" id="lb-count"></span>
         <button class="lightbox__close" type="button" data-close aria-label="Закрыть"><span></span><span></span></button>
       </div>
+      <p class="lightbox__cap" id="lb-cap" hidden></p>
       <div class="lightbox__stage">
         <button class="lightbox__arrow lightbox__arrow--prev" type="button" id="lb-prev" aria-label="Предыдущий слайд"><svg class="ico"><use href="#arrow"/></svg></button>
-        <img class="lightbox__img" id="lb-img" alt="" width="900" height="1200">
+        <div class="lightbox__frame" id="lb-frame"><img class="lightbox__img" id="lb-img" alt="" width="900" height="1200"></div>
         <button class="lightbox__arrow lightbox__arrow--next" type="button" id="lb-next" aria-label="Следующий слайд"><svg class="ico"><use href="#arrow"/></svg></button>
       </div>
       <div class="lightbox__thumbs" id="lb-thumbs"></div>
