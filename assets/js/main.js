@@ -980,7 +980,7 @@
     var prev = document.getElementById("book-prev"), next = document.getElementById("book-next");
     var colors = Array.prototype.slice.call(modal.querySelectorAll("[data-color]"));
     var single = window.matchMedia("(max-width: 760px)");
-    var st = { n: 0, caps: [], color: "black", page: 1, busy: false, opener: null };
+    var st = { n: 0, caps: [], color: "white", page: 1, busy: false, opener: null };
 
     function src(n) { return BASES[st.color] + n + ".webp"; }
     // развороты: [—,1], [2,3], [4,5] … ; на телефоне — по одной странице

@@ -1475,7 +1475,15 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 600; color: v
 
 /* ---------- 02. Каталог: брошюра на плитке ---------- */
 .attic-company { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: clamp(14px, 2vw, 26px); align-items: stretch; }
+.attic-company__side { display: grid; grid-template-rows: 1fr auto; gap: clamp(14px, 2vw, 26px); }
 .attic-company .attic__empty { flex-direction: column; align-items: flex-start; justify-content: center; }
+.exhibit--cards { min-height: 260px; }
+.bcard { position: absolute; width: 62%; aspect-ratio: 1400 / 816; border-radius: 8px; overflow: hidden; box-shadow: 0 0 0 1px rgba(255, 213, 154, 0.25), 0 24px 40px -18px #000; transition: transform 0.8s var(--ease); }
+.bcard img { width: 100%; height: 100%; object-fit: cover; }
+.bcard--black { transform: translate(14%, -6%) rotate(6deg); }
+.bcard--white { transform: translate(-12%, 10%) rotate(-5deg); }
+.exhibit--cards:hover .bcard--black { transform: translate(22%, -10%) rotate(9deg); }
+.exhibit--cards:hover .bcard--white { transform: translate(-18%, 14%) rotate(-8deg); }
 .attic-company .attic__empty-text { flex: none; }
 .exhibit--catalog { height: clamp(380px, 38vw, 520px); }
 .brochure { position: relative; height: 80%; aspect-ratio: 989 / 1400; margin-top: 4%; perspective: 1400px; }
