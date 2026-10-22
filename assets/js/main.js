@@ -963,6 +963,163 @@
     });
   })();
 
+  /* ---------- 7. Каталог: листалка с разворотами и переключением цвета ---------- */
+  (function catalogBook() {
+    var modal = document.getElementById("book");
+    var tiles = document.querySelectorAll("[data-book]");
+    if (!modal || !tiles.length) return;
+    var BASES = { black: "assets/img/attic/catalog-black/", white: null }; // белая версия появится позже
+    var book = document.getElementById("book-spread");
+    var pl = book.querySelector(".book__page--l"), pr = book.querySelector(".book__page--r");
+    var leaf = book.querySelector(".book__leaf");
+    var front = leaf.querySelector(".book__face--front img"), back = leaf.querySelector(".book__face--back img");
+    var title = document.getElementById("book-title"), count = document.getElementById("book-count");
+    var caption = document.getElementById("book-caption"), thumbs = document.getElementById("book-thumbs");
+    var prev = document.getElementById("book-prev"), next = document.getElementById("book-next");
+    var colors = Array.prototype.slice.call(modal.querySelectorAll("[data-color]"));
+    var single = window.matchMedia("(max-width: 760px)");
+    var st = { n: 0, caps: [], color: "black", page: 1, busy: false, opener: null };
+
+    function src(n) { return BASES[st.color] + n + ".webp"; }
+    // развороты: [—,1], [2,3], [4,5] … ; на телефоне — по одной странице
+    function spreadOf(page) {
+      if (single.matches) return [null, page];
+      if (page === 1) return [null, 1];
+      var l = page % 2 ? page - 1 : page;
+      return [l, l + 1 <= st.n ? l + 1 : null];
+    }
+    function setPage(el, n) {
+      var img = el.querySelector("img");
+      el.classList.toggle("is-empty", !n);
+      if (n) { img.src = src(n); img.alt = st.caps[n - 1] ? "Страница " + n + ": " + st.caps[n - 1] : "Страница " + n; }
+      else img.removeAttribute("src");
+    }
+    function stepPage(dir) {
+      var sp = spreadOf(st.page);
+      if (single.matches) return clamp(st.page + dir, 1, st.n);
+      if (dir > 0) { var r = sp[1] || sp[0]; return r >= st.n ? st.page : r + 1; }
+      var l = sp[0] || 1; return l <= 1 ? 1 : l - 1;
+    }
+    function info() {
+      var sp = spreadOf(st.page), a = sp[0] || sp[1], b = sp[1] || sp[0];
+      count.textContent = (a === b ? "Стр. " + a : "Стр. " + a + "–" + b) + " из " + st.n;
+      var c = [];
+      [a, b].forEach(function (n) { if (n && st.caps[n - 1] && c.indexOf(st.caps[n - 1]) < 0) c.push(st.caps[n - 1]); });
+      caption.textContent = c.join(" · ");
+      prev.disabled = a <= 1;
+      next.disabled = b >= st.n;
+      Array.prototype.forEach.call(thumbs.children, function (t, k) {
+        var on = k + 1 === a || k + 1 === b;
+        t.classList.toggle("is-on", on);
+        if (k + 1 === a) t.scrollIntoView({ block: "nearest", inline: "center" });
+      });
+      // заранее подгружаем соседние развороты
+      [stepPage(1), stepPage(-1)].forEach(function (p) { spreadOf(p).forEach(function (n) { if (n) { var im = new Image(); im.src = src(n); } }); });
+    }
+    function render() {
+      var sp = spreadOf(st.page);
+      book.classList.toggle("is-single", single.matches);
+      setPage(pl, sp[0]); setPage(pr, sp[1]);
+      info();
+    }
+    function go(page) {
+      page = clamp(page, 1, st.n);
+      if (st.busy) return;
+      var from = spreadOf(st.page), to = spreadOf(page);
+      if (from[0] === to[0] && from[1] === to[1]) { st.page = page; info(); return; }
+      var forward = (to[1] || to[0]) > (from[1] || from[0]);
+      st.page = page;
+      if (single.matches || reduceMotion) {
+        var img = pr.querySelector("img");
+        img.classList.add("is-swap");
+        setTimeout(function () { render(); img.classList.remove("is-swap"); }, reduceMotion ? 0 : 180);
+        return;
+      }
+      // перелистывание: лист с текущей страницей переворачивается, под ним уже лежит новый разворот
+      st.busy = true;
+      leaf.className = "book__leaf " + (forward ? "is-next" : "is-prev");
+      if (forward) {
+        front.src = src(from[1]); back.src = to[0] ? src(to[0]) : "";
+        setPage(pr, to[1]);
+      } else {
+        front.src = src(from[0]); back.src = to[1] ? src(to[1]) : "";
+        setPage(pl, to[0]);
+      }
+      leaf.classList.add("is-turning");
+      info();
+      var done = false;
+      function finish() {
+        if (done) return;
+        done = true;
+        setPage(pl, to[0]); setPage(pr, to[1]);
+        leaf.className = "book__leaf";
+        leaf.style.transform = "";
+        st.busy = false;
+      }
+      // лист поворачиваем покадрово: так перелистывание одинаково плавное во всех браузерах
+      var t0 = performance.now(), DUR = 750, sign = forward ? -1 : 1;
+      var ease = function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+      leaf.style.transform = "rotateY(0deg)";
+      (function frame(now) {
+        var k = clamp((now - t0) / DUR, 0, 1);
+        leaf.style.transform = "rotateY(" + (sign * 180 * ease(k)).toFixed(2) + "deg)";
+        if (k < 1) requestAnimationFrame(frame); else finish();
+      })(t0);
+      setTimeout(finish, 1500); // страховка, если вкладка ушла в фон
+    }
+    function buildThumbs() {
+      thumbs.textContent = "";
+      for (var i = 1; i <= st.n; i++) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "lightbox__thumb";
+        b.setAttribute("aria-label", "Страница " + i);
+        var t = document.createElement("img"); t.src = src(i); t.alt = ""; t.loading = "lazy";
+        b.appendChild(t);
+        (function (p) { b.addEventListener("click", function () { go(p); }); })(i);
+        thumbs.appendChild(b);
+      }
+    }
+    function open(tile) {
+      st.n = +tile.dataset.pages; st.caps = (tile.dataset.captions || "").split("|"); st.page = 1; st.opener = tile;
+      title.textContent = tile.dataset.title;
+      buildThumbs(); render();
+      modal.hidden = false;
+      root.classList.add("is-locked");
+      next.focus({ preventScroll: true });
+    }
+    function close() {
+      modal.hidden = true;
+      root.classList.remove("is-locked");
+      if (st.opener) st.opener.focus({ preventScroll: true });
+    }
+    tiles.forEach(function (t) { t.addEventListener("click", function () { open(t); }); });
+    prev.addEventListener("click", function () { go(stepPage(-1)); });
+    next.addEventListener("click", function () { go(stepPage(1)); });
+    modal.addEventListener("click", function (e) { if (e.target.closest("[data-book-close]")) close(); });
+    colors.forEach(function (c) {
+      c.addEventListener("click", function () {
+        if (c.disabled || !BASES[c.dataset.color]) return;
+        st.color = c.dataset.color; // страница остаётся той же
+        colors.forEach(function (o) { o.classList.toggle("is-on", o === c); o.setAttribute("aria-checked", String(o === c)); });
+        buildThumbs(); render();
+      });
+    });
+    document.addEventListener("keydown", function (e) {
+      if (modal.hidden) return;
+      if (e.key === "Escape") close();
+      else if (e.key === "ArrowRight") go(stepPage(1));
+      else if (e.key === "ArrowLeft") go(stepPage(-1));
+    });
+    var sx = null;
+    book.addEventListener("pointerdown", function (e) { sx = e.clientX; });
+    book.addEventListener("pointerup", function (e) {
+      if (sx === null) return;
+      var dx = e.clientX - sx; sx = null;
+      if (Math.abs(dx) > 40) go(stepPage(dx < 0 ? 1 : -1));
+    });
+    single.addEventListener("change", function () { if (!modal.hidden) render(); });
+  })();
+
   /* ---------- 1. Верх окна — на уровне верха заголовка (на широких экранах) ---------- */
   (function alignPortal() {
     var scene = document.getElementById("scene");

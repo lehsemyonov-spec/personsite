@@ -510,13 +510,26 @@
       </div>
 
       <div class="attic__group" id="attic-company">
-        <div class="attic__head" data-reveal><span class="attic__num">02</span><h3 class="attic__title">Оформление для компаний</h3><span class="attic__count">скоро</span></div>
+        <div class="attic__head" data-reveal><span class="attic__num">02</span><h3 class="attic__title">Оформление для компаний</h3><span class="attic__count">1 проект</span></div>
+        <div class="attic-company">
+          <button class="exhibit exhibit--catalog" type="button" data-book data-title="Каталог «Гелиос»" data-pages="33" data-captions="Обложка|Содержание|Наш завод|Продукция|Стеновая опалубка|Опалубка стен Гелиос EURO|Щиты линейные Гелиос EURO|Опалубка стен Гелиос Армада|Стеновая опалубка Гелиос Армада|Опалубка колонн: варианты решений|Комплектующие для опалубки|Комплектующие для опалубки|Комплектующие для опалубки|Комплектующие для опалубки|Комплектующие для опалубки|Комплектующие для опалубки|Опалубка перекрытий на телескопических стойках|Опалубка перекрытий на телескопических стойках|Объёмная опалубка|Объёмная опалубка|Объёмная опалубка|Объёмная опалубка|Объёмная опалубка|Расходные материалы|Варианты решений|Варианты решений|Варианты решений|Варианты решений|Наше оборудование на объектах|Наше оборудование на объектах|Наше оборудование на объектах|Наше оборудование на объектах|Закрывающая страница" data-reveal aria-label="Каталог «Гелиос», 33 страницы — открыть">
+            <span class="exhibit__stage">
+              <span class="brochure">
+                <img class="brochure__page brochure__page--3" src="assets/img/attic/catalog-black/3.webp" alt="" width="989" height="1400" loading="lazy" decoding="async">
+                <img class="brochure__page brochure__page--2" src="assets/img/attic/catalog-black/2.webp" alt="" width="989" height="1400" loading="lazy" decoding="async">
+                <span class="brochure__cover"><img src="assets/img/attic/catalog-black/1.webp" alt="Каталог «Гелиос» — обложка" width="989" height="1400" loading="lazy" decoding="async"><span class="brochure__spiral" aria-hidden="true"></span></span>
+              </span>
+            </span>
+            <span class="work__plate"><b>Каталог «Гелиос»</b><span>33 страницы</span></span>
+            <span class="swatches" aria-hidden="true"><i class="swatch swatch--black is-on"></i><i class="swatch swatch--white is-soon"></i><small>2 цвета</small></span>
+          </button>
         <a class="attic__empty" href="https://t.me/HolAndrew" target="_blank" rel="noopener noreferrer" data-tile data-reveal>
           <span class="tile__shine"></span>
           <svg class="spark"><use href="#spark"/></svg>
-          <span class="attic__empty-text">Работы для компаний скоро появятся на чердаке. А пока можно обсудить ваш проект.</span>
+          <span class="attic__empty-text">Скоро здесь появятся прайс-лист, коммерческое предложение и другие материалы для этого же клиента.</span>
           <span class="work__price">Обсудить проект<svg class="ico"><use href="#arrow"/></svg></span>
         </a>
+        </div>
       </div>
 
       <div class="attic__group" id="attic-slides">
@@ -881,6 +894,34 @@
       </div>
     </div>
   </section>
+
+  <!-- Листалка каталога -->
+  <div class="book-modal" id="book" role="dialog" aria-modal="true" aria-label="Просмотр каталога" hidden>
+    <div class="lightbox__backdrop" data-book-close></div>
+    <div class="book-modal__body">
+      <div class="book-modal__head">
+        <p class="lightbox__title" id="book-title"></p>
+        <div class="book-colors" role="radiogroup" aria-label="Цвет каталога">
+          <button type="button" class="book-color is-on" data-color="black" role="radio" aria-checked="true"><i class="swatch swatch--black"></i>Чёрный</button>
+          <button type="button" class="book-color" data-color="white" role="radio" aria-checked="false" disabled title="Белая версия скоро появится"><i class="swatch swatch--white"></i>Белый <small>скоро</small></button>
+        </div>
+        <span class="lightbox__count" id="book-count"></span>
+        <button class="lightbox__close" type="button" data-book-close aria-label="Закрыть"><span></span><span></span></button>
+      </div>
+      <div class="book-stage">
+        <button class="lightbox__arrow lightbox__arrow--prev" type="button" id="book-prev" aria-label="Назад"><svg class="ico"><use href="#arrow"/></svg></button>
+        <div class="book" id="book-spread">
+          <div class="book__page book__page--l"><img alt=""></div>
+          <div class="book__page book__page--r"><img alt=""></div>
+          <div class="book__leaf" aria-hidden="true"><div class="book__face book__face--front"><img alt=""></div><div class="book__face book__face--back"><img alt=""></div></div>
+          <span class="book__spine" aria-hidden="true"></span>
+        </div>
+        <button class="lightbox__arrow lightbox__arrow--next" type="button" id="book-next" aria-label="Вперёд"><svg class="ico"><use href="#arrow"/></svg></button>
+      </div>
+      <p class="book-caption" id="book-caption"></p>
+      <div class="lightbox__thumbs book-thumbs" id="book-thumbs"></div>
+    </div>
+  </div>
 
   <!-- Просмотр работы целиком -->
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Просмотр работы" hidden>
