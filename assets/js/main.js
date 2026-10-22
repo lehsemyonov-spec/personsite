@@ -970,7 +970,7 @@
     var modal = document.getElementById("book");
     var tiles = document.querySelectorAll("[data-book]");
     if (!modal || !tiles.length) return;
-    var BASES = { black: "assets/img/attic/catalog-black/", white: null }; // белая версия появится позже
+    var BASES = { black: "assets/img/attic/catalog-black/", white: "assets/img/attic/catalog-white/" };
     var book = document.getElementById("book-spread");
     var pl = book.querySelector(".book__page--l"), pr = book.querySelector(".book__page--r");
     var leaf = book.querySelector(".book__leaf");
