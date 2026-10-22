@@ -298,16 +298,18 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 600; color: v
   backdrop-filter: blur(16px) saturate(1.2);
 }
 .header.is-hidden { transform: translateY(-110%); }
-.header__row { display: flex; align-items: center; gap: 24px; }
-.brand { display: flex; align-items: center; gap: 12px; margin-right: auto; }
+.header__row { display: flex; align-items: center; justify-content: space-between; gap: clamp(12px, 2vw, 24px); }
+.brand { display: flex; align-items: center; gap: 12px; flex: none; }
+.header__cta { flex: none; }
 .brand__mark { width: 34px; height: 34px; filter: drop-shadow(0 0 8px rgba(255, 177, 92, 0.45)); }
 .brand__text { font: 700 14px/1 var(--f-display); letter-spacing: 0.01em; }
 .brand__text em { font-size: 1.3em; }
 
-.nav { display: flex; gap: 6px; padding: 5px; border: 1px solid var(--line); border-radius: 99px; background: rgba(20, 17, 14, 0.5); backdrop-filter: blur(12px); }
+.nav { display: flex; flex: none; gap: 2px; padding: 5px; border: 1px solid var(--line); border-radius: 99px; background: rgba(20, 17, 14, 0.5); backdrop-filter: blur(12px); }
 .nav a {
   position: relative;
-  padding: 9px 16px;
+  padding: 9px clamp(9px, 1.1vw, 16px);
+  white-space: nowrap;
   border-radius: 99px;
   color: var(--muted);
   font-size: 14px;
@@ -349,7 +351,7 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 600; color: v
   gap: clamp(24px, 4vw, 60px);
 }
 .hero__text { position: relative; z-index: 2; }
-.hero__top { display: flex; flex-wrap: nowrap; align-items: center; gap: 12px 18px; margin-bottom: 22px; }
+.hero__top { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin-bottom: 22px; }
 .hero__top .label { flex: none; }
 .hero__top .label { margin: 0; }
 .label--avatar { gap: 10px; padding: 5px 16px 5px 5px; color: var(--text); text-transform: none; letter-spacing: 0.01em; font-size: 13px; font-weight: 600; }
@@ -366,7 +368,13 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 600; color: v
 }
 .hero__motto { font-size: clamp(13px, 1.12vw, 16px) !important; }
 .hero__motto span { display: block; white-space: nowrap; }
-@media (max-width: 1100px) { .hero__motto span { white-space: normal; display: inline; } }
+/* ноутбуки поуже: колонка текста шире, плашка и слоган компактнее — слоган остаётся справа в 2 строки */
+@media (min-width: 901px) and (max-width: 1179px) {
+  .hero__grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr); gap: 24px; }
+  .hero__top { gap: 10px 14px; }
+  .label--avatar { gap: 8px; padding: 4px 12px 4px 4px; font-size: 12px; }
+  .hero__motto { font-size: 12px !important; padding-left: 12px; }
+}
 .hero__motto::before { content: ""; position: absolute; left: 0; top: 3px; bottom: 3px; width: 1px; background: linear-gradient(180deg, transparent, var(--amber), transparent); }
 .hero__title { margin: 0 0 24px; line-height: 0.92; }
 .hero__name {

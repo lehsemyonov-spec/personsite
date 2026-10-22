@@ -597,52 +597,54 @@
   })();
 
   /* ---------- 5. До / После: «после» проявляется кругом из точки, где курсор вошёл ----------
-     Наведение показывает результат, пока курсор на фото. Нажатие закрепляет «после»:
-     оно уходит, только если нажать другое фото или ничего не делать 15 секунд. */
+     Наведение показывает «после», пока курсор на фото. Нажатие закрепляет «после» —
+     у каждой работы своё, закрепить можно сразу несколько. Повторное нажатие
+     возвращает «до»; без нажатий закреплённая работа сама вернётся в «до» через 15 секунд. */
   (function beforeAfter() {
-    var items = Array.prototype.slice.call(document.querySelectorAll("[data-ba]"));
-    if (!items.length) return;
-    var pinned = null, idleTimer = null, IDLE = 15000;
-    function origin(el, e) {
+    var IDLE = 15000;
+    document.querySelectorAll("[data-ba]").forEach(function (el) {
       var frame = el.querySelector(".ba__frame");
-      var r = frame.getBoundingClientRect();
-      var x = e && e.clientX ? (e.clientX - r.left) / r.width * 100 : 50;
-      var y = e && e.clientY ? (e.clientY - r.top) / r.height * 100 : 50;
-      el.style.setProperty("--x", clamp(x, 0, 100).toFixed(1) + "%");
-      el.style.setProperty("--y", clamp(y, 0, 100).toFixed(1) + "%");
-    }
-    function set(el, on) { el.classList.toggle("is-on", on); el.setAttribute("aria-pressed", String(on && el === pinned)); }
-    function unpin() {
-      if (!pinned) return;
-      var el = pinned;
-      pinned = null;
-      el.classList.remove("is-pinned");
-      if (!el.matches(":hover")) set(el, false); else el.setAttribute("aria-pressed", "false");
-    }
-    function armIdle() {
-      clearTimeout(idleTimer);
-      if (pinned) idleTimer = setTimeout(unpin, IDLE);
-    }
-    function pin(el, e) {
-      if (pinned && pinned !== el) unpin();
-      if (!el.classList.contains("is-on")) origin(el, e);
-      pinned = el;
-      el.classList.add("is-pinned");
-      set(el, true);
-      armIdle();
-    }
-    // любое действие посетителя продлевает закреплённое «после»
-    ["pointermove", "pointerdown", "keydown", "scroll", "wheel", "touchstart"].forEach(function (t) {
-      window.addEventListener(t, function () { if (pinned) armIdle(); }, { passive: true });
-    });
-    items.forEach(function (el) {
-      el.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse" && el !== pinned) { origin(el, e); set(el, true); } });
-      el.addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse" && el !== pinned) { origin(el, e); set(el, false); } });
-      el.addEventListener("click", function (e) { pin(el, e); });
+      var pinned = false, timer = null, blockHover = false;
+      function origin(e) {
+        var r = frame.getBoundingClientRect();
+        var x = e && e.clientX ? (e.clientX - r.left) / r.width * 100 : 50;
+        var y = e && e.clientY ? (e.clientY - r.top) / r.height * 100 : 50;
+        el.style.setProperty("--x", clamp(x, 0, 100).toFixed(1) + "%");
+        el.style.setProperty("--y", clamp(y, 0, 100).toFixed(1) + "%");
+      }
+      function show(on) { el.classList.toggle("is-on", on); }
+      function setPinned(on) {
+        pinned = on;
+        el.classList.toggle("is-pinned", on);
+        el.setAttribute("aria-pressed", String(on));
+        clearTimeout(timer);
+        if (on) timer = setTimeout(function () { setPinned(false); if (!el.matches(":hover")) show(false); }, IDLE);
+      }
+      function toggle(e) {
+        if (pinned) {
+          setPinned(false);
+          show(false);
+          blockHover = true; // курсор ещё на фото — не показываем «после» снова, пока он не уйдёт
+        } else {
+          if (!el.classList.contains("is-on")) origin(e);
+          setPinned(true);
+          show(true);
+        }
+      }
+      el.addEventListener("pointerenter", function (e) {
+        if (e.pointerType !== "mouse" || pinned || blockHover) return;
+        origin(e); show(true);
+      });
+      el.addEventListener("pointerleave", function (e) {
+        if (e.pointerType !== "mouse") return;
+        blockHover = false;
+        if (!pinned) { origin(e); show(false); }
+      });
+      el.addEventListener("click", toggle);
       el.addEventListener("keydown", function (e) {
         if (e.key !== "Enter" && e.key !== " ") return;
         e.preventDefault();
-        pin(el, null);
+        toggle(null);
       });
     });
   })();
