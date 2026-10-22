@@ -1475,9 +1475,16 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 600; color: v
 
 /* ---------- 02. Каталог: брошюра на плитке ---------- */
 .attic-company { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: clamp(14px, 2vw, 26px); align-items: stretch; }
-.attic-company__side { display: grid; grid-template-rows: 1fr auto; gap: clamp(14px, 2vw, 26px); }
+.attic-company__side { display: grid; grid-template-rows: 1fr 1fr auto; gap: clamp(14px, 2vw, 26px); }
+.exhibit--kp { min-height: 230px; }
+.kp-sheet { position: absolute; width: 50%; aspect-ratio: 1600 / 1211; border-radius: 6px; overflow: hidden; box-shadow: 0 0 0 1px rgba(255, 213, 154, 0.25), 0 24px 40px -18px #000; transition: transform 0.8s var(--ease); }
+.kp-sheet img { width: 100%; height: 100%; object-fit: cover; }
+.kp-sheet--black { transform: translate(18%, 4%) rotate(5deg); }
+.kp-sheet--white { transform: translate(-16%, 14%) rotate(-4deg); }
+.exhibit--kp:hover .kp-sheet--black { transform: translate(26%, 0) rotate(8deg); }
+.exhibit--kp:hover .kp-sheet--white { transform: translate(-22%, 18%) rotate(-7deg); }
 .attic-company .attic__empty { flex-direction: column; align-items: flex-start; justify-content: center; }
-.exhibit--cards { min-height: 260px; }
+.exhibit--cards { min-height: 230px; }
 .bcard { position: absolute; width: 62%; aspect-ratio: 1400 / 816; border-radius: 8px; overflow: hidden; box-shadow: 0 0 0 1px rgba(255, 213, 154, 0.25), 0 24px 40px -18px #000; transition: transform 0.8s var(--ease); }
 .bcard img { width: 100%; height: 100%; object-fit: cover; }
 .bcard--black { transform: translate(14%, -6%) rotate(6deg); }
@@ -1485,7 +1492,7 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 600; color: v
 .exhibit--cards:hover .bcard--black { transform: translate(22%, -10%) rotate(9deg); }
 .exhibit--cards:hover .bcard--white { transform: translate(-18%, 14%) rotate(-8deg); }
 .attic-company .attic__empty-text { flex: none; }
-.exhibit--catalog { height: clamp(380px, 38vw, 520px); }
+.exhibit--catalog { height: auto; min-height: clamp(380px, 38vw, 520px); }
 .brochure { position: relative; height: 80%; aspect-ratio: 989 / 1400; margin-top: 4%; perspective: 1400px; }
 .brochure__page, .brochure__cover { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 4px 8px 8px 4px; }
 .brochure__page { object-fit: cover; box-shadow: 0 20px 40px -18px #000; transition: transform 0.9s var(--ease), opacity 0.6s; }
@@ -1574,7 +1581,7 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 600; color: v
   touch-action: pan-y;
 }
 .lightbox__img.is-loading { opacity: 0.35; }
-.lightbox__img.is-wide { height: auto; width: min(1100px, calc(100vw - 200px), 72vh * 16 / 9); }
+.lightbox__img.is-wide { width: auto; height: auto; max-width: min(1100px, calc(100vw - 200px)); max-height: 72vh; }
 .lightbox__arrow { display: grid; place-items: center; width: 52px; height: 52px; flex: none; border: 0; border-radius: 50%; color: var(--text); background: rgba(255, 236, 210, 0.08); box-shadow: inset 0 0 0 1px var(--line-2); cursor: pointer; transition: background 0.3s, box-shadow 0.3s; }
 .lightbox__arrow:hover { background: rgba(255, 177, 92, 0.18); box-shadow: inset 0 0 0 1px rgba(255, 196, 130, 0.7); }
 .lightbox__arrow--prev .ico { transform: rotate(180deg); }
