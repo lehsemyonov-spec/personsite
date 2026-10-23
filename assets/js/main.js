@@ -856,23 +856,18 @@
       copyBtn.addEventListener("click", function () {
         copyText(calcText()).then(function (ok) {
           if (!ok) return;
-          copyBtn.textContent = "Скопировано ✓";
-          setTimeout(function () { copyBtn.textContent = "Скопировать расчёт"; }, 1800);
-        });
-      });
-      // «Обсудить проект»: без выбранных позиций — просто чат; с позициями — расчёт в буфер и уведомление
-      var discuss = calc.querySelector("[data-discuss]");
-      discuss.addEventListener("click", function () {
-        update();
-        if (!lines.length) return;
-        copyText(calcText()).then(function (ok) {
-          if (!ok) return;
           var toast = document.getElementById("toast");
           toast.textContent = "Расчёт скопирован в буфер обмена";
           toast.classList.add("is-on");
           clearTimeout(toast._t);
           toast._t = setTimeout(function () { toast.classList.remove("is-on"); }, 2600);
         });
+      });
+      // «Обсудить проект»: без выбранных позиций — просто чат; с позициями — расчёт молча копируется в буфер
+      var discuss = calc.querySelector("[data-discuss]");
+      discuss.addEventListener("click", function () {
+        update();
+        if (lines.length) copyText(calcText());
       });
       update();
     });
