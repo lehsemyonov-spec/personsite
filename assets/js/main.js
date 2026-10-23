@@ -863,12 +863,6 @@
           toast._t = setTimeout(function () { toast.classList.remove("is-on"); }, 2600);
         });
       });
-      // «Обсудить проект»: без выбранных позиций — просто чат; с позициями — расчёт молча копируется в буфер
-      var discuss = calc.querySelector("[data-discuss]");
-      discuss.addEventListener("click", function () {
-        update();
-        if (lines.length) copyText(calcText());
-      });
       update();
     });
   })();
