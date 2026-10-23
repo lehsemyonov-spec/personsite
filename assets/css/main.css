@@ -1675,7 +1675,7 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 600; color: v
 
   .hero { padding-top: 100px; }
   .hero__grid { grid-template-columns: 1fr; }
-  .hero__scene { order: -1; padding: 0 0 10px; }
+  .hero__scene { padding: 36px 0 10px; }
   .portal { --w: clamp(190px, 50vw, 290px); }
   .hero__top { flex-wrap: wrap; }
   .hero__motto { flex: 1 1 100%; max-width: none; }
