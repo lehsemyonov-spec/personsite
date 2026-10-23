@@ -834,11 +834,45 @@
         r.querySelector("[data-dec]").addEventListener("click", function () { out.value = Math.max(0, (+out.value || 0) - 1); update(); });
       });
       calc.addEventListener("change", update);
-      copyBtn.addEventListener("click", function () {
+      function calcText() {
         var t = update();
-        var text = "Расчёт «" + calc.dataset.calc + "»:\n" + lines.join("\n") + "\nИтого: " + (t.from ? "от " : "") + fmt(t.sum);
-        var done = function () { copyBtn.textContent = "Скопировано ✓"; setTimeout(function () { copyBtn.textContent = "Скопировать расчёт"; }, 1800); };
-        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function () {});
+        return "Расчёт «" + calc.dataset.calc + "»:\n" + lines.join("\n") + "\nИтого: " + fmt(t.sum) +
+          "\nОкончательная стоимость уточняется после обсуждения задачи.";
+      }
+      // копирование с запасным путём для встроенных браузеров, где Clipboard API недоступен
+      function copyText(text) {
+        function legacy() {
+          var ta = document.createElement("textarea");
+          ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+          document.body.appendChild(ta); ta.select();
+          var ok = false;
+          try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+          document.body.removeChild(ta);
+          return ok;
+        }
+        if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text).then(function () { return true; }, legacy);
+        return Promise.resolve(legacy());
+      }
+      copyBtn.addEventListener("click", function () {
+        copyText(calcText()).then(function (ok) {
+          if (!ok) return;
+          copyBtn.textContent = "Скопировано ✓";
+          setTimeout(function () { copyBtn.textContent = "Скопировать расчёт"; }, 1800);
+        });
+      });
+      // «Обсудить проект»: без выбранных позиций — просто чат; с позициями — расчёт в буфер и уведомление
+      var discuss = calc.querySelector("[data-discuss]");
+      discuss.addEventListener("click", function () {
+        update();
+        if (!lines.length) return;
+        copyText(calcText()).then(function (ok) {
+          if (!ok) return;
+          var toast = document.getElementById("toast");
+          toast.textContent = "Расчёт скопирован в буфер обмена";
+          toast.classList.add("is-on");
+          clearTimeout(toast._t);
+          toast._t = setTimeout(function () { toast.classList.remove("is-on"); }, 2600);
+        });
       });
       update();
     });
